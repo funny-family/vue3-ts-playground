@@ -4,3 +4,19 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// ?????
+// declare module "*.css"; "*.scss"; {
+//   const classes: { readonly [key: string]: string };
+//   export default classes;
+// }
+
+declare module "*.css" {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+
+declare module "*.scss" {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
