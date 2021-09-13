@@ -14,7 +14,8 @@ import c from "./gif-404.module.css";
 
 export const Gif404 = defineComponent({
   inheritAttrs: false,
-  get name(): string { return Object.keys({ Gif404 })[0] }, // return "Gif404"
+  // get name(): string { return Object.keys({ Gif404 })[0] }, // return "Gif404"
+  name: "Gif404",
   emits,
   props,
   setup,
