@@ -36,5 +36,3 @@ export const Gif404 = defineComponent({
 
 // eslint-disable-next-line
 console.log('Gif404:', Gif404);
-
-export default Gif404;
