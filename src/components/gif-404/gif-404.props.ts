@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/ban-ts-comment */
 import type { ExtractPropTypes, ComponentPropsOptions, ComponentObjectPropsOptions, Prop } from "@vue/runtime-core";
-import { HTMLAttributes } from "vue";
+import type { HTMLAttributes } from "vue";
 import type { RecordPropsDefinition } from "@/types";
 
 export interface Gif404PropFields {
