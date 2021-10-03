@@ -11,11 +11,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
-      title: "adadad"
-    }
-  }
+      title: "adadad",
+    };
+  },
 });
-
 </script>
 
 <style>
