@@ -2,45 +2,56 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, withScopeId } from 'vue';
 // import { RouterView, RouterLink } from "vue-router"
-
-import { Header } from "../../components/header/header.component";
-import { Gif404 } from "../../components/gif-404/gif-404.component";
-
+import { Header } from '../../components/header/header.component';
+import { Gif404 } from '../../components/gif-404/gif-404.component';
 import { Govno } from '../../components/gif-404';
+import { generateGuid } from '@/utils/guid';
+
+// -> name: Header/Menu/Button (Button component) // Bad!
+
+/**
+ * Writing Vue.js Render Functions in JSX
+ * https://alligator.io/vuejs/jsx-render-functions/
+ */
 
 export const NotFound = defineComponent({
-  name: "NotFound",
+  name: 'NotFound',
   components: {
     Gif404,
     Header
   },
   setup() {
-    const title = "Not found page!";
+    const title = 'Not found page!';
     const isGif404Visible = ref(true);
 
-    return () => (
+    const isRed = false;
+
+    const componentId = generateGuid();
+    const withId = withScopeId(componentId);
+
+    return withId(() => (
       <div>
         <Header title="t45672" />
 
-        <h1>{title}</h1>
+        <h1 class={{ 'is-red': isRed }}>{title}</h1>
         <br />
 
         {/* @ts-ignore */}
         {/* <div v-if={isGif404Visible.value}> */}
-          <Gif404 title="dadada" aria-label="this is giiifff!" />
+        <Gif404 title="dadada" aria-label="this is giiifff!" />
 
-          <Govno.Gif404 title="11" />
+        <Govno.Gif404 title="11" />
         {/* </div> */}
         {/* {isGif404Visible.value === true &&
           <Gif404 v-if={() => true} aria-label="this is giiifff!" />
         } */}
-        <button type="button" onClick={() => isGif404Visible.value = !isGif404Visible.value}>
+        <button type="button" onClick={() => (isGif404Visible.value = !isGif404Visible.value)}>
           show/hide
         </button>
       </div>
-    )
+    ));
   }
 
   // setup() {
