@@ -12,7 +12,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "node"
     ],
     "paths": {
       "@/*": [
@@ -20,7 +21,7 @@
       ]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    // "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": [
     "src/**/*.ts",
@@ -30,6 +31,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "vue.config.js"
   ]
 }
