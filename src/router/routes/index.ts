@@ -1,7 +1,6 @@
 /* eslint-disable no-useless-escape, @typescript-eslint/ban-ts-comment */
-import type { RouteRecord, RouteRecordRaw } from 'vue-router';
-import { names, Names } from './names';
-import { path } from '@/lib/node/path';
+import type { RouteRecordRaw } from 'vue-router';
+import { normalize as normalizePath } from 'path';
 
 /**
  * "Recursive Map function"
@@ -15,41 +14,45 @@ import { path } from '@/lib/node/path';
 
 // ==================================================================================================
 
+type RoutesRecord = Record<string, RouteRecordRaw>;
+type RoutesMap = [string, RouteRecordRaw][];
+
 class RouteTree {
   // @ts-ignore
-  private routesMap: Record<string, RouteRecordRaw>;
+  private routesRecord: RoutesRecord;
+  private childRoutesFolderName = 'children';
 
   constructor() {
-    this.generateRoutesMap();
+    this.generateRoutesRecord();
   }
 
-  private generateRoutesMap() {
+  private generateRoutesRecord() {
     const requireRoutes = require.context('.', true, /(\b[a-z]+(-[a-z]+)*)(\.)(route)(\.)(js|ts)/);
-    const routesMap = {} as Record<string, RouteRecordRaw>;
+    const routesRecord = {} as RoutesRecord;
 
     requireRoutes.keys().forEach((pathToRouteFile) => {
       const foundRouteValue: RouteRecordRaw = requireRoutes(pathToRouteFile).default;
-      // const foundRouteKey = foundRouteValue.name! as Names;
-      const normalizedPathToRouteFile = path.normalize(pathToRouteFile);
+      const normalizedPathToRouteFile = normalizePath(pathToRouteFile);
 
-      routesMap[normalizedPathToRouteFile] = foundRouteValue;
+      routesRecord[normalizedPathToRouteFile] = foundRouteValue;
     });
 
-    this.routesMap = routesMap;
+    this.routesRecord = routesRecord;
 
-    return this.routesMap;
+    return this.routesRecord;
   }
 
-  private getSortedRoutesByLengthOfPath(): [string, RouteRecordRaw][] {
-    const routesMapSortedByLengthOfFilePath = Object.entries(this.routesMap).sort(
+  private createRoutesMap(routesRecord: RoutesRecord): RoutesMap {
+    const routesMapSortedByLengthOfFilePath = Object.entries(routesRecord).sort(
       (a, b) => a[0].split('/').length - b[0].split('/').length
     );
-    const isRouteAChild = (pathToRouteFile: string) => pathToRouteFile.includes('children');
+    const isChildRoute = (pathToRouteFile: string) =>
+      pathToRouteFile.includes(this.childRoutesFolderName);
     const routesMapOfRootRoutes = routesMapSortedByLengthOfFilePath.filter(
-      (route) => !isRouteAChild(route[0])
+      (route) => !isChildRoute(route[0])
     );
     const routesMapOfChildRoutes = routesMapSortedByLengthOfFilePath.filter((route) =>
-      isRouteAChild(route[0])
+      isChildRoute(route[0])
     );
     const sortedRoutesMapOfChildRoutes = routesMapOfChildRoutes.sort((a, b) =>
       a[0] < b[0] ? -1 : 1
@@ -59,23 +62,33 @@ class RouteTree {
     return sortedRoutesMap;
   }
 
-  private createRoutesMapWithChildren(
-    routes: [string, RouteRecordRaw][]
-  ): [string, RouteRecordRaw][] {
-    const routesMap: [string, RouteRecordRaw][] = [];
+  private createRoutesMapWithChildren(routes: RoutesMap): RoutesMap {
+    const routesMap: RoutesMap = [];
     routes.forEach((route) => {
       routesMap.push(route);
     });
 
     routesMap.forEach((route, index, currentArray) => {
-      const parentFolderName = route[0].split('/')[route[0].split('/').lastIndexOf('children') - 1];
-      const regExpOfParentFileName = new RegExp(
-        `(${parentFolderName})\/([a-z]+(-[a-z]+)*)(\.)(route)(\.)(js|ts)`
-      );
+      const pathToRouteFile = route[0];
 
-      if (route[0].includes('children') === true) {
+      if (pathToRouteFile.includes(this.childRoutesFolderName) === true) {
+        const parentFolderName =
+          pathToRouteFile.split('/')[
+            pathToRouteFile.split('/').lastIndexOf(this.childRoutesFolderName) - 1
+          ];
+        const regExpOfParentFileName = new RegExp(
+          `(${parentFolderName})\/(${parentFolderName})(\.)(route)(\.)(js|ts)`
+        );
+
         const parentRoute =
-          currentArray[currentArray.findIndex((route) => regExpOfParentFileName.test(route[0]))];
+          currentArray[
+            currentArray.findIndex((route) => {
+              const pathToRouteFile = route[0];
+              const parentRouteObject = regExpOfParentFileName.test(pathToRouteFile);
+
+              return parentRouteObject;
+            })
+          ];
 
         if (parentRoute[1].children === undefined) {
           parentRoute[1].children = [];
@@ -88,24 +101,23 @@ class RouteTree {
     return routesMap;
   }
 
-  private getRootRoutesOfRoutesMap(routes: [string, RouteRecordRaw][]): [string, RouteRecordRaw][] {
-    return routes.filter((route) => !route[0].includes('children'));
+  private getRootRoutesInRoutesMap(routes: RoutesMap): RoutesMap {
+    return routes.filter((route) => !route[0].includes(this.childRoutesFolderName));
   }
 
-  private getRouteRecordList(routesMap: [string, RouteRecordRaw][]): RouteRecordRaw[] {
+  private getRouteRecordList(routesMap: RoutesMap): RouteRecordRaw[] {
     return routesMap.map((route) => route[1]);
   }
 
-  getRoutes() {
-    const sortedRoutesByLengthOfPath = this.getSortedRoutesByLengthOfPath();
-    const routesMapWithChildren = this.createRoutesMapWithChildren(sortedRoutesByLengthOfPath);
-    const rootRoutesOfRoutesMap = this.getRootRoutesOfRoutesMap(routesMapWithChildren);
-    const routeRecordList = this.getRouteRecordList(rootRoutesOfRoutesMap);
+  create() {
+    const routesMap = this.createRoutesMap(this.routesRecord);
+    const routesMapWithChildren = this.createRoutesMapWithChildren(routesMap);
+    const rootRoutesOfRoutesMap = this.getRootRoutesInRoutesMap(routesMapWithChildren);
+    const routeTree = this.getRouteRecordList(rootRoutesOfRoutesMap);
 
-    return routeRecordList;
+    return routeTree;
   }
 }
 
 const routeTree = new RouteTree();
-export const routes = routeTree.getRoutes();
-// console.log(12313, routeTree.getRoutes());
+export const routes = routeTree.create();
