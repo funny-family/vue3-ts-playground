@@ -1,3 +1,3 @@
-import classNames from 'classnames';
+import classNames, { Argument, Mapping, Value } from 'classnames';
 
-export { classNames };
+export { classNames, Argument, Mapping, Value };
