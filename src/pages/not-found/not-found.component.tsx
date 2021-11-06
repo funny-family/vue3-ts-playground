@@ -8,6 +8,7 @@ import { Header } from '../../components/header/header.component';
 import { Gif404 } from '../../components/gif-404/gif-404.component';
 import { Govno } from '../../components/gif-404';
 import { generateGuid } from '@/utils/guid';
+import { classNames } from '@/lib/npm/class-names';
 
 // -> name: Header/Menu/Button (Button component) // Bad!
 
@@ -26,16 +27,19 @@ export const NotFound = defineComponent({
     const title = 'Not found page!';
     const isGif404Visible = ref(true);
 
-    const isRed = false;
+    const isRed = true;
+
+    console.log('isGif404Visible:', isGif404Visible.value);
+    console.log('isRed:', isRed);
 
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
 
     return withId(() => (
-      <div>
+      <div class="gif404">
         <Header title="t45672" />
 
-        <h1 class={{ 'is-red': isRed }}>{title}</h1>
+        <h1 class={classNames(isRed && 'is-red')}>{title}</h1>
         <br />
 
         {/* @ts-ignore */}
