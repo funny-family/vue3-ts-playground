@@ -2,8 +2,8 @@
   <div>
     <h1>{{ title }}</h1>
 
-    <router-link to="/my/chats">chats</router-link>
-    <router-link to="/my/profile">profile</router-link>
+    <router-link :to="{ name: 'chats' }">chats</router-link>
+    <router-link :to="{ name: 'profile' }">profile</router-link>
 
     <pre>
       <router-view/>
