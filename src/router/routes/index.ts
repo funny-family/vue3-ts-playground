@@ -68,8 +68,8 @@ class RouteTree {
       routesMap.push(route);
     });
 
-    routesMap.forEach((route, index, currentArray) => {
-      const pathToRouteFile = route[0];
+    routesMap.forEach((routeMap, index, currentArray) => {
+      const pathToRouteFile = routeMap[0];
 
       if (pathToRouteFile.includes(this.childRoutesFolderName) === true) {
         const parentFolderName =
@@ -89,12 +89,14 @@ class RouteTree {
               return parentRouteObject;
             })
           ];
+        const parentRouteMap = parentRoute[1];
 
-        if (parentRoute[1].children === undefined) {
-          parentRoute[1].children = [];
+        if (parentRouteMap.children === undefined) {
+          parentRouteMap.children = [];
         }
 
-        parentRoute[1].children.push(route[1]);
+        const route = routeMap[1];
+        parentRouteMap.children.push(route);
       }
     });
 
