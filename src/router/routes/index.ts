@@ -15,7 +15,7 @@ import { normalize as normalizePath } from 'path';
 // ==================================================================================================
 
 type RoutesRecord = Record<string, RouteRecordRaw>;
-type RoutesMap = [string, RouteRecordRaw][];
+type RouteMap = [string, RouteRecordRaw];
 
 class RouteTree {
   // @ts-ignore
@@ -42,7 +42,7 @@ class RouteTree {
     return this.routesRecord;
   }
 
-  private createRoutesMap(routesRecord: RoutesRecord): RoutesMap {
+  private createRoutesMap(routesRecord: RoutesRecord): RouteMap[] {
     const routesMapSortedByLengthOfFilePath = Object.entries(routesRecord).sort(
       (a, b) => a[0].split('/').length - b[0].split('/').length
     );
@@ -62,8 +62,8 @@ class RouteTree {
     return sortedRoutesMap;
   }
 
-  private createRoutesMapWithChildren(routes: RoutesMap): RoutesMap {
-    const routesMap: RoutesMap = [];
+  private createRoutesMapWithChildren(routes: RouteMap[]): RouteMap[] {
+    const routesMap: RouteMap[] = [];
     routes.forEach((route) => {
       routesMap.push(route);
     });
@@ -101,11 +101,11 @@ class RouteTree {
     return routesMap;
   }
 
-  private getRootRoutesInRoutesMap(routes: RoutesMap): RoutesMap {
+  private getRootRoutesInRoutesMap(routes: RouteMap[]): RouteMap[] {
     return routes.filter((route) => !route[0].includes(this.childRoutesFolderName));
   }
 
-  private getRouteRecordList(routesMap: RoutesMap): RouteRecordRaw[] {
+  private getRouteRecordList(routesMap: RouteMap[]): RouteRecordRaw[] {
     return routesMap.map((route) => route[1]);
   }
 
