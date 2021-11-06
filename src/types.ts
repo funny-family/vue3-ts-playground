@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // import type { PropType } from "vue";
-import type { Prop } from "@vue/runtime-core";
+import type { Prop } from '@vue/runtime-core';
 
 type Data = Record<string, unknown>;
 
@@ -18,3 +18,5 @@ type Data = Record<string, unknown>;
 export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- null makes error
 };
+
+export type EnvironmentVariable = 'production' | 'development';
