@@ -6,12 +6,16 @@ import { hideConsoleLogs } from './utils/hide-console-logs';
 import type { EnvironmentVariable } from '@/types';
 import { extractFromEnv } from './utils/extract-from-env';
 
+const app = createApp(App);
+
 const environmentVariable = extractFromEnv(process.env.NODE_ENV) as EnvironmentVariable;
 if (environmentVariable === 'production') {
   hideConsoleLogs();
 }
 
-const app = createApp(App);
+if (environmentVariable === 'development') {
+  app.config.performance = true;
+}
 
 app.use(store);
 app.use(router);
