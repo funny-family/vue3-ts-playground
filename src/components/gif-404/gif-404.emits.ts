@@ -1,4 +1,4 @@
-import type { EmitsOptions } from "vue";
+import type { EmitsOptions } from 'vue';
 
 export const emits: (EmitsOptions & ThisType<void>) | undefined = {};
 

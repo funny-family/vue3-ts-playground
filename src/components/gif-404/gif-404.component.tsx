@@ -2,14 +2,15 @@
 // css modules https://www.jianshu.com/p/be1778a76763
 // Template direct field access https://github.com/vuejs/vue-next/issues/1227
 // https://juejin.cn/post/6885953990345883661
-import { defineComponent, withScopeId, h } from 'vue';
-
 // import { useScopeId } from "../../utils/hooks/use-scoped-id.hook";
-
-import { emits } from "./gif-404.emits";
-import { props } from "./gif-404.props";
-import { setup } from "./gif-404.setup";
-import styles from './styles/gif-404.module.scss'
+import { defineComponent } from 'vue';
+import { emits } from './gif-404.emits';
+import { props } from './gif-404.props';
+import { setup } from './gif-404.setup';
+// import { styles, desktopStyles } from './styles/gif-404.styles';
+import { styles } from './styles/gif-404.styles';
+import { classNames } from '@/lib/npm/class-names';
+// import './styles/gif-404.styles.scss';
 // import { useWithScopedId } from '@/utils/hooks/use-with-scoped-id.hook';
 // import { generateGuid } from '@/utils/guid';
 
@@ -25,9 +26,10 @@ export const Gif404 = defineComponent({
   render() {
     return (
       <>
-        <div class={styles.gif404} {...this.$attrs}>
-          {/* <div {...this.$attrs}> */}
-          <h3 class="test">{this.$props.title}</h3>
+        <div class={styles.gif404}>
+          {/* <div class="gif404"> */}
+          <h3 class={classNames(styles.gif404__text, styles.hidden)}>{this.$props.title}</h3>
+          {/* <h3 class="gif404-text">{this.$props.title}</h3> */}
           <button onClick={() => (this.isImageVisible = !this.isImageVisible)}>hide</button>
           <img
             v-show={this.isImageVisible}
@@ -43,5 +45,5 @@ export const Gif404 = defineComponent({
   // }
 });
 
-// eslint-disable-next-line
-console.log('Gif404 name:', Gif404.name);
+// // eslint-disable-next-line
+// console.log('Gif404 name:', Gif404.name);

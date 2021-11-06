@@ -1,0 +1,17 @@
+// @value medium: min-width: 768px;
+// @media (min-width: 768px) {
+// @media only screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
+  .gif404 {
+    background-color: aqua;
+    color: antiquewhite;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .gif404__text {
+    border: none;
+  }
+}
