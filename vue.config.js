@@ -1,17 +1,12 @@
-// const { customAlphabet } = require('nanoid');
+/* eslint-disable @typescript-eslint/no-var-requires */
+// test: /\.(sa|sc|c)ss$/i,
 
-// const alphabetOfSmallLetters = [...Array(26)].map((x, i) => String.fromCharCode(i + 97));
-// const alphabetOfBigLetters = [...Array(26)]
-//   .map((e, i) => i + 65)
-//   .map((x) => String.fromCharCode(x));
-// const arrayOfNumbersFromZeroToTen = [...Array(10).keys()];
+/**
+ * @see https://stackoverflow.com/questions/62023604/where-to-find-or-how-to-set-htmlwebpackplugin-options-title-in-project-created-w
+ */
 
-// const alphabet = [
-//   ...alphabetOfSmallLetters,
-//   ...alphabetOfBigLetters,
-//   ...arrayOfNumbersFromZeroToTen
-// ].join('');
-// const nanoid = customAlphabet(alphabet, 5);
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   css: {
@@ -35,32 +30,45 @@ module.exports = {
     }
   },
 
-  configureWebpack: {
-    // module: {
-    //   rules: [
-    //     // ... other rules omitted
-    //     {
-    //       test: /\.(sa|sc|c)ss$/i,
-    //       use: [
-    //         {
-    //           loader: 'vue-style-loader'
-    //         },
-    //         {
-    //           loader: 'css-loader',
-    //           options: {
-    //             importLoaders: 1,
-    //             modules: {
-    //               mode: 'local',
-    //               localIdentName: '[local]--[hash:base36:5]'
-    //             }
-    //           }
-    //         },
-    //         {
-    //           loader: 'sass-loader'
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
+  // https://stackoverflow.com/questions/51890879/how-to-rename-index-html-on-a-vue-js-build
+  // https://cli.vuejs.org/guide/html-and-static-assets.html#the-index-file
+
+  chainWebpack: (config) => {
+    /* ==================== vue-svg-loader ==================== */
+    const svgRule = config.module.rule('svg');
+
+    svgRule.uses.clear();
+
+    svgRule
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
+    /* ==================== vue-svg-loader ==================== */
+
+    /* ==================== html-webpack-plugin ==================== */
+    config.plugin('html').tap((args) => {
+      args[0].title = 'ABAOBA App';
+      args[0].template = path.resolve('./src/index.html');
+
+      return args;
+    });
+    /* ==================== html-webpack-plugin ==================== */
+  },
+
+  configureWebpack: () => {
+    return {
+      plugins: [
+        /* config.plugin('copy') */
+        new CopyPlugin([
+          {
+            from: path.resolve('./src/assets/images/favicons/favicon.ico'),
+            to: path.resolve('./dist'),
+            ignore: ['.DS_Store']
+          }
+        ])
+      ]
+    };
   }
 };
