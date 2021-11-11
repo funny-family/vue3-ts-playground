@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
-import App from '@/App.vue';
-import { router } from './router';
-import { store } from './store';
-import { hideConsoleLogs } from './utils/hide-console-logs';
-import type { EnvironmentVariable } from '@/types';
-import { extractFromEnv } from './utils/extract-from-env';
+import App from './app/App.vue';
+import { router } from './app/router';
+import { store } from './app/store';
+import { hideConsoleLogs } from './app/shared/utils/hide-console-logs';
+import type { EnvironmentVariable } from '@/app/types';
+import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
