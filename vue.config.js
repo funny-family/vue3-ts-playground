@@ -16,12 +16,11 @@ module.exports = {
     extract: {
       ignoreOrder: isDevelopment ? false : true
     },
-    requireModuleExtension: true,
+    requireModuleExtension: false,
     loaderOptions: {
       css: {
         modules: {
-          // auto: /\.(sa|sc|c)ss$/i,
-          auto: (resourcePath) => resourcePath.endsWith('.scss'),
+          auto: /\.(sa|sc|c)ss$/i,
           mode: 'local',
           /* ==================== class name (styles) ==================== */
           ...(isDevelopment
