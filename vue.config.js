@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-// test: /\.(sa|sc|c)ss$/i,
-
-/**
- * @see https://stackoverflow.com/questions/62023604/where-to-find-or-how-to-set-htmlwebpackplugin-options-title-in-project-created-w
- */
-
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const { generateScopeName } = require('./utils/scope-name-generator');
@@ -43,7 +37,6 @@ module.exports = {
     }
   },
 
-  // https://stackoverflow.com/questions/51890879/how-to-rename-index-html-on-a-vue-js-build
   // https://cli.vuejs.org/guide/html-and-static-assets.html#the-index-file
 
   chainWebpack: (config) => {
@@ -72,49 +65,7 @@ module.exports = {
 
   configureWebpack: () => {
     return {
-      // module: {
-      //   rules: [
-      //     {
-      //       test: /\.scss$/,
-      //       use: [
-      //         !isDevelopment ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-      //         'css-loader',
-      //         {
-      //           loader: 'sass-loader',
-      //           options: {
-      //             auto: /\.scss$/i,
-      //             modules: true
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
-
-      // module: {
-      //   rules: [
-      //     {
-      //       test: /\.scss$/,
-      //       use: [
-      //         'vue-style-loader',
-      //         'css-loader',
-      //         {
-      //           loader: 'sass-loader',
-      //           options: {
-      //             auto: /\.scss$/i,
-      //             modules: true,
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
-
       plugins: [
-        // new MiniCssExtractPlugin({
-        //   filename: '[name].[contenthash].css',
-        //   chunkFilename: '[name].[contenthash].css'
-        // }),
         /* config.plugin('copy') */
         new CopyPlugin([
           {
