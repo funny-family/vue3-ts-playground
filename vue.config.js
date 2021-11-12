@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+
 // test: /\.(sa|sc|c)ss$/i,
 
 /**
@@ -7,23 +8,33 @@
 
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const { generateScopeName } = require('./utils/scope-name-generator');
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   css: {
     requireModuleExtension: true,
     loaderOptions: {
       css: {
-        // Примечание: формат конфигурации отличается между Vue CLI v4 и v3
-        // Для пользователей Vue CLI v3, обратитесь к документации css-loader v1
-        // https://github.com/webpack-contrib/css-loader/tree/v1.0.1
         modules: {
-          // localIdentName: '[path][name]__[local]--[hash:base64:5]'
-          localIdentName: '[local]--[hash:base36:5]'
+          // auto: /\.(sa|sc|c)ss$/i,
+          auto: (resourcePath) => resourcePath.endsWith('.scss'),
+          mode: 'local',
+          /* ==================== class name (styles) ==================== */
+          ...(isDevelopment
+            ? {
+                localIdentName: '[local]--[hash:base36:5]'
+              }
+            : {
+                getLocalIdent: (context, localIdentName, localName) =>
+                  generateScopeName(localName, context.resourcePath)
+              })
           /**
            * customize hash!!!!
            * @see https://www.npmjs.com/package/generic-names
            * @see https://stackoverflow.com/questions/67746387/different-hashes-between-css-loader-and-babel-plugin-react-css-modules
            */
+          /* ==================== class name (styles) ==================== */
         },
         localsConvention: 'asIs'
       }
@@ -59,6 +70,25 @@ module.exports = {
 
   configureWebpack: () => {
     return {
+      // module: {
+      //   rules: [
+      //     {
+      //       test: /\.scss$/,
+      //       use: [
+      //         'vue-style-loader',
+      //         'css-loader',
+      //         {
+      //           loader: 'sass-loader',
+      //           options: {
+      //             auto: /\.scss$/i,
+      //             modules: true,
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // },
+
       plugins: [
         /* config.plugin('copy') */
         new CopyPlugin([
