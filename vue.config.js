@@ -13,6 +13,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   css: {
+    extract: {
+      ignoreOrder: isDevelopment ? false : true
+    },
     requireModuleExtension: true,
     loaderOptions: {
       css: {
@@ -75,6 +78,25 @@ module.exports = {
       //     {
       //       test: /\.scss$/,
       //       use: [
+      //         !isDevelopment ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+      //         'css-loader',
+      //         {
+      //           loader: 'sass-loader',
+      //           options: {
+      //             auto: /\.scss$/i,
+      //             modules: true
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // },
+
+      // module: {
+      //   rules: [
+      //     {
+      //       test: /\.scss$/,
+      //       use: [
       //         'vue-style-loader',
       //         'css-loader',
       //         {
@@ -90,6 +112,10 @@ module.exports = {
       // },
 
       plugins: [
+        // new MiniCssExtractPlugin({
+        //   filename: '[name].[contenthash].css',
+        //   chunkFilename: '[name].[contenthash].css'
+        // }),
         /* config.plugin('copy') */
         new CopyPlugin([
           {
