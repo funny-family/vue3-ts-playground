@@ -9503,6 +9503,11 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
+vue-tsx-support@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/vue-tsx-support/-/vue-tsx-support-3.2.0.tgz#678b7ecc49473bf743be78482f8edad0331536c0"
+  integrity sha512-Uc3i9deEvZeHKc43Lcsh1ihCWvG1yygFnbY1jMe49K+DWCmGgwYWUkD0mxdgPwAMc6gi23CRVkrJsvamfCvD7A==
+
 vue@3.2.20:
   version "3.2.20"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.20.tgz#940f8aa8bf3e3be78243ca582bad41fcd45ae3e6"
