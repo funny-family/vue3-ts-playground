@@ -6,6 +6,10 @@ const { generateScopeName } = require('./utils/scope-name-generator');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
+  devServer: {
+    port: 6412
+  },
+
   css: {
     extract: {
       ignoreOrder: isDevelopment ? false : true
