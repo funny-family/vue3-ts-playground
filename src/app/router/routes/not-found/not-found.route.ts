@@ -1,8 +1,8 @@
-import type { RouteRecordRawWithoutChild } from '@/app/router/types';
-import { names } from '../names';
+import type { RouteRecordRawWithoutChildren } from '@/app/router/types';
+import { Names } from '../names';
 
 export default {
   path: '/404',
-  name: names.notFound,
+  name: Names.NotFound,
   component: () => import('../../../pages/not-found/not-found.component')
-} as RouteRecordRawWithoutChild;
+} as RouteRecordRawWithoutChildren;

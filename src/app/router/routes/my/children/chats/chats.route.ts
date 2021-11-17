@@ -1,8 +1,8 @@
-import type { RouteRecordRawWithoutChild } from '@/app/router/types';
-import { names } from '../../../names';
+import type { RouteRecordRawWithoutChildren } from '@/app/router/types';
+import { Names } from '../../../names';
 
 export default {
   path: 'chats',
-  name: names.chats,
+  name: Names.Chats,
   component: () => import('../../../../../pages/my/my.component.vue')
-} as RouteRecordRawWithoutChild;
+} as RouteRecordRawWithoutChildren;

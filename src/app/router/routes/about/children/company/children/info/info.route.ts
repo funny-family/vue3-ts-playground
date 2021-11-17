@@ -1,6 +1,6 @@
-import type { RouteRecordRawWithoutChild } from '@/app/router/types';
+import type { RouteRecordRawWithoutChildren } from '@/app/router/types';
 
 export default {
   path: 'info',
-  name: 'info',
-} as RouteRecordRawWithoutChild;
+  name: 'info'
+} as RouteRecordRawWithoutChildren;

@@ -80,7 +80,7 @@ class RouteTree {
           `(${parentFolderName})\/(${parentFolderName})(\.)(route)(\.)(js|ts)`
         );
 
-        const parentRoute =
+        const parentRouteMap =
           currentArray[
             currentArray.findIndex((route) => {
               const pathToRouteFile = route[0];
@@ -89,14 +89,14 @@ class RouteTree {
               return parentRouteObject;
             })
           ];
-        const parentRouteMap = parentRoute[1];
+        const parentRoute = parentRouteMap[1];
 
-        if (parentRouteMap.children === undefined) {
-          parentRouteMap.children = [];
+        if (parentRoute.children === undefined) {
+          parentRoute.children = [];
         }
 
-        const route = routeMap[1];
-        parentRouteMap.children.push(route);
+        const currentRoute = routeMap[1];
+        parentRoute.children.push(currentRoute);
       }
     });
 
