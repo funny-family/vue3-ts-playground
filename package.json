@@ -7,7 +7,10 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "serve": "serve -s ./dist -d -l 7645",
-    "preview": "concurrently \"yarn build\" \"yarn serve\""
+    "preview": "concurrently \"yarn build\" \"yarn serve\"",
+    "component:create": "ts-node ./cli/commands/component.create.ts",
+    "route:create": "ts-node ./cli/commands/route.create.ts",
+    "service:create": "ts-node ./cli/commands/service.create.ts"
   },
   "dependencies": {
     "classnames": "^2.3.1",
