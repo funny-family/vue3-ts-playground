@@ -1,3 +1,8 @@
+const typescriptRules = {
+  '@typescript-eslint/no-namespace': 'off',
+  '@typescript-eslint/no-empty-interface': 'off'
+};
+
 module.exports = {
   root: true,
   env: {
@@ -15,6 +20,7 @@ module.exports = {
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    ...typescriptRules
   }
 };
