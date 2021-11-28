@@ -1,6 +1,7 @@
 const typescriptRules = {
   '@typescript-eslint/no-namespace': 'off',
-  '@typescript-eslint/no-empty-interface': 'off'
+  '@typescript-eslint/no-empty-interface': 'off',
+  '@typescript-eslint/ban-types': 'off'
 };
 
 module.exports = {
