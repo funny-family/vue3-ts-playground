@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-types, no-cond-assign, @typescript-eslint/ban-ts-comment */
-import { withScopeId, getCurrentInstance, VNode, withCtx } from 'vue';
-import { generateGuid } from '../utils/guid';
+/* eslint-disable no-cond-assign, @typescript-eslint/ban-ts-comment */
+import { withScopeId, getCurrentInstance } from 'vue';
 
 // /**
 //  * @see https://zhuanlan.zhihu.com/p/267343741
@@ -28,10 +27,23 @@ import { generateGuid } from '../utils/guid';
 //   return null;
 // }
 
-export function useWithScopedId(fn?: Function): Function {
-  // @ts-ignore
-  console.log('Instance:', getCurrentInstance());
+export function useWithScopeId(): <T extends Function>(fn: T) => T {
+  const instance = getCurrentInstance();
+  if (!instance) {
+    console.warn(`useScopeId is called without current active component instance.`);
 
-  const guid = generateGuid();
-  return withScopeId(guid);
+    // @ts-ignore
+    return;
+  }
+
+  let scopeId: string;
+  if ((scopeId = (instance.type as any).__scopeId)) {
+    const withId = withScopeId(scopeId);
+
+    // @ts-ignore
+    return withId;
+  }
+
+  // @ts-ignore
+  return;
 }
