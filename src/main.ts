@@ -3,7 +3,7 @@ import App from './app/App.vue';
 import { router } from './app/router';
 import { store } from './app/store';
 import { hideConsoleLogs } from './app/shared/utils/hide-console-logs';
-import type { EnvironmentVariable } from '@/app/types';
+import type { EnvironmentVariable } from '@/app/shared/types';
 import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
