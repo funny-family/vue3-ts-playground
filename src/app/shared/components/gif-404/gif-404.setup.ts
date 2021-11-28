@@ -3,16 +3,30 @@
 // separate setup????? https://github.com/vuejs/composition-api/issues/650
 // https://mrcrmn.dev/articles/lightweight-components-with-vue3-and-jsx/
 
-import { getCurrentInstance, ref, SetupContext, withScopeId } from 'vue';
-import type { Gif404Props } from './gif-404.props';
+import { getCurrentInstance, ref, withScopeId } from 'vue';
+import type { Gif404Props, Gif404Attrs } from './gif-404.props';
 import type { Gif404Emits } from './gif-404.emits';
 import { generateGuid } from '@/app/shared/utils/guid';
-import { getNormalizedRouteRecordByName } from '@/app/router/utils';
-import { names } from '@/app/router/routes/names';
+import { SetupCtx } from '@/app/shared/types';
 
-export const setup = (props: Gif404Props, ctx: SetupContext<Gif404Emits>) => {
+// Omit<Gif404Attrs, 'class'> & { class: string }
+
+// export const setup = (
+//   props: Readonly<LooseRequired<Readonly<Readonly<Gif404Props>>>>,
+//   context: SetupContext<Gif404Emits>
+// ) => {
+export const setup = (
+  props: Readonly<Gif404Props>,
+  context: SetupCtx<Gif404Emits, Gif404Attrs>
+) => {
+  // export const setup = (props: Gif404Props, context: SetupContext<Gif404Emits>) => {
+  // export const setup = (props: Gif404Props, context: SetupCtx<Gif404Emits, Gif404Attrs>) => {
   const title = 'Not found page!';
   const isImageVisible = ref(true);
+
+  console.log('Gif404 context:', context.attrs);
+
+  const c = context.attrs.class;
 
   // console.log(isImageVisible.value);
 
@@ -28,14 +42,20 @@ export const setup = (props: Gif404Props, ctx: SetupContext<Gif404Emits>) => {
   // https://zhuanlan.zhihu.com/p/267343741
 
   // const scopeId = instance?.type.__isBuiltIn;
+
   const componentId = generateGuid();
   const withId = withScopeId(componentId);
 
   return {
+    props,
+    context,
+    c,
     title,
     isImageVisible,
     withId
   };
 };
+
+export type Gif404RawBindings = ReturnType<typeof setup>;
 
 // export type RawBindings = ReturnType<typeof setup>;
