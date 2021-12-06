@@ -1,5 +1,6 @@
 module.exports = {
   jsxBracketSameLine: false,
-  htmlWhitespaceSensitivity: "css",
+  htmlWhitespaceSensitivity: 'css',
   singleQuote: true,
+  trailingComma: 'none',
 };
