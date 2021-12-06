@@ -10,7 +10,7 @@ export type VShow = {
 /**
  * @see https://v3.vuejs.org/api/directives.html#v-slot
  */
-export type VSlots<T = any> = {
+export type VSlots<T = {}> = {
   'v-slots'?: T;
 };
 
