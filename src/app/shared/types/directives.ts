@@ -10,8 +10,8 @@ export type VShow = {
 /**
  * @see https://v3.vuejs.org/api/directives.html#v-slot
  */
-export type VSlot = {
-  'v-slot'?: any;
+export type VSlots<T = any> = {
+  'v-slots'?: T;
 };
 
 /**
@@ -55,5 +55,3 @@ export type VCloak = {
 export type VOnce = {
   'v-once'?: boolean;
 };
-
-export type Directives = VShow | VSlot | VMemo | VHtml | VText | VPre | VCloak | VOnce;
