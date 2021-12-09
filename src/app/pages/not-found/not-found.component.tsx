@@ -47,15 +47,31 @@ export const NotFound = defineComponent({
         <h1 class={classNames(isRed && 'is-red')}>{title}</h1>
         <br />
 
-        {/* @ts-ignore */}
-        {/* <div v-if={isGif404Visible.value}> */}
         <Gif404
           onClick={(e) => {
-            console.log(e)
+            console.log(e);
           }}
-          style={{ color: 'red' }}
+          style={{ color: 'red', border: '2px solid green' }}
           class="121212112"
-          title="this is title!"
+          title="This is title!"
+          v-slots={{
+            default: () => (
+              <div>
+                <div>default</div>
+              </div>
+            ),
+            header: (headerTitle, someShittyText) => (
+              <div>
+                <div>
+                  title that came from "header" slot: <b>{headerTitle}</b>
+                </div>
+                <div>
+                  Some Shitty Text: <b>{someShittyText}</b>
+                </div>
+              </div>
+            ),
+            footer: (t) => <>123131</>
+          }}
         />
 
         <hr />
@@ -65,7 +81,10 @@ export const NotFound = defineComponent({
         {/* {isGif404Visible.value === true &&
           <Gif404 v-if={() => true} aria-label="this is giiifff!" />
         } */}
-        <button type="button" onClick={() => (isGif404Visible.value = !isGif404Visible.value)}>
+        <button
+          type="button"
+          onClick={() => (isGif404Visible.value = !isGif404Visible.value)}
+        >
           show/hide
         </button>
       </div>
