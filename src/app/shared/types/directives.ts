@@ -55,3 +55,10 @@ export type VCloak = {
 export type VOnce = {
   'v-once'?: boolean;
 };
+
+/**
+ * @see https://v3.vuejs.org/api/directives.html#v-model
+ */
+export type VModel = {
+  'v-model'?: any;
+};
