@@ -12,7 +12,7 @@ export type RecordPropsDefinition<P = Data> = {
 // export type CustomSlot<A, T> = ((...args: A[]) => T) | undefined;
 export type CustomSlot<A, T> = ((args: A) => T) | undefined;
 
-export type DefaultSlot<T, A = undefined> = {
+export type DefaultSlot<T, A = void> = {
   default: CustomSlot<A, T>;
 };
 
