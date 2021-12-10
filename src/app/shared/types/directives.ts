@@ -59,6 +59,6 @@ export type VOnce = {
 /**
  * @see https://v3.vuejs.org/api/directives.html#v-model
  */
-export type VModel = {
-  'v-model'?: any;
+export type VModel<T> = {
+  'v-model'?: T;
 };
