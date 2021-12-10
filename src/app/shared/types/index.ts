@@ -12,8 +12,8 @@ export type RecordPropsDefinition<P = Data> = {
 // export type CustomSlot<A, T> = ((...args: A[]) => T) | undefined;
 export type CustomSlot<A, T> = ((args: A) => T) | undefined;
 
-export type DefaultSlot<T, A = void> = {
-  default: CustomSlot<A, T>;
+export type DefaultSlot<T> = {
+  default: (() => T) | undefined;
 };
 
 export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
