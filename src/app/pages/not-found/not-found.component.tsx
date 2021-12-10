@@ -60,7 +60,7 @@ export const NotFound = defineComponent({
                 <div>default</div>
               </div>
             ),
-            header: (headerTitle, someShittyText) => (
+            header: ({ headerTitle, someShittyText }) => (
               <div>
                 <div>
                   title that came from "header" slot: <b>{headerTitle}</b>
