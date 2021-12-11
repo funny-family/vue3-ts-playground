@@ -1,9 +1,14 @@
 import type { Prop, SetupContext } from '@vue/runtime-core';
-import type { EmitsOptions, Slots } from 'vue';
+import type { EmitsOptions, HTMLAttributes, Slots } from 'vue';
 
 export type Data = Record<string, unknown>;
 
 export type CSSClassAsString = { class: string | undefined };
+
+export type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<
+  T,
+  'class'
+>;
 
 export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
