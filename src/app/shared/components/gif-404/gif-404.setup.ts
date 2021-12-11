@@ -13,7 +13,11 @@ import {
 import type { Gif404Props, Gif404Attrs } from './gif-404.props';
 import type { Gif404Emits } from './gif-404.emits';
 import { generateGuid } from '@/app/shared/utils/guid';
-import type { SetupCtx } from '@/app/shared/types';
+import type {
+  CSSClassAsString,
+  HTMLAttributesWithoutCSSClass,
+  SetupCtx
+} from '@/app/shared/types';
 import type { Gif404Slots } from './gif-404.slots';
 
 // export const setup = (
@@ -21,18 +25,18 @@ import type { Gif404Slots } from './gif-404.slots';
 //   context: SetupCtx<Gif404Emits, Gif404Attrs>
 // ) => {
 /* ----------------------------------------------------------------------------------- */
-// export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
-//   const props = p as Readonly<Gif404Props>;
-//   const context = ctx as unknown as SetupCtx<
-//     Gif404Emits,
-//     Gif404Attrs,
-//     Gif404Slots.VNodeList
-//   >;
-/* ----------------------------------------------------------------------------------- */
-export const setup = (
-  props: Readonly<Gif404Props>,
-  context: SetupCtx<Gif404Emits, Gif404Attrs, Gif404Slots.VNodeList>
-) => {
+export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
+  const props = p as Readonly<Gif404Props>;
+  const context = ctx as unknown as SetupCtx<
+    Gif404Emits,
+    HTMLAttributesWithoutCSSClass<Gif404Attrs> & CSSClassAsString,
+    Gif404Slots.VNodeList
+  >;
+  /* ----------------------------------------------------------------------------------- */
+  // export const setup = (
+  //   props: Readonly<Gif404Props>,
+  //   context: SetupCtx<Gif404Emits, Gif404Attrs, Gif404Slots.VNodeList>
+  // ) => {
   /* ----------------------------------------------------------------------------------- */
 
   const title = 'Not found page!';
