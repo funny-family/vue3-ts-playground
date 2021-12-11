@@ -23,7 +23,8 @@ module.exports = {
           /* ==================== class name (styles) ==================== */
           ...(isDevelopment
             ? {
-                localIdentName: '[local]--[hash:base36:5]'
+                // localIdentName: '[local]--[hash:base36:5]'
+                localIdentName: '[local][[hash:base36:5]]'
               }
             : {
                 getLocalIdent: (context, localIdentName, localName) =>
