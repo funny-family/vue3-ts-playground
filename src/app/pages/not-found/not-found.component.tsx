@@ -9,6 +9,7 @@ import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import { Govno } from '../../shared/components/gif-404';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { classNames } from '@/app/shared/lib/npm/class-names';
+import { TextField } from '@/app/shared/components/text-field/text-field.component';
 
 // -> name: Header/Menu/Button (Button component) // Bad!
 
@@ -36,8 +37,18 @@ export const NotFound = defineComponent({
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
 
+    const textFieldValue = ref('');
+
     return withId(() => (
       <div class="gif404">
+        <div>
+          <input type="text" v-model={textFieldValue.value} /> {/* "v-model"  works !!! */}
+          <TextField v-model={textFieldValue.value} /> {/* "v-model" doesn't work ;(( */}
+          <div>textFieldValue: {textFieldValue.value}</div>
+        </div>
+
+        <hr />
+
         <RouterLink to="/">
           <h2>to home!</h2>
         </RouterLink>
