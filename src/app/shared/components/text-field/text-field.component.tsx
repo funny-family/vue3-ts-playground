@@ -20,11 +20,16 @@ export const TextField = defineComponent<
   name: nameOf(() => TextField),
 
   render() {
-    const { context } = this;
+    const { context, onInput } = this;
 
     return (
       <>
-        <input {...context.attrs} class={styles.textField} type="text" />
+        <input
+          {...context.attrs}
+          class={styles.textField}
+          type="text"
+          onInput={onInput}
+        />
       </>
     );
   }

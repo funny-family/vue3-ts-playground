@@ -14,9 +14,20 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
     HTMLAttributesWithoutCSSClass<TextFieldAttrs> & CSSClassAttribute
   >;
 
+  // Events
+
+  const onInput = (event: Event): void => {
+    // const inputValue = (event.target as HTMLInputElement).value;
+    // console.log('"TextField" value inside:', inputValue);
+    console.log('"TextField" event inside:', event);
+
+    context.emit('input', event);
+  };
+
   return {
     props,
-    context
+    context,
+    onInput
   };
 };
 
