@@ -72,11 +72,6 @@ export const Gif404 = defineComponent<
 
             {this.context.slots.header !== undefined && (
               <div title="content inside header slot!">
-                {/* {this.context.slots.header(
-                  // this.props.title === undefined ? '' : this.props.title,
-                  '1',
-                  'some shitty text!'
-                )} */}
                 {this.context.slots.header({
                   headerTitle: 'headerTitle',
                   someShittyText: 'someShittyText'
