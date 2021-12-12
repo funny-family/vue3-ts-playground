@@ -11,7 +11,6 @@ import {
   withScopeId
 } from 'vue';
 import type { Gif404Props, Gif404Attrs } from './gif-404.props';
-import type { Gif404Emits } from './gif-404.emits';
 import { generateGuid } from '@/app/shared/utils/guid';
 import type {
   CSSClassAsString,
@@ -28,7 +27,7 @@ import type { Gif404Slots } from './gif-404.slots';
 export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const props = p as Readonly<Gif404Props>;
   const context = ctx as unknown as SetupCtx<
-    Gif404Emits,
+    EmitsOptions,
     HTMLAttributesWithoutCSSClass<Gif404Attrs> & CSSClassAsString,
     Gif404Slots.VNodeList
   >;
