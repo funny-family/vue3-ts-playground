@@ -2,16 +2,12 @@ import { createApp } from 'vue';
 import App from './app/App.vue';
 import { router } from './app/router';
 import { store } from './app/store';
-import { hideConsoleLogs } from './app/shared/utils/hide-console-logs';
 import type { EnvironmentVariable } from '@/app/shared/types';
 import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
-const environmentVariable = extractFromEnv(process.env.NODE_ENV) as EnvironmentVariable;
-if (environmentVariable === 'production') {
-  hideConsoleLogs();
-}
+const environmentVariable = extractFromEnv<EnvironmentVariable>(process.env.NODE_ENV);
 
 if (environmentVariable === 'development') {
   app.config.performance = true;
