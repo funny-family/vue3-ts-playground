@@ -1,6 +1,6 @@
 import type { EmitsOptions, SetupContext } from 'vue';
 import type {
-  CSSClassAsString,
+  CSSClassAttribute,
   HTMLAttributesWithoutCSSClass,
   SetupCtx
 } from '@/app/shared/types';
@@ -11,7 +11,7 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const props = p as Readonly<TextFieldProps>;
   const context = ctx as unknown as SetupCtx<
     TextFieldEmits,
-    HTMLAttributesWithoutCSSClass<TextFieldAttrs> & CSSClassAsString
+    HTMLAttributesWithoutCSSClass<TextFieldAttrs> & CSSClassAttribute
   >;
 
   return {

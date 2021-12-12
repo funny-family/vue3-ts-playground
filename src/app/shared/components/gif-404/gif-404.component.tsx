@@ -9,16 +9,16 @@ import { styles } from './styles/gif-404.styles';
 import { classNames } from '@/app/shared/lib/npm/class-names';
 import { RouterLink } from 'vue-router';
 import type {
-  CSSClassAsString,
+  CSSClassAttribute,
   HTMLAttributesWithoutCSSClass
-} from '@/app/shared/types';
+} from '@/app/shared/types'; 
 import type { VSlots } from '@/app/shared/types/directives';
 import type { Gif404Slots } from './gif-404.slots';
 
 export const Gif404 = defineComponent<
   Gif404Props &
     HTMLAttributesWithoutCSSClass<Gif404Attrs> &
-    CSSClassAsString &
+    CSSClassAttribute &
     VSlots<Gif404Slots.JSXElement>,
   Gif404Bindings
 >({
