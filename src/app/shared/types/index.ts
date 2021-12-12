@@ -3,7 +3,7 @@ import type { EmitsOptions, HTMLAttributes, Slots } from 'vue';
 
 export type Data = Record<string, unknown>;
 
-export type CSSClassAsString = { class?: string | undefined };
+export type CSSClassAttribute = { class?: string | undefined };
 
 export type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<
   T,
