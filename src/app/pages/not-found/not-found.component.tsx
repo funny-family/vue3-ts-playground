@@ -42,8 +42,20 @@ export const NotFound = defineComponent({
     return withId(() => (
       <div class="gif404">
         <div>
-          <input type="text" v-model={textFieldValue.value} /> {/* "v-model"  works !!! */}
-          <TextField v-model={textFieldValue.value} /> {/* "v-model" doesn't work ;(( */}
+          <>
+            <input type="text" v-model={textFieldValue.value} />{' '}
+            {/* "v-model"  works !!! */}
+          </>
+
+          <>
+            <TextField
+              v-model={textFieldValue.value}
+              onInput={(event) =>
+                console.log('"TextField" event outside:', event)
+              }
+            />{' '}
+            {/* "v-model" doesn't work ;(( */}
+          </>
           <div>textFieldValue: {textFieldValue.value}</div>
         </div>
 
