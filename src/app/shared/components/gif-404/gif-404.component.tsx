@@ -2,7 +2,7 @@
 // css modules https://www.jianshu.com/p/be1778a76763
 // Template direct field access https://github.com/vuejs/vue-next/issues/1227
 // https://juejin.cn/post/6885953990345883661
-import { defineComponent } from 'vue';
+import { defineComponent, withModifiers } from 'vue';
 import { props, Gif404Props, Gif404Attrs } from './gif-404.props';
 import { setup, Gif404Bindings } from './gif-404.setup';
 import { styles } from './styles/gif-404.styles';
@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router';
 import type {
   CSSClassAttribute,
   HTMLAttributesWithoutCSSClass
-} from '@/app/shared/types'; 
+} from '@/app/shared/types';
 import type { VSlots } from '@/app/shared/types/directives';
 import type { Gif404Slots } from './gif-404.slots';
 
