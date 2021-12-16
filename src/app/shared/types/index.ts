@@ -1,5 +1,10 @@
 import type { Prop, SetupContext } from '@vue/runtime-core';
-import type { EmitsOptions, HTMLAttributes, Slots } from 'vue';
+import type {
+  EmitsOptions,
+  HTMLAttributes,
+  ObjectEmitsOptions,
+  Slots
+} from 'vue';
 
 export type Data = Record<string, unknown>;
 
@@ -28,3 +33,28 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
 }
 
 export type EnvironmentVariable = 'production' | 'development';
+
+// export type GetValues<T, K extends readonly (keyof T)[]> = {
+//   (object: T, keys: K): T[K[number]][];
+// };
+
+export type EmitsToProps<T extends EmitsOptions> = T extends string[]
+  ? {
+      [K in string & `on${Capitalize<T[number]>}`]?: (...args: any[]) => void;
+    }
+  : T extends ObjectEmitsOptions
+  ? {
+      [K in string &
+        `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
+        ? T[Uncapitalize<C>] extends null
+          ? (...args: any[]) => void
+          : (
+              ...args: T[Uncapitalize<C>] extends (...args: infer P) => void
+                ? P
+                : never
+            ) => void
+        : never;
+    }
+  : {};
+
+export type DefaultEmit = (event: Event) => void;
