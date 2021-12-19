@@ -19,18 +19,9 @@ export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
 };
 
-// export type CustomSlot<A, T> = ((...args: A[]) => T) | undefined;
 export type CustomSlot<A, T> = ((args: A) => T) | undefined;
 
-export type DefaultSlot<T> = {
-  default: (() => T) | undefined;
-};
-
 export type EnvironmentVariable = 'production' | 'development';
-
-// export type GetValues<T, K extends readonly (keyof T)[]> = {
-//   (object: T, keys: K): T[K[number]][];
-// };
 
 export type EmitsToProps<T extends EmitsOptions> = T extends string[]
   ? {
