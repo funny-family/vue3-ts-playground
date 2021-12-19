@@ -21,6 +21,10 @@ export type RecordPropsDefinition<P = Data> = {
 
 export type CustomSlot<A, T> = ((args: A) => T) | undefined;
 
+export type DefaultSlot<T> = {
+  default: (() => T) | undefined;
+};
+
 export type EnvironmentVariable = 'production' | 'development';
 
 export type EmitsToProps<T extends EmitsOptions> = T extends string[]
