@@ -26,12 +26,6 @@ export type DefaultSlot<T> = {
   default: (() => T) | undefined;
 };
 
-export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
-  extends Omit<SetupContext<E>, 'attrs' | 'slots'> {
-  attrs: A;
-  slots: S;
-}
-
 export type EnvironmentVariable = 'production' | 'development';
 
 // export type GetValues<T, K extends readonly (keyof T)[]> = {
@@ -57,4 +51,32 @@ export type EmitsToProps<T extends EmitsOptions> = T extends string[]
     }
   : {};
 
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I
+) => void
+  ? I
+  : never;
+
+type EmitFunction<
+  Options = ObjectEmitsOptions,
+  Event extends keyof Options = keyof Options
+> = Options extends Array<infer V>
+  ? (event: V, ...args: any[]) => void
+  : {} extends Options
+  ? (event: string, ...args: any[]) => void
+  : UnionToIntersection<
+      {
+        [key in Event]: Options[key] extends (...args: infer Args) => any
+          ? (event: key, ...args: Args) => void
+          : (event: key, ...args: any[]) => void;
+      }[Event]
+    >;
+
 export type DefaultEmit = (event: Event) => void;
+
+export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
+  extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
+  attrs: A;
+  slots: S;
+  emit: EmitFunction<E>;
+}
