@@ -74,7 +74,9 @@ export const NotFound = defineComponent({
 
         <Header title="t45672" />
 
-        <h1 class={classNames(isRed && 'is-red')}>{title}</h1>
+        <h1 class={classNames(isRed && 'is-red')} {...{ 'onClickOnce111': () => {
+          console.log(11111);
+        }, }} onCopy={(e) => console.log(e)} about="2131321313" >{title}</h1>
         <br />
 
         <Gif404
