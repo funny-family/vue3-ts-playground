@@ -1,7 +1,25 @@
-import type { EmitsToProps } from '@/app/shared/types';
+import type {
+  EmitsToProps,
+  EmitValidationFunction,
+  Keys
+} from '@/app/shared/types';
 
-export const emits = {
-  change(event: Event) {
+export namespace TextFieldEmits {
+  export type Schema = {
+    change: EmitValidationFunction<Event>;
+    input: EmitValidationFunction<Event>;
+    deleteById: EmitValidationFunction<{ id: number }>;
+  };
+
+  export type Keys = keyof Schema;
+
+  export type AsFunctionArguments = Schema;
+
+  export type AsProps = EmitsToProps<Schema>;
+}
+
+export const emits: TextFieldEmits.Schema = {
+  change(event) {
     if (event) return true;
 
     return false;
@@ -13,28 +31,18 @@ export const emits = {
     return false;
   },
 
-  deleteById(id: number) {
+  deleteById({ id }) {
     if (id) return true;
 
     return false;
   }
 };
 
-export namespace TextFieldEmits {
-  type Schema = typeof emits;
-
-  export type Keys = keyof Schema;
-
-  export type AsFunctionArguments = Schema;
-
-  export type AsProps = EmitsToProps<Schema>;
-}
-
-export const emitNames = Object.keys(emits).reduce(
+export const emitNames = (Object.keys(emits) as TextFieldEmits.Keys[]).reduce(
   (accumulator, currentValue) => {
-    accumulator[currentValue as TextFieldEmits.Keys] = currentValue;
+    (accumulator[currentValue as TextFieldEmits.Keys] as any) = currentValue;
 
     return accumulator;
   },
-  {} as Record<TextFieldEmits.Keys, string>
+  {} as Keys<TextFieldEmits.Keys>
 );
