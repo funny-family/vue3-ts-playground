@@ -1,39 +1,40 @@
-import type { EmitsOptions } from 'vue';
+import type { EmitsToProps } from '@/app/shared/types';
 
-// export type ObjectEmitsOptions = Record<string, ((...args: any[]) => any) | null>;
-// export type EmitsOptions = ObjectEmitsOptions | string[];
+export const emits = {
+  change(event: Event) {
+    if (event) return true;
 
-export const emits: (EmitsOptions & ThisType<void>) | undefined = ['input'];
+    return false;
+  },
 
-// https://stackoverflow.com/questions/65277526/building-a-prefixer-type-using-typescripts-template-literal-type-feature
+  input(event: Event) {
+    if (event) return true;
 
-// https://github.com/vuejs/jsx-next/issues/266
+    return false;
+  },
 
-// https://github.com/vuejs/jsx-next/issues/134
+  deleteById(id: number) {
+    if (id) return true;
 
-// https://github.com/vuejs/jsx-next/issues/236
-
-export type TextFieldEmits = typeof emits;
-
-type Getters<T> = {
-  [K in keyof T as `on${Capitalize<string & K>}`]: (event: Event) => void
+    return false;
+  }
 };
 
-const el = ['input', 'click', 'change'] as const;
+export namespace TextFieldEmits {
+  type Schema = typeof emits;
 
-const elObj = {
-  input: 'input',
-  click: 'click',
-  change: 'change'
+  export type Keys = keyof Schema;
+
+  export type AsFunctionArguments = Schema;
+
+  export type AsProps = EmitsToProps<Schema>;
 }
 
+export const emitNames = Object.keys(emits).reduce(
+  (accumulator, currentValue) => {
+    accumulator[currentValue as TextFieldEmits.Keys] = currentValue;
 
-interface Person {
-  name: string;
-  age: number;
-  location: string;
-}
-
-type LazyPerson = Getters<Person>;
-
-type E = Getters<typeof elObj>
+    return accumulator;
+  },
+  {} as Record<TextFieldEmits.Keys, string>
+);
