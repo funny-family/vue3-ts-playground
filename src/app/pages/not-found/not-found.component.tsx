@@ -2,7 +2,7 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import { defineComponent, ref, withScopeId, Comment } from 'vue';
+import { defineComponent, ref, withScopeId, withModifiers } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -39,8 +39,27 @@ export const NotFound = defineComponent({
 
     const textFieldValue = ref('');
 
+    const s = () => {
+      console.log('sssssssssss');
+    };
+
     return withId(() => (
       <div class="gif404">
+        <form
+          onSubmit={withModifiers(
+            (e: any) => {
+              console.log(e);
+              s();
+            },
+            ['prevent']
+          )}
+          // onSubmit={() => s()}
+          style={{ border: '2px solid green' }}
+        >
+          <input placeholder="some shit info" type="text" />
+          <button type="submit">submit from</button>
+        </form>
+
         <div>
           <>
             <input type="text" v-model={textFieldValue.value} />{' '}
@@ -51,7 +70,6 @@ export const NotFound = defineComponent({
             {/* https://vue-next-jsx-explorer.netlify.app/#const%20App%20%3D%20()%20%3D%3E%20%3Cdiv%3E%0A%3Cspan%3EHello%20World%3C%2Fspan%3E%0A%3Cdiv%20onClickSelf%3D%7B()%20%3D%3E%20alert(1111)%7D%3E1231231%3C%2Fdiv%3E%0A%3C%2Fdiv%3E */}
             {/* https://vue-next-template-explorer.netlify.app/#%7B%22src%22%3A%22%3Cdiv%20class%3D%5C%22counter%5C%22%3E%5Cn%20%20%3Cspan%3E%7B%7B%20count%20%7D%7D%3C%2Fspan%3E%5Cn%20%20%3Cbutton%20%40click.stop%3D%5C%22increment%5C%22%3E%2B%3C%2Fbutton%3E%5Cn%3C%2Fdiv%3E%5Cn%22%2C%22options%22%3A%7B%22mode%22%3A%22module%22%2C%22filename%22%3A%22Foo.vue%22%2C%22prefixIdentifiers%22%3Afalse%2C%22hoistStatic%22%3Afalse%2C%22cacheHandlers%22%3Afalse%2C%22scopeId%22%3Anull%2C%22inline%22%3Afalse%2C%22ssrCssVars%22%3A%22%7B%20color%20%7D%22%2C%22compatConfig%22%3A%7B%22MODE%22%3A3%7D%2C%22whitespace%22%3A%22condense%22%2C%22bindingMetadata%22%3A%7B%22TestComponent%22%3A%22setup-const%22%2C%22setupRef%22%3A%22setup-ref%22%2C%22setupConst%22%3A%22setup-const%22%2C%22setupLet%22%3A%22setup-let%22%2C%22setupMaybeRef%22%3A%22setup-maybe-ref%22%2C%22setupProp%22%3A%22props%22%2C%22vMySetupDir%22%3A%22setup-const%22%7D%7D%7D */}
             {/* https://v3.vuejs.org/guide/events.html#event-modifiers */}
-
             {/* https://stackoverflow.com/questions/51198226/vue-v-onclick-native-in-jsx */}
             {/* https://github.com/michitaro/vue-menu/issues/20 */}
             {/* https://github.com/vuejs/vue-next/blob/2937530beff5c6bb57286c2556307859e37aa809/packages/compiler-core/src/ast.ts#L426 */}
