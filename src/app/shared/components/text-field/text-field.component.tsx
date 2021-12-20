@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import { setup, TextFieldBindings } from './text-field.setup';
 import { props, TextFieldProps, TextFieldAttrs } from './text-field.props';
 import { styles } from './styles/text-field.styles';
-import { emits } from './text-field.emits';
+import { emits, TextFieldEmits } from './text-field.emits';
 import type {
   CSSClassAttribute,
   HTMLAttributesWithoutCSSClass
@@ -13,6 +13,7 @@ import { nameOf } from '../../utils/name-of';
 export const TextField = defineComponent<
   TextFieldProps &
     HTMLAttributesWithoutCSSClass<TextFieldAttrs> &
+    TextFieldEmits.AsProps &
     CSSClassAttribute &
     VModel<string>,
   TextFieldBindings
