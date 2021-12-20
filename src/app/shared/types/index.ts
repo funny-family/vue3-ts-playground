@@ -63,7 +63,9 @@ type EmitFunction<
       }[Event]
     >;
 
-export type DefaultEmit = (event: Event) => void;
+export type DefaultSlot<T, A = undefined> = {
+  default: A extends object ? (((args: A) => T) | undefined) : ((() => T) | undefined);
+};
 
 export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
@@ -71,3 +73,7 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   slots: S;
   emit: EmitFunction<E>;
 }
+
+export type Keys<T extends string> = {
+  [K in T]: K;
+};
