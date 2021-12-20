@@ -25,10 +25,6 @@ export type DefaultSlot<T, A = undefined> = {
   default: CustomSlot<A, T>;
 };
 
-export type DefaultSlot<T> = {
-  default: (() => T) | undefined;
-};
-
 export type EnvironmentVariable = 'production' | 'development';
 
 export type EmitsToProps<T extends EmitsOptions> = T extends string[]
