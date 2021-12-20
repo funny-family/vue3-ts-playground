@@ -19,7 +19,11 @@ export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
 };
 
-export type CustomSlot<A, T> = ((args: A) => T) | undefined;
+export type CustomSlot<A, T> = A extends object ? (((args: A) => T) | undefined) : ((() => T) | undefined);
+
+export type DefaultSlot<T, A = undefined> = {
+  default: CustomSlot<A, T>;
+};
 
 export type DefaultSlot<T> = {
   default: (() => T) | undefined;
@@ -67,11 +71,13 @@ type EmitFunction<
       }[Event]
     >;
 
-export type DefaultEmit = (event: Event) => void;
-
 export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
   attrs: A;
   slots: S;
   emit: EmitFunction<E>;
 }
+
+export type Keys<T extends string> = {
+  [K in T]: K;
+};
