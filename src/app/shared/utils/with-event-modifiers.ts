@@ -38,7 +38,7 @@ const eventModifierList: EventModifierList = [
   'passive',
 ];
 
-const eventModifiers = enumify<EventModifiers>(eventModifierList);
+const eventModifiers = enumify(eventModifierList);
 
 export const withEventModifiers = (objectWithEventFunction: Events, modifiers: string[]): any => {
   /**
