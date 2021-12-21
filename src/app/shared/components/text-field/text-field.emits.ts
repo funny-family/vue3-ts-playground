@@ -3,6 +3,7 @@ import type {
   EmitValidationFunction,
   Keys
 } from '@/app/shared/types';
+import { enumify } from '@/app/shared/utils/enumify';
 
 export namespace TextFieldEmits {
   export type Schema = {
@@ -38,11 +39,4 @@ export const emits: TextFieldEmits.Schema = {
   }
 };
 
-export const emitNames = (Object.keys(emits) as TextFieldEmits.Keys[]).reduce(
-  (accumulator, currentValue) => {
-    (accumulator[currentValue as TextFieldEmits.Keys] as any) = currentValue;
-
-    return accumulator;
-  },
-  {} as Keys<TextFieldEmits.Keys>
-);
+export const emitNames = enumify(Object.keys(emits) as [TextFieldEmits.Keys]);
