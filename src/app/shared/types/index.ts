@@ -81,3 +81,7 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
 export type Keys<T extends string> = {
   [K in T]: K;
 };
+
+export type Writeable<T extends { [x: string]: any }, K extends string> = {
+  [P in K]: T[P];
+};
