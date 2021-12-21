@@ -85,3 +85,6 @@ export type Keys<T extends string> = {
 export type Writeable<T extends { [x: string]: any }, K extends string> = {
   [P in K]: T[P];
 };
+
+export type ArrayElement<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
