@@ -69,7 +69,9 @@ type EmitFunction<
       }[Event]
     >;
 
-export type EmitValidationFunction<A> = (args: A) => boolean;
+export type EmitValidationFunction<A = undefined> = A extends object
+  ? (args: A) => boolean
+  : () => boolean;
 
 export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
