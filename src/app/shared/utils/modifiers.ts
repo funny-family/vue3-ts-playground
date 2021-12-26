@@ -19,7 +19,14 @@ export const eventModifier: Keys<EventModifier> = {
   passive: 'passive'
 };
 
-type EventsObject = {
+export type KeyModifier = 'enter' | 'esc'; // etc
+
+export const keyModifier: Keys<KeyModifier> = {
+  enter: 'enter',
+  esc: 'esc'
+};
+
+type EventObject = {
   [key in keyof Events]:
     | ((event: Events[key]) => void)
     | (() => void)
@@ -39,26 +46,32 @@ type EventObjetWithModifiers = {
  *
  * @example
  * <button
- *  class="btn"
- *  type="button"
- *  {...withEventModifiers(
- *    {
- *      onClick: () => {
- *        alert('Yeah, you clicked me! Only once, no more!');
- *      }
- *    },
- *    ['once']
- *  )}
+ *   class="btn"
+ *   type="button"
+ *   {...withEventModifiers(
+ *     {
+ *       onClick: () => {
+ *         alert('Yeah, you clicked me! Only once, no more!');
+ *       }
+ *     },
+ *     ['once']
+ *   )}
  * >
- *  You can click me only once!
+ *   You can click me only once!
  * </button>
  */
 export const withEventModifiers = (
-  eventObject: UnionOfProperties<EventsObject>,
-  modifiers: string[]
+  eventObject: UnionOfProperties<EventObject>,
+  modifiers: EventModifier[]
 ): EventObjetWithModifiers => {
-  const isModifierTransformable = (modifier: string): boolean =>
-    ['capture', 'once', 'passive'].includes(modifier);
+  const isModifierTransformable = (modifier: EventModifier): boolean =>
+    (
+      [
+        eventModifier.capture,
+        eventModifier.once,
+        eventModifier.passive
+      ] as EventModifier[]
+    ).includes(modifier);
 
   const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
 
@@ -70,17 +83,17 @@ export const withEventModifiers = (
   );
 
   const inputEventName = Object.keys(eventObject)[0];
-  const inputEventFuction = Object.values(eventObject)[0] as Function;
+  const inputEventFunction = Object.values(eventObject)[0] as Function;
 
   const outputEventName = `${inputEventName}${transformableModifiers
     .map(capitalizeFirstLetter)
     .join('')}`;
-  const outputEventFuction = isArrayEmpty(nonTransformableModifiers)
-    ? inputEventFuction
-    : withModifiers(inputEventFuction, [...nonTransformableModifiers]);
+  const outputEventFunction = isArrayEmpty(nonTransformableModifiers)
+    ? inputEventFunction
+    : withModifiers(inputEventFunction, [...nonTransformableModifiers]);
 
   const eventObjetWithModifiers = {
-    [outputEventName]: outputEventFuction
+    [outputEventName]: outputEventFunction
   };
 
   return eventObjetWithModifiers;
