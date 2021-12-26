@@ -90,3 +90,11 @@ export type Writeable<T extends { [x: string]: any }, K extends string> = {
 
 export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export type SingleProperty<T, K extends keyof T> = K extends any
+  ? { [Prop in K]: T[Prop] }
+  : never;
+
+export type UnionOfProperties<T> = {
+  [K in keyof T]: SingleProperty<T, K>;
+}[keyof T];
