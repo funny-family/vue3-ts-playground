@@ -64,13 +64,13 @@ export const withEventModifiers = (
   eventObject: UnionOfProperties<EventObject>,
   modifiers: EventModifier[]
 ): EventObjetWithModifiers => {
-  const isModifierTransformable = (modifier: EventModifier): boolean =>
+  const isModifierTransformable = (modifier: string): boolean =>
     (
       [
         eventModifier.capture,
         eventModifier.once,
         eventModifier.passive
-      ] as EventModifier[]
+      ] as string[]
     ).includes(modifier);
 
   const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
