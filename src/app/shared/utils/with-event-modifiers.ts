@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Events, HTMLAttributes, withModifiers } from 'vue';
-import type { ArrayElement, Keys } from '../types';
+import type { ArrayElement, Keys, UnionOfProperties } from '../types';
 import { enumify } from './enumify';
 
 /**
@@ -50,16 +50,20 @@ type EventsObject = {
     | undefined;
 };
 
+type T = UnionOfProperties<EventsObject>;
+
+const t: T = {
+  ...{ onClick: () => {} }
+};
+
 export const withEventModifiers = (
-  eventObject: Partial<EventsObject>,
+  eventObject: UnionOfProperties<EventsObject>,
   modifiers: string[]
 ) => {
-  const isModifierTransformable = (modifier: string): boolean => {
-    const transformableModifierList: string[] = ['capture', 'once', 'passive'];
-    const isTransformable = transformableModifierList.includes(modifier);
+  const isModifierTransformable = (modifier: string): boolean =>
+    ['capture', 'once', 'passive'].includes(modifier);
 
-    return isTransformable;
-  };
+  const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
 
   const transformableModifiers = modifiers.filter((modifier) =>
     isModifierTransformable(modifier)
@@ -68,17 +72,21 @@ export const withEventModifiers = (
     (modifier) => !isModifierTransformable(modifier)
   );
 
-  const eventName = Object.keys(eventObject)[0];
-  const eventFuction = Object.values(eventObject)[0] as Function;
+  const inputEventName = Object.keys(eventObject)[0];
+  const inputEventFuction = Object.values(eventObject)[0] as Function;
 
-  const r = {
-    [`${eventName}${transformableModifiers
-      .map(capitalizeFirstLetter)
-      .join('')}`]:
-      nonTransformableModifiers.length === 0
-        ? eventFuction
-        : withModifiers(eventFuction, [...nonTransformableModifiers])
+  const outputEventName = `${inputEventName}${transformableModifiers
+    .map(capitalizeFirstLetter)
+    .join('')}`;
+  const outputEventFuction = isArrayEmpty(nonTransformableModifiers)
+    ? inputEventFuction
+    : withModifiers(inputEventFuction, [...nonTransformableModifiers]);
+
+  const eventObjetWithModifiers = {
+    [outputEventName]: outputEventFuction
   };
 
-  return r;
+  console.log('eventObjetWithModifiers:', eventObjetWithModifiers);
+
+  return eventObjetWithModifiers;
 };
