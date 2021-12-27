@@ -21,7 +21,7 @@ export const TextField = defineComponent<
   name: nameOf(() => TextField),
 
   render() {
-    const { context, onInput } = this;
+    const { props, context, onInput } = this;
 
     return (
       <>
@@ -29,8 +29,8 @@ export const TextField = defineComponent<
           {...context.attrs}
           class={styles.textField}
           type="text"
-          // onInput={onInput}
-          onChange={onInput}
+          value={props.modelValue}
+          onInput={onInput}
         />
       </>
     );
@@ -41,4 +41,4 @@ TextField.inheritAttrs = false;
 TextField.setup = setup;
 TextField.props = props;
 // TextField.emits = emits;
-TextField.emits = ['onUpdate:modelValue'];
+TextField.emits = ['update:modelValue'];

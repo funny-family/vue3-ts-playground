@@ -27,7 +27,7 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
     // console.log('"TextField" event inside:', event);
 
     // @ts-ignore
-    context.emit('onUpdate:modelValue', event);
+    context.emit('update:modelValue', inputValue);
   };
 
   return {

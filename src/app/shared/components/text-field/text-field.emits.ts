@@ -14,9 +14,11 @@ import { enumify } from '@/app/shared/utils/enumify';
  * v-model. Overview
  */
 
+//  https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+
 // =============================================================================
 
-export const updateModuleValue = 'update:moduleValue';
+export const updateModuleValue = 'update:modelValue';
 
 export namespace TextFieldEmits {
   export type Schema = {
