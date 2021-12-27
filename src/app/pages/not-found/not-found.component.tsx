@@ -1,8 +1,13 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import { defineComponent, ref, withScopeId, withModifiers } from 'vue';
+import {
+  defineComponent,
+  ref,
+  withScopeId,
+  withModifiers,
+  onMounted
+} from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -10,8 +15,8 @@ import { Govno } from '../../shared/components/gif-404';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { classNames } from '@/app/shared/lib/npm/class-names';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
-
-// -> name: Header/Menu/Button (Button component) // Bad!
+import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
+import { withEventModifiers } from '@/app/shared/utils/modifiers';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -38,22 +43,30 @@ export const NotFound = defineComponent({
     const withId = withScopeId(componentId);
 
     const textFieldValue = ref('');
+    const textFieldRef = ref<TextFieldBindings>();
+    onMounted(() => {
+      console.log('textFieldRef of "TextField" component:', textFieldRef.value);
+      console.log('"TextField" attrs:', textFieldRef.value?.context.attrs);
+      console.log('"TextField" props:', textFieldRef.value?.props);
+    });
 
     const s = () => {
       console.log('sssssssssss');
     };
 
-    return withId(() => (
+    return () => (
       <div class="gif404">
         <form
-          onSubmit={withModifiers(
-            (e: any) => {
-              console.log(e);
-              s();
+          {...withEventModifiers(
+            {
+              onSubmit: (e) => {
+                console.log(e);
+
+                s();
+              }
             },
-            ['prevent']
+            ['prevent', 'once']
           )}
-          // onSubmit={() => s()}
           style={{ border: '2px solid green' }}
         >
           <input placeholder="some shit info" type="text" />
@@ -62,7 +75,12 @@ export const NotFound = defineComponent({
 
         <div>
           <>
-            <input type="text" v-model={textFieldValue.value} />{' '}
+            <label>aduadaud</label>
+            <input
+              about="aduadaud"
+              type="text"
+              v-model={textFieldValue.value}
+            />{' '}
             {/* "v-model"  works !!! */}
           </>
 
@@ -73,14 +91,17 @@ export const NotFound = defineComponent({
             {/* https://stackoverflow.com/questions/51198226/vue-v-onclick-native-in-jsx */}
             {/* https://github.com/michitaro/vue-menu/issues/20 */}
             {/* https://github.com/vuejs/vue-next/blob/2937530beff5c6bb57286c2556307859e37aa809/packages/compiler-core/src/ast.ts#L426 */}
+            {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
             <TextField
+              class="TextField"
               v-model={textFieldValue.value}
-              onInput={(event) =>
-                console.log('"TextField" event outside:', event)
-              }
+              ref={textFieldRef}
+              // onInput={(event) =>
+              //   console.log('"TextField" event outside:', event)
+              // }
             />{' '}
-            {/* "v-model" doesn't work ;(( */}
           </>
+            {/* "v-model" doesn't work ;(( */}
           <div>textFieldValue: {textFieldValue.value}</div>
         </div>
 
@@ -92,9 +113,6 @@ export const NotFound = defineComponent({
 
         <Header title="t45672" />
 
-        <h1 class={classNames(isRed && 'is-red')} {...{ 'onClickOnce111': () => {
-          console.log(11111);
-        }, }} onCopy={(e) => console.log(e)} about="2131321313" >{title}</h1>
         <br />
 
         <Gif404
@@ -138,36 +156,8 @@ export const NotFound = defineComponent({
           show/hide
         </button>
       </div>
-    ));
+    );
   }
-
-  // setup() {
-  //   const title = "Not found page!";
-  //   const isGif404Visible = ref(true);
-  //   // console.log("Gif404:", Gif404.template);
-
-  //   return {
-  //     title,
-  //     isGif404Visible
-  //   };
-
-  // },
-  // render() {
-  //   return (
-  //     <div>
-  //       <Header />
-
-  //       <h1>{this.title}</h1>
-  //       <br />
-  //       <div v-if={this.isGif404Visible}>
-  //         <Gif404 aria-label="this is giiifff!" />
-  //       </div>
-  //       <button type="button" onClick={() => this.isGif404Visible = !this.isGif404Visible}>
-  //         show/hide
-  //       </button>
-  //     </div>
-  //   )
-  // }
 });
 
 export default NotFound;
