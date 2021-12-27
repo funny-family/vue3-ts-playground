@@ -29,7 +29,6 @@ export const keyModifier: Keys<KeyModifier> = {
 type EventObject = {
   [key in keyof Events]:
     | ((event: Events[key]) => void)
-    | (() => void)
     | undefined;
 };
 
@@ -64,13 +63,13 @@ export const withEventModifiers = (
   eventObject: UnionOfProperties<EventObject>,
   modifiers: EventModifier[]
 ): EventObjetWithModifiers => {
-  const isModifierTransformable = (modifier: string): boolean =>
+  const isModifierTransformable = (modifier: EventModifier): boolean =>
     (
       [
         eventModifier.capture,
         eventModifier.once,
         eventModifier.passive
-      ] as string[]
+      ] as EventModifier[]
     ).includes(modifier);
 
   const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
