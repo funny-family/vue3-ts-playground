@@ -26,6 +26,8 @@ export const keyModifier: Keys<KeyModifier> = {
   esc: 'esc'
 };
 
+// https://v3.vuejs.org/guide/forms.html#number
+
 type EventObject = {
   [key in keyof Events]:
     | ((event: Events[key]) => void)
