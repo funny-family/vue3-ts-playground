@@ -1,4 +1,4 @@
-import type { VNode } from 'vue';
+import type { VNode, DirectiveArguments, Directive } from 'vue';
 
 /**
  * @see https://v3.vuejs.org/api/directives.html#v-show
