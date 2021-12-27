@@ -29,7 +29,8 @@ export const TextField = defineComponent<
           {...context.attrs}
           class={styles.textField}
           type="text"
-          onInput={onInput}
+          // onInput={onInput}
+          onChange={onInput}
         />
       </>
     );
@@ -39,4 +40,5 @@ export const TextField = defineComponent<
 TextField.inheritAttrs = false;
 TextField.setup = setup;
 TextField.props = props;
-TextField.emits = emits;
+// TextField.emits = emits;
+TextField.emits = ['onUpdate:modelValue'];

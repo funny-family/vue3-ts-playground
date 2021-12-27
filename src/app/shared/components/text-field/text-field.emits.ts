@@ -1,15 +1,26 @@
-import type {
-  EmitsToProps,
-  EmitValidationFunction,
-  Keys
-} from '@/app/shared/types';
+import type { EmitsToProps, EmitValidationFunction } from '@/app/shared/types';
 import { enumify } from '@/app/shared/utils/enumify';
+
+// https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
+
+/**
+ * @see
+ * https://v3.vuejs.org/guide/migration/v-model.html#migration-strategy
+ *
+ * @see
+ * https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
+ *
+ * @description
+ * v-model. Overview
+ */
+
+// =============================================================================
+
+export const updateModuleValue = 'update:moduleValue';
 
 export namespace TextFieldEmits {
   export type Schema = {
-    change: EmitValidationFunction<Event>;
-    input: EmitValidationFunction<Event>;
-    deleteById: EmitValidationFunction<{ id: number }>;
+    [updateModuleValue]: EmitValidationFunction<string>;
   };
 
   export type Keys = keyof Schema;
@@ -20,22 +31,10 @@ export namespace TextFieldEmits {
 }
 
 export const emits: TextFieldEmits.Schema = {
-  change(event) {
-    if (event) return true;
+  [updateModuleValue](value) {
+    if (typeof value !== 'string') return false;
 
-    return false;
-  },
-
-  input(event: Event) {
-    if (event) return true;
-
-    return false;
-  },
-
-  deleteById({ id }) {
-    if (id) return true;
-
-    return false;
+    return true;
   }
 };
 
