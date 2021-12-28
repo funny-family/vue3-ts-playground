@@ -1,29 +1,19 @@
-import type { EmitsToProps, EmitValidationFunction } from '@/app/shared/types';
+import type { EmitsToProps } from '@/app/shared/types';
 import { enumify } from '@/app/shared/utils/enumify';
+import {
+  ModelValueEmitValidationFunction,
+  modelValueEmitFunction,
+  modelValue
+} from '@/app/shared/utils/model-value';
 
 // https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
-
-/**
- * @see
- * https://v3.vuejs.org/guide/migration/v-model.html#migration-strategy
- *
- * @see
- * https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
- *
- * @description
- * v-model. Overview
- */
-
-//  https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+// https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 
 // =============================================================================
 
-export const updateModuleValue = 'update:modelValue';
 
 export namespace TextFieldEmits {
-  export type Schema = {
-    [updateModuleValue]: EmitValidationFunction<string>;
-  };
+  export type Schema = {} & ModelValueEmitValidationFunction;
 
   export type Keys = keyof Schema;
 
@@ -33,11 +23,10 @@ export namespace TextFieldEmits {
 }
 
 export const emits: TextFieldEmits.Schema = {
-  [updateModuleValue](value) {
-    if (typeof value !== 'string') return false;
-
-    return true;
-  }
+  ...modelValueEmitFunction
 };
 
-export const emitNames = enumify(Object.keys(emits) as [TextFieldEmits.Keys]);
+export const emitName = {
+  ...enumify(Object.keys(emits) as [TextFieldEmits.Keys]),
+  ...modelValue.normalizedEmitName
+};

@@ -40,5 +40,4 @@ export const TextField = defineComponent<
 TextField.inheritAttrs = false;
 TextField.setup = setup;
 TextField.props = props;
-// TextField.emits = emits;
-TextField.emits = ['update:modelValue'];
+TextField.emits = emits;

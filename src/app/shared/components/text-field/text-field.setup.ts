@@ -5,29 +5,19 @@ import type {
   SetupCtx
 } from '@/app/shared/types';
 import type { TextFieldAttrs, TextFieldProps } from './text-field.props';
-import {
-  emitNames,
-  TextFieldEmits,
-  updateModuleValue
-} from './text-field.emits';
+import { TextFieldEmits, emitName } from './text-field.emits';
 
 export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const props = p as Readonly<TextFieldProps>;
   const context = ctx as unknown as SetupCtx<
-    // EmitsOptions,
     TextFieldEmits.AsFunctionArguments,
     HTMLAttributesWithoutCSSClass<TextFieldAttrs> & CSSClassAttribute
   >;
 
-  // Events
-
   const onInput = (event: Event): void => {
     const inputValue = (event.target as HTMLInputElement).value;
-    // console.log('"TextField" value inside:', inputValue);
-    // console.log('"TextField" event inside:', event);
 
-    // @ts-ignore
-    context.emit('update:modelValue', inputValue);
+    context.emit(emitName.updateModelValue, inputValue);
   };
 
   return {
