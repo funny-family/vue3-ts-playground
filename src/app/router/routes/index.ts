@@ -18,9 +18,8 @@ type RoutesRecord = Record<string, RouteRecordRaw>;
 type RouteMap = [string, RouteRecordRaw];
 
 class RouteTree {
-  // @ts-ignore
-  private routesRecord: RoutesRecord;
-  private childRoutesFolderName = 'children';
+  private routesRecord: RoutesRecord = {};
+  private readonly childRoutesFolderName = 'children';
 
   constructor() {
     this.generateRoutesRecord();
