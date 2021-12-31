@@ -6,7 +6,7 @@ import type {
   Slots
 } from 'vue';
 
-export type Data = Record<string, unknown>;
+type Data = Record<string, unknown>;
 
 export type CSSClassAttribute = { class?: string | undefined };
 
