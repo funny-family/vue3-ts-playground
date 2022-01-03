@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, ComponentObjectPropsOptions, PropType } from '@vue/runtime-core';
+import type { ExtractPropTypes } from '@vue/runtime-core';
 import type { HTMLAttributes } from 'vue';
 import type { RecordPropsDefinition } from '../../types';
 
@@ -6,14 +6,6 @@ export interface Gif404PropFields {
   title: string;
   icon: string;
 }
-
-type Pr<P> = {
-  [K in keyof P]: any
-};
-
-// const pr: Pr<Gif404PropFields> = {
-
-// }
 
 // export const props: ComponentObjectPropsOptions<Gif404PropFields> = {
 export const props: RecordPropsDefinition<Gif404PropFields> = {
