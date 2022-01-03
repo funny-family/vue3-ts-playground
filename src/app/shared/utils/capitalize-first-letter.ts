@@ -7,5 +7,7 @@
  * const capitalizedString = capitalizeFirstLetter(string);
  * console.log(capitalizedString); // 'Hello'
  */
-export const capitalizeFirstLetter = (string: string): string =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+export const capitalizeFirstLetter = <T extends string>(
+  string: T
+): Capitalize<T> =>
+  (string.charAt(0).toUpperCase() + string.slice(1)) as Capitalize<T>;
