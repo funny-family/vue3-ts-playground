@@ -16,3 +16,6 @@ if (environmentVariable === 'development') {
 app.use(store);
 app.use(router);
 app.mount('#app');
+
+// http://www.hygen.io/docs/faq
+// The simple, fast, and scalable code generator that lives in your project.
