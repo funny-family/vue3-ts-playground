@@ -1,11 +1,11 @@
-import { Prop } from 'vue';
+import type { Prop } from 'vue';
 import { capitalizeFirstLetter } from './capitalize-first-letter';
 
-type NameOfUpdateFunction = 'update';
+type NameOfUpdateValueFunction = 'update';
 type PropName<T extends string> = T;
-type EmitName<T extends string> = `${NameOfUpdateFunction}:${T}`;
+type EmitName<T extends string> = `${NameOfUpdateValueFunction}:${T}`;
 type NormalizedEmitName<T extends string> =
-  `${NameOfUpdateFunction}${Capitalize<T>}`;
+  `${NameOfUpdateValueFunction}${Capitalize<T>}`;
 
 export class VModelBindingArgument<
   Name extends string,
@@ -13,7 +13,8 @@ export class VModelBindingArgument<
 > {
   private readonly name: Name;
   private readonly defaultValue: DefaultValue;
-  private readonly nameOfUpdateFunction: NameOfUpdateFunction = 'update';
+  private readonly nameOfUpdateValueFunction: NameOfUpdateValueFunction =
+    'update';
 
   constructor(name: Name, defaultValue: DefaultValue) {
     this.name = name;
@@ -25,16 +26,16 @@ export class VModelBindingArgument<
   }
 
   get emitName(): EmitName<Name> {
-    return `${this.nameOfUpdateFunction}:${this.name}` as const;
+    return `${this.nameOfUpdateValueFunction}:${this.name}` as const;
   }
 
   get normalizedEmitName(): NormalizedEmitName<Name> {
-    return `${this.nameOfUpdateFunction}${capitalizeFirstLetter(
+    return `${this.nameOfUpdateValueFunction}${capitalizeFirstLetter(
       this.name
     )}` as const;
   }
 
-  get propObject() {
+  get propObject(): Prop<DefaultValue> {
     return {
       type:
         typeof this.defaultValue === 'string'
@@ -48,11 +49,7 @@ export class VModelBindingArgument<
   }
 }
 
-// default value
-export type ModelValueName = 'modelValue';
-export type ModelValueType = string;
-export const modelValueName: ModelValueName = 'modelValue';
-export const { propName, propObject, emitName } = new VModelBindingArgument<
-  ModelValueName,
-  ModelValueType
->(modelValueName, '');
+// default values
+export type DefaultNameOfBindingArgument = 'modelValue';
+export const defaultNameOfBindingArgument: DefaultNameOfBindingArgument =
+  'modelValue';
