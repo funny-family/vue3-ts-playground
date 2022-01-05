@@ -19,8 +19,8 @@ export const Header = defineComponent({
     const scopeId = instance?.type.__scopeId;
     const withId = withScopeId(scopeId);
 
-    console.log('scopeId:', scopeId);
-    console.log('withId:', withId);
+    // console.log('scopeId:', scopeId);
+    // console.log('withId:', withId);
   },
   render() {
     return <header style={{ height: '60px', backgroundColor: 'red' }}>{this.$props.title}</header>;
