@@ -1,25 +1,16 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import {
-  defineComponent,
-  ref,
-  withScopeId,
-  withModifiers,
-  onMounted
-} from 'vue';
+import { defineComponent, ref, withScopeId } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import { Govno } from '../../shared/components/gif-404';
 import { generateGuid } from '@/app/shared/utils/guid';
-import { classNames } from '@/app/shared/lib/npm/class-names';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
-import {
-  withEventModifiers,
-  Event,
-} from '@/app/shared/utils/modifiers';
+import { Modifier } from '@/app/shared/utils/modifiers';
+import { withModifiers } from '@/app/shared/utils/with-modifiers';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -56,7 +47,7 @@ export const NotFound = defineComponent({
     return () => (
       <div class="gif404">
         <form
-          {...withEventModifiers(
+          {...withModifiers(
             {
               onSubmit: (e) => {
                 console.log(e);
@@ -64,7 +55,7 @@ export const NotFound = defineComponent({
                 s();
               }
             },
-            [Event.modifier.prevent, Event.modifier.once]
+            [Modifier.Event.Prevent, Modifier.Event.Once]
           )}
           style={{ border: '2px solid green' }}
         >
