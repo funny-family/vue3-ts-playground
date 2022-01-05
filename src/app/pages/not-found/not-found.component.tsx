@@ -18,7 +18,7 @@ import { TextField } from '@/app/shared/components/text-field/text-field.compone
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
 import {
   withEventModifiers,
-  eventModifier
+  Event,
 } from '@/app/shared/utils/modifiers';
 
 /**
@@ -64,7 +64,7 @@ export const NotFound = defineComponent({
                 s();
               }
             },
-            [eventModifier.prevent, eventModifier.once]
+            [Event.modifier.prevent, Event.modifier.once]
           )}
           style={{ border: '2px solid green' }}
         >

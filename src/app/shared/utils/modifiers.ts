@@ -1,32 +1,34 @@
 import { Events, withModifiers } from 'vue';
-import type { Keys, UnionOfProperties } from '@/app/shared/types';
+import type { KeyToKeyMapping, UnionOfProperties } from '@/app/shared/types';
 import { capitalize } from '@/app/shared/utils/capitalize';
 
-export type EventModifier =
-  | 'stop'
-  | 'prevent'
-  | 'capture'
-  | 'self'
-  | 'once'
-  | 'passive';
+export namespace Event {
+  export type Modifier =
+    | 'stop'
+    | 'prevent'
+    | 'capture'
+    | 'self'
+    | 'once'
+    | 'passive';
 
-export const eventModifier: Keys<EventModifier> = {
-  stop: 'stop',
-  prevent: 'prevent',
-  capture: 'capture',
-  self: 'self',
-  once: 'once',
-  passive: 'passive'
-};
+  export const modifier: KeyToKeyMapping<Modifier> = {
+    stop: 'stop',
+    prevent: 'prevent',
+    capture: 'capture',
+    self: 'self',
+    once: 'once',
+    passive: 'passive'
+  };
+}
 
-export type KeyModifier = 'enter' | 'esc'; // etc
+export namespace Key {
+  export type Modifier = 'enter' | 'esc'; // etc
 
-export const keyModifier: Keys<KeyModifier> = {
-  enter: 'enter',
-  esc: 'esc'
-};
-
-// https://v3.vuejs.org/guide/forms.html#number
+  export const modifier: KeyToKeyMapping<Modifier> = {
+    enter: 'enter',
+    esc: 'esc'
+  };
+}
 
 type EventObject = {
   [key in keyof Events]: ((event: Events[key]) => void) | undefined;
@@ -41,7 +43,7 @@ type EventObjetWithModifiers = {
  * https://v3.vuejs.org/guide/migration/keycode-modifiers.html#keycode-modifiers
  *
  * @description
- * Addes modifier to event function.
+ * Adds modifier to event function.
  *
  * @example
  * <button
@@ -61,15 +63,15 @@ type EventObjetWithModifiers = {
  */
 export const withEventModifiers = (
   eventObject: UnionOfProperties<EventObject>,
-  modifiers: EventModifier[]
+  modifiers: Event.Modifier[]
 ): EventObjetWithModifiers => {
-  const isModifierTransformable = (modifier: EventModifier): boolean =>
+  const isModifierTransformable = (modifier: Event.Modifier): boolean =>
     (
       [
-        eventModifier.capture,
-        eventModifier.once,
-        eventModifier.passive
-      ] as EventModifier[]
+        Event.modifier.capture,
+        Event.modifier.once,
+        Event.modifier.passive
+      ] as Event.Modifier[]
     ).includes(modifier);
 
   const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
@@ -91,7 +93,7 @@ export const withEventModifiers = (
     ? inputEventFunction
     : withModifiers(inputEventFunction, [...nonTransformableModifiers]);
 
-  const eventObjetWithModifiers = {
+  const eventObjetWithModifiers: EventObjetWithModifiers = {
     [outputEventName]: outputEventFunction
   };
 
