@@ -16,7 +16,10 @@ import { generateGuid } from '@/app/shared/utils/guid';
 import { classNames } from '@/app/shared/lib/npm/class-names';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
-import { withEventModifiers } from '@/app/shared/utils/modifiers';
+import {
+  withEventModifiers,
+  eventModifier
+} from '@/app/shared/utils/modifiers';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -44,11 +47,7 @@ export const NotFound = defineComponent({
 
     const textFieldValue = ref('');
     const textFieldRef = ref<TextFieldBindings>();
-    onMounted(() => {
-      console.log('textFieldRef of "TextField" component:', textFieldRef.value);
-      console.log('"TextField" attrs:', textFieldRef.value?.context.attrs);
-      console.log('"TextField" props:', textFieldRef.value?.props);
-    });
+    console.log('"TextField" ref:', textFieldRef);
 
     const s = () => {
       console.log('sssssssssss');
@@ -65,7 +64,7 @@ export const NotFound = defineComponent({
                 s();
               }
             },
-            ['prevent', 'once']
+            [eventModifier.prevent, eventModifier.once]
           )}
           style={{ border: '2px solid green' }}
         >
@@ -101,7 +100,7 @@ export const NotFound = defineComponent({
               // }
             />{' '}
           </>
-            {/* "v-model" doesn't work ;(( */}
+          {/* "v-model" doesn't work ;(( */}
           <div>textFieldValue: {textFieldValue.value}</div>
         </div>
 
