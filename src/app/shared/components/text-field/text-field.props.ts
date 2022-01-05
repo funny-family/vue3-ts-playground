@@ -1,12 +1,16 @@
 import type { ExtractPropTypes } from '@vue/runtime-core';
 import type { InputHTMLAttributes } from 'vue';
 import type { RecordPropsDefinition } from '@/app/shared/types';
-import { ModelValueProp, modelValueProp } from '@/app/shared/utils/model-value';
+import { ModelValue } from './text-field.binding-argument';
 
-export interface TextFieldPropFields extends ModelValueProp {}
+export interface TextFieldPropFields {
+  [ModelValue.propName]: ModelValue.Type;
+}
 
 export const props: RecordPropsDefinition<TextFieldPropFields> = {
-  ...modelValueProp
+  [ModelValue.propName]: {
+    ...ModelValue.propObject
+  }
 };
 
 export type TextFieldProps = ExtractPropTypes<typeof props> & ThisType<void>;
