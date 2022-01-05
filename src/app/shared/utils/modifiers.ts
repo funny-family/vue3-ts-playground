@@ -1,6 +1,6 @@
 import { Events, withModifiers } from 'vue';
 import type { Keys, UnionOfProperties } from '@/app/shared/types';
-import { capitalizeFirstLetter } from '@/app/shared/utils/capitalize-first-letter';
+import { capitalize } from '@/app/shared/utils/capitalize';
 
 export type EventModifier =
   | 'stop'
@@ -85,7 +85,7 @@ export const withEventModifiers = (
   const inputEventFunction = Object.values(eventObject)[0] as Function;
 
   const outputEventName = `${inputEventName}${transformableModifiers
-    .map(capitalizeFirstLetter)
+    .map(capitalize)
     .join('')}`;
   const outputEventFunction = isArrayEmpty(nonTransformableModifiers)
     ? inputEventFunction

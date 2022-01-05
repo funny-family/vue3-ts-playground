@@ -1,5 +1,5 @@
 import type { Prop } from 'vue';
-import { capitalizeFirstLetter } from './capitalize-first-letter';
+import { capitalize } from './capitalize';
 
 type NameOfUpdateValueFunction = 'update';
 type PropName<T extends string> = T;
@@ -30,9 +30,7 @@ export class VModelBindingArgument<
   }
 
   get normalizedEmitName(): NormalizedEmitName<Name> {
-    return `${this.nameOfUpdateValueFunction}${capitalizeFirstLetter(
-      this.name
-    )}` as const;
+    return `${this.nameOfUpdateValueFunction}${capitalize(this.name)}` as const;
   }
 
   get propObject(): Prop<DefaultValue> {
