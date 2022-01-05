@@ -84,6 +84,8 @@ export type Keys<T extends string> = {
   [K in T]: K;
 };
 
+export type KeyToKeyMapping<Keys extends PropertyKey> = { [K in Keys]: K };
+
 export type Writeable<T extends { [x: string]: any }, K extends string> = {
   [P in K]: T[P];
 };
