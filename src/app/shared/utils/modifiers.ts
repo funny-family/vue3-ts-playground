@@ -1,101 +1,100 @@
-import { Events, withModifiers } from 'vue';
-import type { KeyToKeyMapping, UnionOfProperties } from '@/app/shared/types';
-import { capitalize } from '@/app/shared/utils/capitalize';
+export namespace Modifier {
+  export namespace VModel {
+    /**
+     * @see
+     * https://v3.vuejs.org/guide/forms.html#modifiers
+     *
+     * @description
+     * Modifiers
+     */
+    export enum Base {
+      /**
+       * @see
+       * https://v3.vuejs.org/guide/forms.html#lazy
+       */
+      Lazy = 'lazy',
+      /**
+       * @see
+       * https://v3.vuejs.org/guide/forms.html#number
+       */
+      Number = 'number',
+      /**
+       * @see
+       * https://v3.vuejs.org/guide/forms.html#trim
+       */
+      Trim = 'trim'
+    }
+  }
 
-export namespace Event {
-  export type Modifier =
-    | 'stop'
-    | 'prevent'
-    | 'capture'
-    | 'self'
-    | 'once'
-    | 'passive';
+  /**
+   * @see
+   * https://v3.vuejs.org/guide/events.html#event-modifiers
+   *
+   * @description
+   * Event Modifiers
+   */
+  export enum Event {
+    Stop = 'stop',
+    Prevent = 'prevent',
+    Capture = 'capture',
+    Self = 'self',
+    Once = 'once',
+    Passive = 'passive'
+  }
 
-  export const modifier: KeyToKeyMapping<Modifier> = {
-    stop: 'stop',
-    prevent: 'prevent',
-    capture: 'capture',
-    self: 'self',
-    once: 'once',
-    passive: 'passive'
-  };
+  /**
+   * @see
+   * https://v3.vuejs.org/guide/events.html#key-modifiers
+   *
+   * @description
+   * Key Modifiers
+   */
+  export namespace Key {
+    enum CommonAlias {
+      Enter = 'enter',
+      Tab = 'tab',
+      Delete = 'delete', // (captures both "Delete" and "Backspace" keys)
+      Esc = 'esc',
+      Space = 'space',
+      Up = 'up',
+      Down = 'down',
+      Left = 'left',
+      Right = 'right'
+    }
+
+    enum UncommonAlias {}
+
+    /**
+     * @see
+     * https://v3.vuejs.org/guide/events.html#key-aliases
+     *
+     * @description
+     * Key Aliases
+     */
+    export const Alias = {
+      ...CommonAlias,
+      ...UncommonAlias
+    };
+
+    /**
+     * @see
+     * https://v3.vuejs.org/guide/events.html#system-modifier-keys
+     *
+     * @description
+     * System Modifier Keys
+     */
+    export enum System {
+      Ctrl = 'ctrl',
+      Alt = 'alt',
+      Shift = 'shift',
+      Meta = 'meta',
+      Exact = 'exact' // The .exact modifier allows control of the exact combination of system modifiers needed to trigger an event.;
+    }
+  }
+
+  export enum MouseButton {
+    Left = 'left',
+    Right = 'right',
+    Middle = 'middle'
+  }
 }
-
-export namespace Key {
-  export type Modifier = 'enter' | 'esc'; // etc
-
-  export const modifier: KeyToKeyMapping<Modifier> = {
-    enter: 'enter',
-    esc: 'esc'
-  };
-}
-
-type EventObject = {
-  [key in keyof Events]: ((event: Events[key]) => void) | undefined;
-};
-
-type EventObjetWithModifiers = {
-  [eventName: string]: Function;
-};
-
-/**
- * @see
- * https://v3.vuejs.org/guide/migration/keycode-modifiers.html#keycode-modifiers
- *
- * @description
- * Adds modifier to event function.
- *
- * @example
- * <button
- *   class="btn"
- *   type="button"
- *   {...withEventModifiers(
- *     {
- *       onClick: () => {
- *         alert('Yeah, you clicked me! Only once, no more!');
- *       }
- *     },
- *     ['once']
- *   )}
- * >
- *   You can click me only once!
- * </button>
- */
-export const withEventModifiers = (
-  eventObject: UnionOfProperties<EventObject>,
-  modifiers: Event.Modifier[]
-): EventObjetWithModifiers => {
-  const isModifierTransformable = (modifier: Event.Modifier): boolean =>
-    (
-      [
-        Event.modifier.capture,
-        Event.modifier.once,
-        Event.modifier.passive
-      ] as Event.Modifier[]
-    ).includes(modifier);
-
-  const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
-
-  const transformableModifiers = modifiers.filter((modifier) =>
-    isModifierTransformable(modifier)
-  );
-  const nonTransformableModifiers = modifiers.filter(
-    (modifier) => !isModifierTransformable(modifier)
-  );
-
-  const inputEventName = Object.keys(eventObject)[0];
-  const inputEventFunction = Object.values(eventObject)[0] as Function;
-
-  const outputEventName = `${inputEventName}${transformableModifiers
-    .map(capitalize)
-    .join('')}`;
-  const outputEventFunction = isArrayEmpty(nonTransformableModifiers)
-    ? inputEventFunction
-    : withModifiers(inputEventFunction, [...nonTransformableModifiers]);
-
-  const eventObjetWithModifiers: EventObjetWithModifiers = {
-    [outputEventName]: outputEventFunction
-  };
-
-  return eventObjetWithModifiers;
-};
