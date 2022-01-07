@@ -1,40 +1,11 @@
-import type { VNode, DirectiveArguments, Directive } from 'vue';
-
-// /**
-//  * @see https://v3.vuejs.org/api/directives.html#v-show
-//  */
-// export type VShow = {
-//   'v-show'?: boolean;
-// };
-
-/**
- * @see https://v3.vuejs.org/api/directives.html#v-slot
- */
-export type VSlots<T = {}> = {
-  'v-slots'?: T;
-};
-
-// /**
-//  * @see https://v3.vuejs.org/api/directives.html#v-memo
-//  * use "withMemo" function
-//  */
-// export type VMemo = {
-//   'v-memo'?: [...values: any];
-// };
-
-// /**
-//  * @see https://v3.vuejs.org/api/directives.html#v-html
-//  */
-// export type VHtml = {
-//   'v-html'?: VNode;
-// };
-
-// /**
-//  * @see https://v3.vuejs.org/api/directives.html#v-text
-//  */
-// export type VText = {
-//   'v-text'?: string;
-// };
+export namespace VSlots {
+  /**
+   * @see https://v3.vuejs.org/api/directives.html#v-slot
+   */
+  export type Directive<T = {}> = {
+    'v-slots'?: T;
+  };
+}
 
 /**
  * @see https://v3.vuejs.org/api/directives.html#v-pre
@@ -57,9 +28,61 @@ export type VOnce = {
   'v-once'?: boolean;
 };
 
-/**
- * @see https://v3.vuejs.org/api/directives.html#v-model
- */
-export type VModel<T> = {
-  'v-model'?: T;
-};
+export namespace VModel {
+  type Value = string | boolean;
+  type Argument = string;
+  type BaseModifier =
+    /**
+     * @see https://v3.vuejs.org/guide/forms.html#lazy
+     */
+    | 'lazy'
+    /**
+     * @see https://v3.vuejs.org/guide/forms.html#number
+     */
+    | 'number'
+    /**
+     * @see https://v3.vuejs.org/guide/forms.html#trim
+     */
+    | 'trim';
+  type CustomModifier = '';
+  type Modifier = BaseModifier | CustomModifier;
+
+  /**
+   * @see https://v3.vuejs.org/api/directives.html#v-model
+   */
+  export type Directive<V = Value, A = Argument, AdditionalModifier = void> = {
+    'v-model'?:
+      | V
+      // ================================================
+      | [V, A]
+      | [V, A][]
+      // ================================================
+      | [
+          V,
+          AdditionalModifier extends void
+            ? (Modifier | AdditionalModifier)[]
+            : AdditionalModifier[]
+        ]
+      | [
+          Value,
+          AdditionalModifier extends void
+            ? (Modifier | AdditionalModifier)[]
+            : AdditionalModifier[]
+        ][]
+      // ================================================
+      | [
+          V,
+          A,
+          AdditionalModifier extends void
+            ? (Modifier | AdditionalModifier)[]
+            : AdditionalModifier[]
+        ]
+      | [
+          V,
+          A,
+          AdditionalModifier extends void
+            ? (Modifier | AdditionalModifier)[]
+            : AdditionalModifier[]
+        ][];
+  };
+}
