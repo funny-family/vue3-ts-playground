@@ -15,7 +15,7 @@ export const TextField = defineComponent<
     HTMLAttributesWithoutCSSClass<TextFieldAttrs> &
     TextFieldEmits.AsProps &
     CSSClassAttribute &
-    VModel<string>,
+    VModel.Directive<string>,
   TextFieldBindings
 >({
   name: nameOf(() => TextField),
