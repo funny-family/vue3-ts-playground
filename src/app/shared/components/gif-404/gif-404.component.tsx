@@ -19,7 +19,7 @@ export const Gif404 = defineComponent<
   Gif404Props &
     HTMLAttributesWithoutCSSClass<Gif404Attrs> &
     CSSClassAttribute &
-    VSlots<Gif404Slots.JSXElement>,
+    VSlots.Directive<Gif404Slots.JSXElement>,
   Gif404Bindings
 >({
   get name(): string {
