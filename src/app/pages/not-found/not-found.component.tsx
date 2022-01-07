@@ -1,7 +1,13 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import { defineComponent, ref, withScopeId } from 'vue';
+import {
+  defineComponent,
+  ref,
+  vModelText,
+  withDirectives,
+  withScopeId
+} from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -11,6 +17,15 @@ import { TextField } from '@/app/shared/components/text-field/text-field.compone
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
+import { withModel } from '@/app/shared/utils/with-model';
+import type { VModel } from '@/app/shared/types/directives';
+
+const v = 'adada';
+const modelValue = withModel({
+  value: v,
+  modifiers: ['trim']
+});
+console.log(111, modelValue);
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -31,20 +46,35 @@ export const NotFound = defineComponent({
 
     console.log('isGif404Visible:', isGif404Visible.value);
     console.log('isRed:', isRed);
-    const val = ref('');
 
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
 
     const textFieldValue = ref('');
-    const textFieldRef = ref<TextFieldBindings>();
+    const textFieldValueNumber = ref(0);
+    const textFieldRef = ref();
     console.log('"TextField" ref:', textFieldRef);
+
+    const trimModifier = 'trim';
 
     const s = () => {
       console.log('sssssssssss');
     };
 
-    return () => (
+    return {
+      isGif404Visible,
+      textFieldValue,
+      textFieldValueNumber,
+      textFieldRef,
+      trimModifier,
+      s
+    };
+  },
+
+  render() {
+    const trimModifier = 'trim';
+
+    return (
       <div class="gif404">
         <form
           {...withModifiers(
@@ -52,7 +82,7 @@ export const NotFound = defineComponent({
               onSubmit: (e) => {
                 console.log(e);
 
-                s();
+                this.s();
               }
             },
             [Modifier.Event.Prevent, Modifier.Event.Once]
@@ -65,13 +95,30 @@ export const NotFound = defineComponent({
 
         <div>
           <>
-            <label>aduadaud</label>
-            <input
-              about="aduadaud"
-              type="text"
-              v-model={textFieldValue.value}
-            />{' '}
-            {/* "v-model"  works !!! */}
+            <fieldset>
+              <label>aduadaud</label>
+              <input
+                about="aduadaud"
+                type="text"
+                // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
+                v-model={[this.textFieldValue, ['trim']] as VModel.Directive<string>}
+              />
+            </fieldset>
+
+            {/* <fieldset>
+              <label>aduadaud</label>
+              {withDirectives(<input about="aduadaud" type="text" />, [
+                [
+                  vModelText,
+                  this.textFieldValue,
+                  // 'modelValue',
+                  (void 0) as any as string,
+                  {
+                    trim: true
+                  }
+                ]
+              ])}
+            </fieldset> */}
           </>
 
           <>
@@ -84,15 +131,15 @@ export const NotFound = defineComponent({
             {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
             <TextField
               class="TextField"
-              v-model={textFieldValue.value}
-              ref={textFieldRef}
-              // onInput={(event) =>
-              //   console.log('"TextField" event outside:', event)
-              // }
-            />{' '}
+              // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
+              v-model={[this.textFieldValue, ['trim']]}
+              // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
+              // // @ts-ignore
+              // modelModifiers={{ trim: true }}
+              ref={this.textFieldRef}
+            />
           </>
-          {/* "v-model" doesn't work ;(( */}
-          <div>textFieldValue: {textFieldValue.value}</div>
+          <div>textFieldValue: {this.textFieldValue}</div>
         </div>
 
         <hr />
@@ -141,7 +188,7 @@ export const NotFound = defineComponent({
         } */}
         <button
           type="button"
-          onClick={() => (isGif404Visible.value = !isGif404Visible.value)}
+          onClick={() => (this.isGif404Visible = !this.isGif404Visible)}
         >
           show/hide
         </button>
