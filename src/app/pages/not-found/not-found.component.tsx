@@ -17,15 +17,7 @@ import { TextField } from '@/app/shared/components/text-field/text-field.compone
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
-import { withModel } from '@/app/shared/utils/with-model';
 import type { VModel } from '@/app/shared/types/directives';
-
-const v = 'adada';
-const modelValue = withModel({
-  value: v,
-  modifiers: ['trim']
-});
-console.log(111, modelValue);
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -101,7 +93,9 @@ export const NotFound = defineComponent({
                 about="aduadaud"
                 type="text"
                 // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
-                v-model={[this.textFieldValue, ['trim']] as VModel.Directive<string>}
+                v-model={
+                  [this.textFieldValue, ['trim']] as VModel.Directive<string>
+                }
               />
             </fieldset>
 
