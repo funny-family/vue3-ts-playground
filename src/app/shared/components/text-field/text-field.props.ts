@@ -5,11 +5,18 @@ import { ModelValue } from './text-field.binding-argument';
 
 export interface TextFieldPropFields {
   [ModelValue.propName]: ModelValue.Type;
+  label: string;
 }
 
 export const props: RecordPropsDefinition<TextFieldPropFields> = {
   [ModelValue.propName]: {
     ...ModelValue.propObject
+  },
+
+  label: {
+    type: String,
+    required: false,
+    default: ''
   }
 };
 

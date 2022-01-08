@@ -24,15 +24,20 @@ export const TextField = defineComponent<
     const { props, context, onInput } = this;
 
     return (
-      <>
+      <fieldset class={styles.textField}>
+        {props.label && (
+          <label class={styles.textField__label}>
+            {props.label}
+          </label>
+        )}
         <input
           {...context.attrs}
-          class={styles.textField}
+          class={styles.textField__input}
           type="text"
           value={props.modelValue}
           onInput={onInput}
         />
-      </>
+      </fieldset>
     );
   }
 });

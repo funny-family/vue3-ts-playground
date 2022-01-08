@@ -1,4 +1,14 @@
 .textField {
+  display: flex;
+  flex-direction: column;
+}
+
+.textField__label {
+  text-align: start;
+  font-weight: bold;
+}
+
+.textField__input {
   border: 2px solid grey;
   border-radius: 0.4em;
   font-size: 2rem;
