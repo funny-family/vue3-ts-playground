@@ -125,6 +125,7 @@ export const NotFound = defineComponent({
             {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
             <TextField
               class="TextField"
+              label="Text Field Label"
               // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
               v-model={[this.textFieldValue, ['trim']]}
               // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
