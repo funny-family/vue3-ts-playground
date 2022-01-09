@@ -14,3 +14,11 @@ declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
+
+import 'vue-router';
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    title?: string;
+  }
+}
