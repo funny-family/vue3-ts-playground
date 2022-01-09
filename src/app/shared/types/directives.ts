@@ -8,20 +8,6 @@ export namespace VSlots {
 }
 
 /**
- * @see https://v3.vuejs.org/api/directives.html#v-pre
- */
-export type VPre = {
-  'v-pre'?: boolean;
-};
-
-/**
- * @see https://v3.vuejs.org/api/directives.html#v-cloak
- */
-export type VCloak = {
-  'v-cloak'?: any;
-};
-
-/**
  * @see https://v3.vuejs.org/api/directives.html#v-once
  */
 export type VOnce = {
@@ -45,7 +31,7 @@ export namespace VModel {
      */
     | 'trim';
   type CustomModifier = '';
-  type Modifier = BaseModifier | CustomModifier;
+  type Modifier = Exclude<BaseModifier | CustomModifier, ''>;
 
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-model
