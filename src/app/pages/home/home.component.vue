@@ -1,6 +1,17 @@
 <template>
   <div>
-    <h1 class="home-heading">{{ title }}</h1>
+    <div class="counter">
+      <h1>{{ inputValue }}</h1>
+    </div>
+
+    <h1
+      v-pre
+      class="home-heading"
+    >{{ title }}</h1>
+
+    <div>
+      <div v-cloak>title :) {{ title }}</div>
+    </div>
 
     <hr />
 

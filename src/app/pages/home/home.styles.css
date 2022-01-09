@@ -1,3 +1,9 @@
 .home-heading {
   color: aqua;
+  background-color: yellowgreen;
+}
+
+[v-cloak] {
+  background-color: red;
+  border: 4px solid green;
 }
