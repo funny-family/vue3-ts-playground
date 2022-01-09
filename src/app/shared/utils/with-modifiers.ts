@@ -1,7 +1,7 @@
 import { Events, withModifiers as _withModifiers } from 'vue';
 import type { UnionOfProperties } from '@/app/shared/types';
 import { capitalize } from '@/app/shared/utils/capitalize';
-import { Modifier } from '@/app/shared/utils/modifiers'
+import { Modifier } from '@/app/shared/utils/modifiers';
 
 type EventObject = {
   [key in keyof Events]: ((event: Events[key]) => void) | undefined;
