@@ -4,11 +4,12 @@
 import {
   defineComponent,
   ref,
+  resolveDirective,
   vModelText,
   withDirectives,
   withScopeId
 } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import { Govno } from '../../shared/components/gif-404';
