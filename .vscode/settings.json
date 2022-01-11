@@ -1,10 +1,7 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "cSpell.words": [
-    "enumify",
-    "favicons",
-    "pinia",
-    "vuex"
-  ]
+  "cSpell.words": ["enumify", "favicons", "pinia", "vuex"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }
