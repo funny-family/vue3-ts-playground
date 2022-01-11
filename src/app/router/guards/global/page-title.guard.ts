@@ -6,5 +6,6 @@ export const pageTitle: NavigationGuardWithThis<undefined> = (
   next
 ) => {
   if (to.meta.title !== undefined) document.title = to.meta.title;
-  else next();
+
+  next();
 };

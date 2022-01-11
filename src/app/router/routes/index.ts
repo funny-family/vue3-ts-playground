@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape, @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-useless-escape, */
 import type { RouteRecordRaw } from 'vue-router';
 import { normalize as normalizePath } from 'path';
 
