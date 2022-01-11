@@ -32,6 +32,7 @@ export const NotFound = defineComponent({
     Header
   },
   setup() {
+    <RouterView  />
     const title = 'Not found page!';
     const isGif404Visible = ref(true);
 
