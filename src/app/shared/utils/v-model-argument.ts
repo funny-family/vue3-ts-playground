@@ -5,7 +5,7 @@ type Name = string;
 type Value = string | boolean;
 type NameOfUpdateFunction = 'update';
 
-interface VModelArgumentInterface<N extends Name, D extends Value> {
+interface VModelArgumentFields<N extends Name, D extends Value> {
   propName: N;
   propObject: Prop<D>;
   nameOfEmit: `${NameOfUpdateFunction}:${N}`;
@@ -18,10 +18,10 @@ interface VModelArgumentConstructor<N extends Name, D extends Value> {
 }
 
 export class VModelArgument<N extends Name, D extends Value>
-  implements VModelArgumentInterface<N, D>
+  implements VModelArgumentFields<N, D>
 {
-  private name: N;
-  private defaultValue: D;
+  private readonly name: N;
+  private readonly defaultValue: D;
   private readonly nameOfUpdateFunction: NameOfUpdateFunction = 'update';
 
   constructor({ name, defaultValue }: VModelArgumentConstructor<N, D>) {
