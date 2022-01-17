@@ -6,10 +6,10 @@ type Value = string | boolean;
 type NameOfUpdateFunction = 'update';
 
 interface VModelArgumentFields<N extends Name, D extends Value> {
-  propName: N;
-  propObject: Prop<D>;
-  nameOfEmit: `${NameOfUpdateFunction}:${N}`;
-  normalizedNameOfEmit: `${NameOfUpdateFunction}${Capitalize<N>}`;
+  readonly propName: N;
+  readonly propObject: Prop<D>;
+  readonly nameOfEmit: `${NameOfUpdateFunction}:${N}`;
+  readonly normalizedNameOfEmit: `${NameOfUpdateFunction}${Capitalize<N>}`;
 }
 
 interface VModelArgumentConstructor<N extends Name, D extends Value> {
