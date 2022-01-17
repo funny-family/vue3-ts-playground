@@ -129,7 +129,7 @@ export const NotFound = defineComponent({
               class="TextField"
               label="Text Field Label"
               // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
-              v-model={[this.textFieldValue, ['trim']]}
+              v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
               // // @ts-ignore
               // modelModifiers={{ trim: true }}
