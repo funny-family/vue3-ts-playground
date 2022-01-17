@@ -1,8 +1,9 @@
 import type { Prop, PropType } from 'vue';
+import type { RecordOfBoolean } from '@/app/shared/types';
 
 type Name = 'modelModifiers';
 
-type Modifier<T extends string> = Record<T, boolean>;
+type Modifier<T extends string> = RecordOfBoolean<T>;
 
 interface VModelModifierFields<M extends string> {
   readonly propName: Name;
