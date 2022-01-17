@@ -5,8 +5,8 @@ type Name = 'modelModifiers';
 type Modifier<T extends string> = Record<T, boolean>;
 
 interface VModelModifierFields<M extends string> {
-  propName: Name;
-  propObject: Prop<Modifier<M>>;
+  readonly propName: Name;
+  readonly propObject: Prop<Modifier<M>>;
 }
 
 export class VModelModifier<M extends string>
