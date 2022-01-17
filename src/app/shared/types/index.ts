@@ -100,3 +100,5 @@ type SingleProperty<T, K extends keyof T> = K extends any
 export type UnionOfProperties<T> = {
   [K in keyof T]: SingleProperty<T, K>;
 }[keyof T];
+
+export type RecordOfBoolean<T extends string> = Record<T, boolean>;
