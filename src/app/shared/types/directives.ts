@@ -46,29 +46,29 @@ export namespace VModel {
       | [
           V,
           AdditionalModifier extends void
-            ? (Modifier | AdditionalModifier)[]
-            : AdditionalModifier[]
+            ? Modifier[]
+            : (Modifier | AdditionalModifier)[]
         ]
       | [
           Value,
           AdditionalModifier extends void
-            ? (Modifier | AdditionalModifier)[]
-            : AdditionalModifier[]
+            ? Modifier[]
+            : (Modifier | AdditionalModifier)[]
         ][]
       // ================================================
       | [
           V,
           A,
           AdditionalModifier extends void
-            ? (Modifier | AdditionalModifier)[]
-            : AdditionalModifier[]
+            ? Modifier[]
+            : (Modifier | AdditionalModifier)[]
         ]
       | [
           V,
           A,
           AdditionalModifier extends void
-            ? (Modifier | AdditionalModifier)[]
-            : AdditionalModifier[]
+            ? Modifier[]
+            : (Modifier | AdditionalModifier)[]
         ][];
   };
 }
