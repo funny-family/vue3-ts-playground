@@ -1,6 +1,6 @@
 import { enumify } from '@/app/shared/utils/enumify';
 import type { EmitsToProps, EmitValidationFunction } from '@/app/shared/types';
-import { ModelValue } from './text-field.binding-argument';
+import { VModel } from './text-field.binding-data';
 
 // https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
 // https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
@@ -9,7 +9,7 @@ import { ModelValue } from './text-field.binding-argument';
 
 export namespace TextFieldEmits {
   export type Schema = {
-    [ModelValue.emitName]: EmitValidationFunction<ModelValue.Type>;
+    [VModel.Argument.ModelValue.nameOfEmit]: EmitValidationFunction<VModel.Argument.ModelValue.Type>;
   };
 
   export type Keys = keyof Schema;
@@ -20,7 +20,7 @@ export namespace TextFieldEmits {
 }
 
 export const emits: TextFieldEmits.Schema = {
-  [ModelValue.emitName]: (value) => {
+  [VModel.Argument.ModelValue.nameOfEmit]: (value) => {
     if (typeof value === 'string') return true;
 
     return false;
@@ -29,5 +29,5 @@ export const emits: TextFieldEmits.Schema = {
 
 export const emitName = {
   ...enumify(Object.keys(emits) as [TextFieldEmits.Keys]),
-  ...{ [ModelValue.normalizedEmitName]: ModelValue.emitName }
+  ...{ [VModel.Argument.ModelValue.normalizedNameOfEmit]: VModel.Argument.ModelValue.nameOfEmit }
 };

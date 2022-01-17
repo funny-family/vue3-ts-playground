@@ -7,15 +7,18 @@ import type {
   CSSClassAttribute,
   HTMLAttributesWithoutCSSClass
 } from '@/app/shared/types';
-import type { VModel } from '@/app/shared/types/directives';
+// import type { VModel } from '@/app/shared/types/directives';
 import { nameOf } from '../../utils/name-of';
+import type { VModel } from './text-field.binding-data';
 
 export const TextField = defineComponent<
   TextFieldProps &
     HTMLAttributesWithoutCSSClass<TextFieldAttrs> &
     TextFieldEmits.AsProps &
     CSSClassAttribute &
-    VModel.Directive<string>,
+    // VModel.Directive<string, string, 'asNumber' | 'asNumber' | 'capitalize'>,
+    // VModel.Directive<VModel.Type, string, VModel.Modifier.Directive>
+    VModel.Directive,
   TextFieldBindings
 >({
   name: nameOf(() => TextField),
@@ -26,9 +29,7 @@ export const TextField = defineComponent<
     return (
       <fieldset class={styles.textField}>
         {props.label && (
-          <label class={styles.textField__label}>
-            {props.label}
-          </label>
+          <label class={styles.textField__label}>{props.label}</label>
         )}
         <input
           {...context.attrs}

@@ -1,16 +1,21 @@
 import type { ExtractPropTypes } from '@vue/runtime-core';
 import type { InputHTMLAttributes } from 'vue';
 import type { RecordPropsDefinition } from '@/app/shared/types';
-import { ModelValue } from './text-field.binding-argument';
+import { VModel } from './text-field.binding-data';
 
 export interface TextFieldPropFields {
-  [ModelValue.propName]: ModelValue.Type;
+  [VModel.Argument.ModelValue.propName]: VModel.Argument.ModelValue.Type;
+  [VModel.Modifier.propName]: Record<VModel.Modifier.Directive, boolean>;
   label: string;
 }
 
 export const props: RecordPropsDefinition<TextFieldPropFields> = {
-  [ModelValue.propName]: {
-    ...ModelValue.propObject
+  [VModel.Argument.ModelValue.propName]: {
+    ...VModel.Argument.ModelValue.propObject
+  },
+
+  [VModel.Modifier.propName]: {
+    ...VModel.Modifier.propObject
   },
 
   label: {
