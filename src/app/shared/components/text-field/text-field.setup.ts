@@ -15,13 +15,13 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   >;
 
   const onInput = (event: Event): void => {
-    let inputValue = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
     if (props.modelModifiers?.capitalize) {
-      inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+      value = value.charAt(0).toUpperCase() + value.slice(1);
     }
 
-    context.emit(emitName.updateModelValue, inputValue);
+    context.emit(emitName.updateModelValue, value);
   };
 
   return {

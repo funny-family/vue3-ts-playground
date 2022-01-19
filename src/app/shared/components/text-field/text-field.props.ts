@@ -6,7 +6,7 @@ import type { RecordOfBoolean } from '@/app/shared/types';
 
 export interface TextFieldPropFields {
   [VModel.Argument.ModelValue.propName]: VModel.Argument.ModelValue.Type;
-  [VModel.Modifier.propName]: RecordOfBoolean<VModel.Modifier.Directive>;
+  [VModel.ModelModifier.propName]: RecordOfBoolean<VModel.ModelModifier.Modifier>;
   label: string;
 }
 
@@ -15,8 +15,8 @@ export const props: RecordPropsDefinition<TextFieldPropFields> = {
     ...VModel.Argument.ModelValue.propObject
   },
 
-  [VModel.Modifier.propName]: {
-    ...VModel.Modifier.propObject
+  [VModel.ModelModifier.propName]: {
+    ...VModel.ModelModifier.propObject
   },
 
   label: {
