@@ -1,14 +1,7 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import {
-  defineComponent,
-  ref,
-  resolveDirective,
-  vModelText,
-  withDirectives,
-  withScopeId
-} from 'vue';
+import { defineComponent, onMounted, ref, withDirectives, withScopeId } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -29,10 +22,10 @@ export const NotFound = defineComponent({
   name: 'NotFound',
   components: {
     Gif404,
-    Header
+    Header,
+    TextField
   },
-  setup() {
-    <RouterView  />
+  setup(props, context) {
     const title = 'Not found page!';
     const isGif404Visible = ref(true);
 
@@ -46,8 +39,14 @@ export const NotFound = defineComponent({
 
     const textFieldValue = ref('');
     const textFieldValueNumber = ref(0);
-    const textFieldRef = ref();
+    const textFieldRef = ref<TextFieldBindings | undefined>();
     console.log('"TextField" ref:', textFieldRef);
+
+    console.log('context:', context);
+
+    onMounted(() => {
+      console.log('"TextField" ref value:', textFieldRef?.value);
+    });
 
     const trimModifier = 'trim';
 
@@ -66,6 +65,7 @@ export const NotFound = defineComponent({
   },
 
   render() {
+    const { textFieldRef } = this;
     const trimModifier = 'trim';
 
     return (
@@ -95,9 +95,7 @@ export const NotFound = defineComponent({
                 about="aduadaud"
                 type="text"
                 // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
-                v-model={
-                  [this.textFieldValue, ['trim']] as VModel.Directive<string>
-                }
+                v-model={[this.textFieldValue, ['trim']] as VModel.Directive}
               />
             </fieldset>
 
@@ -131,8 +129,7 @@ export const NotFound = defineComponent({
               // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
-              // // @ts-ignore
-              // modelModifiers={{ trim: true }}
+              // @ts-ignore
               ref={this.textFieldRef}
             />
           </>
@@ -183,10 +180,7 @@ export const NotFound = defineComponent({
         {/* {isGif404Visible.value === true &&
           <Gif404 v-if={() => true} aria-label="this is giiifff!" />
         } */}
-        <button
-          type="button"
-          onClick={() => (this.isGif404Visible = !this.isGif404Visible)}
-        >
+        <button type="button" onClick={() => (this.isGif404Visible = !this.isGif404Visible)}>
           show/hide
         </button>
       </div>
