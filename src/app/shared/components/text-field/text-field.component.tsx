@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue';
 import { setup, TextFieldBindings } from './text-field.setup';
 import { props, TextFieldProps, TextFieldAttrs } from './text-field.props';
-import { styles } from './styles/text-field.styles';
 import { emits, TextFieldEmits } from './text-field.emits';
+import { render } from './text-field.render';
 import type {
   CSSClassAttribute,
   HTMLAttributesWithoutCSSClass
@@ -17,30 +17,12 @@ export const TextField = defineComponent<
     CSSClassAttribute &
     VModel.Directive,
   TextFieldBindings
->({
-  name: nameOf(() => TextField),
+>({});
 
-  render() {
-    const { props, context, onInput } = this;
-
-    return (
-      <fieldset class={styles.textField}>
-        {props.label && (
-          <label class={styles.textField__label}>{props.label}</label>
-        )}
-        <input
-          {...context.attrs}
-          class={styles.textField__input}
-          type="text"
-          value={props.modelValue}
-          onInput={onInput}
-        />
-      </fieldset>
-    );
-  }
-});
-
+// @ts-ignore
+TextField.name = nameOf(() => TextField);
 TextField.inheritAttrs = false;
 TextField.setup = setup;
 TextField.props = props;
 TextField.emits = emits;
+TextField.render = render;
