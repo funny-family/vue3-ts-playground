@@ -1,8 +1,11 @@
+import type { Slots } from 'vue';
+import type { Modifier } from '@/app/shared/utils/modifiers';
+
 export namespace VSlots {
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-slot
    */
-  export type Directive<T = {}> = {
+  export type Directive<T = Slots> = {
     'v-slots'?: T;
   };
 }
@@ -17,21 +20,7 @@ export type VOnce = {
 export namespace VModel {
   type Value = string | boolean;
   type Argument = string;
-  type BaseModifier =
-    /**
-     * @see https://v3.vuejs.org/guide/forms.html#lazy
-     */
-    | 'lazy'
-    /**
-     * @see https://v3.vuejs.org/guide/forms.html#number
-     */
-    | 'number'
-    /**
-     * @see https://v3.vuejs.org/guide/forms.html#trim
-     */
-    | 'trim';
-  type CustomModifier = '';
-  type Modifier = Exclude<BaseModifier | CustomModifier, ''>;
+  type BaseModifier = `${Modifier.VModel.Base}`;
 
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-model
@@ -46,29 +35,29 @@ export namespace VModel {
       | [
           V,
           AdditionalModifier extends void
-            ? Modifier[]
-            : (Modifier | AdditionalModifier)[]
+            ? BaseModifier[]
+            : (BaseModifier | AdditionalModifier)[]
         ]
       | [
           Value,
           AdditionalModifier extends void
-            ? Modifier[]
-            : (Modifier | AdditionalModifier)[]
+            ? BaseModifier[]
+            : (BaseModifier | AdditionalModifier)[]
         ][]
       // ================================================
       | [
           V,
           A,
           AdditionalModifier extends void
-            ? Modifier[]
-            : (Modifier | AdditionalModifier)[]
+            ? BaseModifier[]
+            : (BaseModifier | AdditionalModifier)[]
         ]
       | [
           V,
           A,
           AdditionalModifier extends void
-            ? Modifier[]
-            : (Modifier | AdditionalModifier)[]
+            ? BaseModifier[]
+            : (BaseModifier | AdditionalModifier)[]
         ][];
   };
 }
