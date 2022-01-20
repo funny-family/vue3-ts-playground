@@ -1,5 +1,5 @@
-import { styles } from './styles/text-field.styles';
 import type { TextFieldBindings } from './text-field.setup';
+import { styles } from './styles/text-field.styles';
 
 export const render = function (this: TextFieldBindings) {
   const { props, context, onInput } = this;
