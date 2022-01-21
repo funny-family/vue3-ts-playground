@@ -1,4 +1,4 @@
-// const fromCabeToCamelCase = (str: string | undefined | null): string | null => {
+// const fromCableToCamelCase = (str: string | undefined | null): string | null => {
 //   if (str === undefined || str === null) return null;
 
 //   const arr = str.split('-');
