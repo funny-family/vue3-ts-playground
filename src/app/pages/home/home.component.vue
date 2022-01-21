@@ -7,6 +7,7 @@
     <h1
       v-pre
       class="home-heading"
+      ref="headingRef"
     >{{ title }}</h1>
 
     <div>
@@ -19,6 +20,7 @@
       <input
         type="text"
         v-model.trim="inputValue"
+        ref="inputRef"
       />
 
       <div>inputValue: {{ inputValue }}</div>
