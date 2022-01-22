@@ -10,7 +10,8 @@
     "preview": "concurrently \"yarn build\" \"yarn serve\"",
     "component:create": "ts-node ./cli/commands/component.create.ts",
     "route:create": "ts-node ./cli/commands/route.create.ts",
-    "service:create": "ts-node ./cli/commands/service.create.ts"
+    "service:create": "ts-node ./cli/commands/service.create.ts",
+    "crnew": "hygen component new"
   },
   "dependencies": {
     "classnames": "^2.3.1",
@@ -38,6 +39,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
+    "hygen": "^6.1.0",
     "incstr": "^1.2.3",
     "jss": "^10.9.0",
     "prettier": "^2.2.1",
