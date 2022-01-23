@@ -1,7 +1,6 @@
-export type Value = string | number | boolean | undefined | null;
-export type Mapping = { [key: string]: any };
-export type Argument = Value | Mapping | Argument[];
+import clsx from 'clsx';
+import type { ClassArray, ClassDictionary, ClassValue } from 'clsx';
 
-export const mergeClassNames = () => {
-  return '';
-};
+const mergeClassNames = clsx;
+
+export { mergeClassNames, ClassArray, ClassDictionary, ClassValue };

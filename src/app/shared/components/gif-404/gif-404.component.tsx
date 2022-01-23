@@ -6,7 +6,7 @@ import { defineComponent, withModifiers } from 'vue';
 import { props, Gif404Props, Gif404Attrs } from './gif-404.props';
 import { setup, Gif404Bindings } from './gif-404.setup';
 import { styles } from './styles/gif-404.styles';
-import { classNames } from '@/app/shared/lib/npm/class-names';
+import { mergeClassNames } from '@/app/shared/utils/merge-class-names';
 import { RouterLink } from 'vue-router';
 import type {
   CSSClassAttribute,
@@ -43,7 +43,7 @@ export const Gif404 = defineComponent<
             />
           </a>
           <RouterLink to="/">adadad</RouterLink>
-          <h3 class={classNames(styles.gif404__text, styles.hidden)}>
+          <h3 class={mergeClassNames(styles.gif404__text, styles.hidden)}>
             <b>{this.props.title}</b>
           </h3>
           <button onClick={() => (this.isImageVisible = !this.isImageVisible)}>
