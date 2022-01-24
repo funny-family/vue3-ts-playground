@@ -8,7 +8,9 @@ import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
-const environmentVariable = extractFromEnv<EnvironmentVariable>(process.env.NODE_ENV);
+const environmentVariable = extractFromEnv<EnvironmentVariable>(
+  process.env.NODE_ENV
+);
 
 if (environmentVariable === 'development') {
   app.config.performance = true;
@@ -20,3 +22,4 @@ app.mount('#app');
 
 // http://www.hygen.io/docs/faq
 // The simple, fast, and scalable code generator that lives in your project.
+// https://ardexpert.ru/article/7142
