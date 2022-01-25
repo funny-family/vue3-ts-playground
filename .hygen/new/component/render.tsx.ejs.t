@@ -5,5 +5,7 @@ import type { <%= componentNameInCamelCase %>Bindings } from './<%= componentNam
 import { styles } from './styles/<%= componentNameInCableCase %>.styles';
 
 export const render = function (this: <%= componentNameInCamelCase %>Bindings) {
-  return <div><%= componentNameInCamelCase %> component.</div>
+  const { context } = this;
+
+  return <div {...context.attrs}><%= componentNameInCamelCase %> component.</div>
 };
