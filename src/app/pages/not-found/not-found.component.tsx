@@ -74,7 +74,7 @@ export const NotFound = defineComponent({
   },
 
   render() {
-    console.log('this.$refs:', this.$refs);
+    // console.log('this.$refs:', this.$refs);
 
     const { textFieldRef } = this;
     const trimModifier = 'trim';
