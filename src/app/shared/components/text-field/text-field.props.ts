@@ -1,6 +1,9 @@
 import type { ExtractPropTypes } from '@vue/runtime-core';
 import type { InputHTMLAttributes } from 'vue';
-import type { RecordPropsDefinition } from '@/app/shared/types';
+import type {
+  HTMLAttributesWithClassAttributeAsString,
+  RecordPropsDefinition
+} from '@/app/shared/types';
 import { VModel } from './text-field.binding-data';
 import type { RecordOfBoolean } from '@/app/shared/types';
 
@@ -29,4 +32,5 @@ export const props: RecordPropsDefinition<TextFieldPropFields> = {
 
 export type TextFieldProps = ExtractPropTypes<typeof props> & ThisType<void>;
 
-export type TextFieldAttrs = InputHTMLAttributes;
+export type TextFieldAttrs =
+  HTMLAttributesWithClassAttributeAsString<InputHTMLAttributes>;
