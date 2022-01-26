@@ -8,12 +8,15 @@ import type {
 
 type Data = Record<string, unknown>;
 
-export type CSSClassAttribute = { class?: string | undefined };
+export type CSSClassAttribute = { class?: string };
 
 export type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<
   T,
   'class'
 >;
+
+export type HTMLAttributesWithClassAttributeAsString<T = HTMLAttributes> =
+  HTMLAttributesWithoutCSSClass<T> & CSSClassAttribute;
 
 export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
