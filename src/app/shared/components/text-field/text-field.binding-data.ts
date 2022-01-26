@@ -1,7 +1,10 @@
-import { VModelArgument, defaultVModelArgumentName } from '@/app/shared/utils/v-model-argument';
+import {
+  VModelArgument,
+  defaultVModelArgumentName
+} from '@/app/shared/utils/v-model-argument';
 import { VModelModifier } from '@/app/shared/utils/v-model-modifier';
 import type { DefaultVModelArgumentName } from '@/app/shared/utils/v-model-argument';
-import type { VModel as VM } from '@/app/shared/types/directives';
+import type { VModel as _VModel } from '@/app/shared/types/directives';
 
 export namespace VModel {
   export type Type = string;
@@ -10,13 +13,11 @@ export namespace VModel {
     export namespace ModelValue {
       export type Type = string;
 
-      export const { propName, propObject, nameOfEmit, normalizedNameOfEmit } = new VModelArgument<
-        DefaultVModelArgumentName,
-        Type
-      >({
-        name: defaultVModelArgumentName,
-        defaultValue: ''
-      });
+      export const { propName, propObject, nameOfEmit, normalizedNameOfEmit } =
+        new VModelArgument<DefaultVModelArgumentName, Type>({
+          name: defaultVModelArgumentName,
+          defaultValue: ''
+        });
 
       export namespace Modifier {
         export type Type = 'capitalize';
@@ -31,5 +32,9 @@ export namespace VModel {
     export const { propName, propObject } = new VModelModifier<Modifier>();
   }
 
-  export type Directive = VM.Directive<Type, string, ModelModifier.Modifier>;
+  export type Directive = _VModel.Directive<
+    Type,
+    string,
+    ModelModifier.Modifier
+  >;
 }
