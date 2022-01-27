@@ -3,6 +3,13 @@ import type { UnionOfProperties } from '@/app/shared/types';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { Modifier } from '@/app/shared/utils/modifiers';
 
+type OnlyOneKey<K extends string, V = any> = {
+  [P in K]: (Record<P, V> &
+    Partial<Record<Exclude<K, P>, never>>) extends infer O
+    ? { [Q in keyof O]: O[Q] }
+    : never
+}[K];
+
 type EventObject = {
   [key in keyof Events]: ((event: Events[key]) => void) | undefined;
 };

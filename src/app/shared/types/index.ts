@@ -76,6 +76,7 @@ export type EmitValidationFunction<A = undefined> = A extends undefined
   ? () => boolean
   : (args: A) => boolean;
 
+// Extended "SetupContext" type.
 export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
   attrs: A;

@@ -4,7 +4,7 @@
 // https://mrcrmn.dev/articles/lightweight-components-with-vue3-and-jsx/
 
 import { EmitsOptions, ref, SetupContext, withScopeId } from 'vue';
-import type { Gif404Props, Gif404Attrs } from './gif-404.props';
+import type { Gif404Props, Gif404Attrs, Gif404PropFields } from './gif-404.props';
 import { generateGuid } from '@/app/shared/utils/guid';
 import type {
   CSSClassAttribute,

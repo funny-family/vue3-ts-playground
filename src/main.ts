@@ -8,12 +8,26 @@ import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
-const environmentVariable = extractFromEnv<EnvironmentVariable>(
-  process.env.NODE_ENV
-);
+const environmentVariable = extractFromEnv<EnvironmentVariable>(process.env.NODE_ENV);
 
 if (environmentVariable === 'development') {
   app.config.performance = true;
+
+  // app.config.errorHandler = (err, instance, info) => {
+  //   console.group('app error');
+  //   console.log('err:', err);
+  //   console.log('instance:', instance);
+  //   console.log('info:', info);
+  //   console.groupEnd();
+  // };
+
+  // app.config.warnHandler = (msg, instance, trace) => {
+  //   console.group('%c app warning', 'background-color: #250221; color: #f08784;');
+  //   console.error('msg:', msg);
+  //   console.log('instance:', instance);
+  //   console.log('trace:', trace);
+  //   console.groupEnd();
+  // };
 }
 
 app.use(store);
