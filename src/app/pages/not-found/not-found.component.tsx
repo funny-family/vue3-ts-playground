@@ -110,21 +110,6 @@ export const NotFound = defineComponent({
                 ref={this.inputRef}
               />
             </fieldset>
-
-            {/* <fieldset>
-              <label>aduadaud</label>
-              {withDirectives(<input about="aduadaud" type="text" />, [
-                [
-                  vModelText,
-                  this.textFieldValue,
-                  // 'modelValue',
-                  (void 0) as any as string,
-                  {
-                    trim: true
-                  }
-                ]
-              ])}
-            </fieldset> */}
           </>
 
           <>
