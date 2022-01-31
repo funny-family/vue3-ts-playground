@@ -12,6 +12,12 @@ module.exports = {
         message: 'What is the component name?'
       },
       {
+        type: 'multiselect',
+        name: 'additionalOptions',
+        choices: ['props', 'emits', 'binding support'],
+        message: 'Select additional options for the component.'
+      },
+      {
         type: 'input',
         name: 'directory',
         message: 'Where is the directory? (Optional)'
@@ -19,40 +25,54 @@ module.exports = {
     ];
 
     return inquirer.prompt(questions).then((component) => {
+      console.log('component data:', component);
+
       const componentNameInCableCase = component.name;
       const componentNameInCamelCase = capitalize(
         fromCableToCamelCase(component.name)
       );
-      const componentDirectory = component.directory;
+
+      const shouldComponentHaveProps =
+        component.additionalOptions.includes('props');
+      const shouldComponentHaveEmits =
+        component.additionalOptions.includes('emits');
+      const shouldComponentHaveBindingDataSupport =
+        component.additionalOptions.includes('binding support');
 
       const kebabCaseRegex = /^([a-z][a-z0-9]*)(-[a-z0-9]+)*$/g;
       if (!kebabCaseRegex.test(componentNameInCableCase)) {
         console.error(
           '\x1b[31m',
-          `Component name ${componentNameInCableCase} must be in kebab-case!`
+          `Component name "${componentNameInCableCase}" must be in kebab-case!`
         );
         process.exit(1);
       }
 
+      const componentDirectory = component.directory;
       const path = `${
         componentDirectory ? `${componentDirectory}/` : ``
       }${componentNameInCableCase}`;
       const absPath = `src/app/shared/components/${path}`;
 
-      const value = {
-        ...component,
-        path,
+      const templateData = {
         absPath,
+        componentDirectory,
+
         componentNameInCableCase,
         componentNameInCamelCase,
-        componentDirectory
+
+        shouldComponentHaveProps,
+        shouldComponentHaveEmits,
+        shouldComponentHaveBindingDataSupport
       };
 
-      console.log(value);
+      console.log('template data:', templateData);
 
-      return value;
+      return templateData;
     });
   }
 };
 
 // https://habr.com/ru/company/timeweb/blog/534686/
+
+// https://github.com/jondot/hygen/issues/23
