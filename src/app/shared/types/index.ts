@@ -1,9 +1,11 @@
-import type { Prop, SetupContext } from '@vue/runtime-core';
 import type {
   EmitsOptions,
   HTMLAttributes,
   ObjectEmitsOptions,
-  Slots
+  PropType,
+  Slots,
+  Prop,
+  SetupContext
 } from 'vue';
 
 type Data = Record<string, unknown>;
@@ -21,6 +23,19 @@ export type HTMLAttributesWithClassAttributeAsString<T = HTMLAttributes> =
 export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
 };
+
+// type DefaultFactory<T> = (props: Data) => T | null | undefined;
+
+// export interface PropOptions<T = any, D = T> {
+//   type?: PropType<T>;
+//   required?: boolean;
+//   default?: D;
+//   validator?(value: unknown): boolean;
+// }
+
+// export type RecordPropsDefinition<P = Data> = {
+//   [K in keyof P]: PropOptions<P[K]>;
+// };
 
 export type CustomSlot<A, T> = A extends object
   ? ((args: A) => T) | undefined
