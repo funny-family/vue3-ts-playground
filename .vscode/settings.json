@@ -11,5 +11,8 @@
     "vuex"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "node_modules/": true
+  }
 }
