@@ -1,13 +1,7 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  withDirectives,
-  withScopeId
-} from 'vue';
+import { defineComponent, onMounted, ref, withDirectives, withScopeId } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -149,7 +143,7 @@ export const NotFound = defineComponent({
           }}
           style={{ color: 'red', border: '2px solid green' }}
           class="121212112"
-          title="This is title!"
+          text="This is title!"
           v-slots={{
             default: () => (
               <div>
@@ -172,15 +166,12 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        <Govno.Gif404 class="3434343343" title="11" />
+        <Govno.Gif404 text="123131313" class="3434343343" title="11" />
         {/* </div> */}
         {/* {isGif404Visible.value === true &&
           <Gif404 v-if={() => true} aria-label="this is giiifff!" />
         } */}
-        <button
-          type="button"
-          onClick={() => (this.isGif404Visible = !this.isGif404Visible)}
-        >
+        <button type="button" onClick={() => (this.isGif404Visible = !this.isGif404Visible)}>
           show/hide
         </button>
       </div>
