@@ -34,7 +34,7 @@ export const Gif404 = defineComponent<
           </a>
           <RouterLink to="/">adadad</RouterLink>
           <h3 class={mergeClassNames(styles.gif404__text, styles.hidden)}>
-            <b>{this.props.title}</b>
+            <b>{this.props.text}</b>
           </h3>
           <button onClick={() => (this.isImageVisible = !this.isImageVisible)}>hide</button>
           <img
