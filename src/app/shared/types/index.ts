@@ -1,103 +1,20 @@
-import type {
-  EmitsOptions,
-  HTMLAttributes,
-  ObjectEmitsOptions,
-  PropType,
-  Slots,
-  Prop,
-  SetupContext
-} from 'vue';
+import type { Prop } from 'vue';
 
-type Data = Record<string, unknown>;
+export type Data = Record<string, unknown>;
 
-export type CSSClassAttribute = { class?: string };
-
-export type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<
-  T,
-  'class'
->;
-
-export type HTMLAttributesWithClassAttributeAsString<T = HTMLAttributes> =
-  HTMLAttributesWithoutCSSClass<T> & CSSClassAttribute;
+export type DefaultFactory<T> = (props: Data) => T | null | undefined;
 
 export type RecordPropsDefinition<P = Data> = {
   [K in keyof P]: Prop<P[K]>; // [K in keyof P]: PropValidator<P[K]> | null; <- "null" makes the type work incorrectly
 };
 
-// type DefaultFactory<T> = (props: Data) => T | null | undefined;
-
-// export interface PropOptions<T = any, D = T> {
-//   type?: PropType<T>;
-//   required?: boolean;
-//   default?: D;
-//   validator?(value: unknown): boolean;
-// }
-
-// export type RecordPropsDefinition<P = Data> = {
-//   [K in keyof P]: PropOptions<P[K]>;
-// };
-
-export type CustomSlot<A, T> = A extends object
-  ? ((args: A) => T) | undefined
-  : (() => T) | undefined;
-
-export type DefaultSlot<T, A = undefined> = {
-  default: CustomSlot<A, T>;
-};
-
 export type EnvironmentVariable = 'production' | 'development';
 
-export type EmitsToProps<T extends EmitsOptions> = T extends string[]
-  ? {
-      [K in string & `on${Capitalize<T[number]>}`]?: (...args: any[]) => void;
-    }
-  : T extends ObjectEmitsOptions
-  ? {
-      [K in string &
-        `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
-        ? T[Uncapitalize<C>] extends null
-          ? (...args: any[]) => void
-          : (
-              ...args: T[Uncapitalize<C>] extends (...args: infer P) => void
-                ? P
-                : never
-            ) => void
-        : never;
-    }
-  : {};
-
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
+export type UnionToIntersection<U> = (
+  U extends any ? (k: U) => void : never
+) extends (k: infer I) => void
   ? I
   : never;
-
-type EmitFunction<
-  Options = ObjectEmitsOptions,
-  Event extends keyof Options = keyof Options
-> = Options extends Array<infer V>
-  ? (event: V, ...args: any[]) => void
-  : {} extends Options
-  ? (event: string, ...args: any[]) => void
-  : UnionToIntersection<
-      {
-        [key in Event]: Options[key] extends (...args: infer Args) => any
-          ? (event: key, ...args: Args) => void
-          : (event: key, ...args: any[]) => void;
-      }[Event]
-    >;
-
-export type EmitValidationFunction<A = undefined> = A extends undefined
-  ? () => boolean
-  : (args: A) => boolean;
-
-// Extended "SetupContext" type.
-export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
-  extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
-  attrs: A;
-  slots: S;
-  emit: EmitFunction<E>;
-}
 
 export type Keys<T extends string> = {
   [K in T]: K;
