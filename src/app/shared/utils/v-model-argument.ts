@@ -1,4 +1,5 @@
 import type { Prop } from 'vue';
+import type { PropOption } from '@/app/shared/types/component/props';
 import { capitalize } from '@/app/shared/utils/capitalize';
 
 type Name = string;
@@ -33,7 +34,7 @@ export class VModelArgument<N extends Name, D extends Value>
     return this.name;
   }
 
-  get propObject(): Prop<D> {
+  get propObject(): PropOption<D, false, D> {
     return {
       type:
         typeof this.defaultValue === 'string'
@@ -43,7 +44,7 @@ export class VModelArgument<N extends Name, D extends Value>
           : null,
       required: false,
       default: this.defaultValue
-    } as Prop<D>;
+    } as PropOption<D, false, D>;
   }
 
   get nameOfEmit(): `${NameOfUpdateFunction}:${N}` {
