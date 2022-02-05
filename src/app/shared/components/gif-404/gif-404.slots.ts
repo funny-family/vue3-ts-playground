@@ -1,5 +1,8 @@
 import type { VNode } from 'vue';
-import type { CustomSlot, DefaultSlot } from '@/app/shared/types';
+import type {
+  CustomSlot,
+  DefaultSlot
+} from '@/app/shared/types/component/slots';
 
 export namespace Gif404Slots {
   export interface Schema<ReturnSlotType>

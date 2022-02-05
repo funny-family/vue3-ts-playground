@@ -4,20 +4,17 @@
 // https://mrcrmn.dev/articles/lightweight-components-with-vue3-and-jsx/
 
 import { EmitsOptions, ref, SetupContext, withScopeId } from 'vue';
-import type { Gif404Props, Gif404Attrs, Gif404PropFields } from './gif-404.props';
-import { generateGuid } from '@/app/shared/utils/guid';
-import type {
-  CSSClassAttribute,
-  HTMLAttributesWithoutCSSClass,
-  SetupCtx
-} from '@/app/shared/types';
+import type { Gif404Props } from './gif-404.props';
+import type { Gif404Attrs } from './gif-404.attrs';
+import type { SetupCtx } from '@/app/shared/types/component/setup';
 import type { Gif404Slots } from './gif-404.slots';
+import { generateGuid } from '@/app/shared/utils/guid';
 
 export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const props = p as Readonly<Gif404Props>;
   const context = ctx as unknown as SetupCtx<
     EmitsOptions,
-    HTMLAttributesWithoutCSSClass<Gif404Attrs> & CSSClassAttribute,
+    Gif404Attrs,
     Gif404Slots.VNodeList
   >;
 
