@@ -1,29 +1,38 @@
-import type { ExtractPropTypes } from '@vue/runtime-core';
-import type { RecordPropsDefinition } from '@/app/shared/types';
-import { VModel } from './text-field.binding-data';
 import type { RecordOfBoolean } from '@/app/shared/types';
+import type {
+  ExtractTypeFromProps,
+  PropOption
+} from '@/app/shared/types/component/props';
+import { VModel } from './text-field.binding-data';
 
-export interface TextFieldPropFields {
-  [VModel.Argument.ModelValue.propName]: VModel.Argument.ModelValue.Type;
-  [VModel.ModelModifier
-    .propName]: RecordOfBoolean<VModel.ModelModifier.Modifier>;
-  label: string;
+interface TextFieldPropSchema {
+  label: PropOption<string, false, ''>;
+  [VModel.Argument.ModelValue.propName]: PropOption<
+    VModel.Argument.ModelValue.Type,
+    false,
+    VModel.Argument.ModelValue.Type
+  >;
+  [VModel.ModelModifier.propName]: PropOption<
+    RecordOfBoolean<VModel.ModelModifier.Modifier>,
+    false,
+    RecordOfBoolean<VModel.ModelModifier.Modifier>
+  >;
 }
 
-export const props: RecordPropsDefinition<TextFieldPropFields> = {
+export const props: TextFieldPropSchema = {
+  label: {
+    type: String,
+    required: false,
+    default: ''
+  },
+
   [VModel.Argument.ModelValue.propName]: {
     ...VModel.Argument.ModelValue.propObject
   },
 
   [VModel.ModelModifier.propName]: {
     ...VModel.ModelModifier.propObject
-  },
-
-  label: {
-    type: String,
-    required: false,
-    default: ''
   }
 };
 
-export type TextFieldProps = ExtractPropTypes<typeof props>;
+export type TextFieldProps = ExtractTypeFromProps<TextFieldPropSchema>;
