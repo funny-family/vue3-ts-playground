@@ -1,5 +1,6 @@
-import type { Prop, PropType } from 'vue';
+import type { PropType } from 'vue';
 import type { RecordOfBoolean } from '@/app/shared/types';
+import type { PropOption } from '@/app/shared/types/component/props';
 
 type Name = 'modelModifiers';
 
@@ -7,7 +8,7 @@ type Modifier<T extends string> = RecordOfBoolean<T>;
 
 interface VModelModifierFields<M extends string> {
   readonly propName: Name;
-  readonly propObject: Prop<Modifier<M>>;
+  readonly propObject: PropOption<Modifier<M>, false, Modifier<M>>;
 }
 
 export class VModelModifier<M extends string>
@@ -19,7 +20,7 @@ export class VModelModifier<M extends string>
     return this.name;
   }
 
-  get propObject(): Prop<Modifier<M>> {
+  get propObject(): PropOption<Modifier<M>, false, Modifier<M>> {
     return {
       type: Object as PropType<Modifier<M>>,
       required: false,
