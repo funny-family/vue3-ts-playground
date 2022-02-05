@@ -1,6 +1,7 @@
 import type { EmitsOptions, SetupContext } from 'vue';
-import type { SetupCtx } from '@/app/shared/types';
-import type { TextFieldAttrs, TextFieldProps } from './text-field.props';
+import type { SetupCtx } from '@/app/shared/types/component/setup';
+import type { TextFieldProps } from './text-field.props';
+import type { TextFieldAttrs } from './text-field.attrs';
 import { TextFieldEmits, emitName } from './text-field.emits';
 
 export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {

@@ -1,5 +1,8 @@
 import { enumify } from '@/app/shared/utils/enumify';
-import type { EmitsToProps, EmitValidationFunction } from '@/app/shared/types';
+import type {
+  EmitsToProps,
+  EmitValidationFunction
+} from '@/app/shared/types/component/emits';
 import { VModel } from './text-field.binding-data';
 
 // https://v3.vuejs.org/guide/migration/v-model.html#v-model-arguments
