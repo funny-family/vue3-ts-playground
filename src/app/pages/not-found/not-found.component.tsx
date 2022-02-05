@@ -1,7 +1,13 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
-import { defineComponent, onMounted, ref, withDirectives, withScopeId } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  withDirectives,
+  withScopeId
+} from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -12,6 +18,8 @@ import type { TextFieldBindings } from '@/app/shared/components/text-field/text-
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import type { VModel } from '@/app/shared/types/directives';
+import { nameOf } from '@/app/shared/utils/name-of';
+import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -39,15 +47,15 @@ export const NotFound = defineComponent({
 
     const textFieldValue = ref('');
     const textFieldValueNumber = ref(0);
-    const textFieldRef = ref<TextFieldBindings | undefined>();
-    const inputRef = ref<any>(null);
-    console.log('"TextField" ref:', textFieldRef);
+    const textFieldRef = ref<TextFieldBindings>();
+    const inputRef = ref();
+    // console.log('"TextField" ref:', textFieldRef);
 
     console.log('context:', context);
 
     onMounted(() => {
-      console.log('"TextField" ref value:', textFieldRef?.value);
-      console.log(456456464, inputRef.value);
+      console.log('"TextField" ref value:', textFieldRef.value);
+      console.log('input ref value:', inputRef.value);
     });
 
     const trimModifier = 'trim';
@@ -101,7 +109,8 @@ export const NotFound = defineComponent({
                 type="text"
                 // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
                 v-model={[this.textFieldValue, ['trim']] as VModel.Directive}
-                ref={this.inputRef}
+                // ref={this.inputRef}
+                ref="inputRef"
               />
             </fieldset>
           </>
@@ -120,11 +129,22 @@ export const NotFound = defineComponent({
               // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
-              // @ts-ignore
-              ref={this.textFieldRef}
+              // do not work!
+              // ref={this.textFieldRef as any}
+              // works! ;)
+              // ref="textFieldRef"
+              // works! ;)
+              // ref={nameOf(() => this.textFieldRef).split('.')[1]}
+              // works! ;)
+              ref={createTemplateRef(nameOf(() => this.textFieldRef))}
             />
           </>
           <div>textFieldValue: {this.textFieldValue}</div>
+          <div>{nameOf(() => this.textFieldRef).split('.')[1]}</div>
+          <div>
+            "createTemplateRef(this.textFieldRef as any)"{' '}
+            {createTemplateRef(nameOf(() => this.textFieldRef))}
+          </div>
         </div>
 
         <hr />
@@ -171,7 +191,10 @@ export const NotFound = defineComponent({
         {/* {isGif404Visible.value === true &&
           <Gif404 v-if={() => true} aria-label="this is giiifff!" />
         } */}
-        <button type="button" onClick={() => (this.isGif404Visible = !this.isGif404Visible)}>
+        <button
+          type="button"
+          onClick={() => (this.isGif404Visible = !this.isGif404Visible)}
+        >
           show/hide
         </button>
       </div>
