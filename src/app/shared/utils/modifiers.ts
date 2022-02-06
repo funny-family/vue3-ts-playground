@@ -7,7 +7,7 @@ export namespace Modifier {
      * @description
      * Modifiers
      */
-    export enum Base {
+    export const enum Base {
       /**
        * @see
        * https://v3.vuejs.org/guide/forms.html#lazy
@@ -33,7 +33,7 @@ export namespace Modifier {
    * @description
    * Event Modifiers
    */
-  export enum Event {
+  export const enum Event {
     Stop = 'stop',
     Prevent = 'prevent',
     Capture = 'capture',
@@ -83,7 +83,7 @@ export namespace Modifier {
      * @description
      * System Modifier Keys
      */
-    export enum System {
+    export const enum System {
       Ctrl = 'ctrl',
       Alt = 'alt',
       Shift = 'shift',
@@ -92,7 +92,7 @@ export namespace Modifier {
     }
   }
 
-  export enum MouseButton {
+  export const enum MouseButton {
     Left = 'left',
     Right = 'right',
     Middle = 'middle'
