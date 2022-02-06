@@ -22,15 +22,13 @@ export namespace VModel {
           defaultValue: ''
         });
 
-      export namespace Modifier {
-        export type Type = 'capitalize';
-      }
+      export type Modifier = 'capitalize';
     }
   }
 
   export namespace ModelModifier {
     // list of modifiers
-    export type ModifierList = Argument.ModelValue.Modifier.Type;
+    export type ModifierList = Argument.ModelValue.Modifier;
     type ModifierRecord = RecordOfBoolean<ModifierList>;
     export type PropOption = _PropOption<ModifierRecord, false, ModifierRecord>;
 
