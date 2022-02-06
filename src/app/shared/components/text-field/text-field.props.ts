@@ -1,4 +1,3 @@
-import type { RecordOfBoolean } from '@/app/shared/types';
 import type {
   ExtractTypeFromProps,
   PropOption
@@ -7,16 +6,8 @@ import { VModel } from './text-field.binding-data';
 
 interface TextFieldPropSchema {
   label: PropOption<string, false, ''>;
-  [VModel.Argument.ModelValue.propName]: PropOption<
-    VModel.Argument.ModelValue.Type,
-    false,
-    VModel.Argument.ModelValue.Type
-  >;
-  [VModel.ModelModifier.propName]: PropOption<
-    RecordOfBoolean<VModel.ModelModifier.Modifier>,
-    false,
-    RecordOfBoolean<VModel.ModelModifier.Modifier>
-  >;
+  [VModel.Argument.ModelValue.propName]: VModel.Argument.ModelValue.PropOption;
+  [VModel.ModelModifier.propName]: VModel.ModelModifier.PropOption;
 }
 
 export const props: TextFieldPropSchema = {
