@@ -13,7 +13,7 @@ export namespace VModel {
 
   export namespace Argument {
     export namespace ModelValue {
-      type Type = string;
+      export type Type = string;
       export type PropOption = _PropOption<Type, false, Type>;
 
       export const { propName, propObject, nameOfEmit, normalizedNameOfEmit } =
