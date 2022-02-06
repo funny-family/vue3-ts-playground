@@ -17,7 +17,6 @@ import { TextField } from '@/app/shared/components/text-field/text-field.compone
 import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
-import type { VModel } from '@/app/shared/types/directives';
 import { nameOf } from '@/app/shared/utils/name-of';
 import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
 
@@ -83,6 +82,8 @@ export const NotFound = defineComponent({
 
     return (
       <div class="gif404">
+        <RouterLink to="/" />
+
         <form
           {...withModifiers(
             {
@@ -108,7 +109,7 @@ export const NotFound = defineComponent({
                 about="aduadaud"
                 type="text"
                 // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
-                v-model={[this.textFieldValue, ['trim']] as VModel.Directive}
+                v-model={[this.textFieldValue, ['trim']]}
                 // ref={this.inputRef}
                 ref="inputRef"
               />
@@ -126,7 +127,6 @@ export const NotFound = defineComponent({
             <TextField
               class="TextField"
               label="Text Field Label"
-              // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]} // does not work!
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
               // do not work!
