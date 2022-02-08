@@ -5,12 +5,18 @@ import {
   defineComponent,
   onMounted,
   ref,
+  resolveDynamicComponent,
+  // Component as DynamicComponent,
+  h,
   withDirectives,
-  withScopeId
+  withScopeId,
+  KeepAlive,
+  Transition
 } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
+import type { Gif404Slots } from '../../shared/components/gif-404/gif-404.slots';
 import { Govno } from '../../shared/components/gif-404';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
@@ -25,13 +31,17 @@ import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
  * https://alligator.io/vuejs/jsx-render-functions/
  */
 
+console.log(Header);
+
 export const NotFound = defineComponent({
   name: 'NotFound',
+
   components: {
     Gif404,
     Header,
     TextField
   },
+
   setup(props, context) {
     const title = 'Not found page!';
     const isGif404Visible = ref(true);
@@ -75,6 +85,10 @@ export const NotFound = defineComponent({
   },
 
   render() {
+    console.log(
+      "resolveDynamicComponent('Header'):",
+      resolveDynamicComponent(Header.name)
+    );
     // console.log('this.$refs:', this.$refs);
 
     const { textFieldRef } = this;
@@ -82,8 +96,6 @@ export const NotFound = defineComponent({
 
     return (
       <div class="gif404">
-        <RouterLink to="/" />
-
         <form
           {...withModifiers(
             {
@@ -149,11 +161,29 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        <RouterLink to="/">
-          <h2>to home!</h2>
-        </RouterLink>
+        {/* <KeepAlive
+          v-slots={{
+            default: () => (
+              <RouterLink to="/">
+                <h2>to home!</h2>
+              </RouterLink>
+            )
+          }}
+        /> */}
+
+        <KeepAlive>
+          <RouterLink to="/">
+            <h2>to home!</h2>
+          </RouterLink>
+        </KeepAlive>
 
         <Header title="t45672" />
+        {/* https://v3.vuejs.org/api/global-api.html#resolvecomponent */}
+        {/* https://v3.vuejs.org/api/built-in-components.html#component */}
+        {/* https://github.com/vuejs/babel-plugin-jsx/issues/161 */}
+
+        {/* https://liujiangblog.com/course/Vue3/307 */}
+        {h(Header, { title: '000000' })}
 
         <br />
 
