@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import App from './app/App.vue';
+import { App } from './app/app.component';
 import { router } from './app/router';
 import { store } from './app/store';
 import type { EnvironmentVariable } from '@/app/shared/types';
@@ -7,7 +7,13 @@ import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
-const environmentVariable = extractFromEnv<EnvironmentVariable>(process.env.NODE_ENV);
+const environmentVariable = extractFromEnv(
+  process.env.NODE_ENV
+);
+
+const s = process.env.NODE_ENV as EnvironmentVariable | undefined;
+
+const ev = extractFromEnv(s);
 
 if (environmentVariable === 'development') {
   app.config.performance = true;
