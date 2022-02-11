@@ -31,15 +31,14 @@ import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
  * https://alligator.io/vuejs/jsx-render-functions/
  */
 
-console.log(Header);
 
 export const NotFound = defineComponent({
   name: 'NotFound',
 
   components: {
-    Gif404,
-    Header,
-    TextField
+    // Gif404,
+    // Header,
+    // TextField
   },
 
   setup(props, context) {
@@ -85,10 +84,6 @@ export const NotFound = defineComponent({
   },
 
   render() {
-    console.log(
-      "resolveDynamicComponent('Header'):",
-      resolveDynamicComponent(Header.name)
-    );
     // console.log('this.$refs:', this.$refs);
 
     const { textFieldRef } = this;
