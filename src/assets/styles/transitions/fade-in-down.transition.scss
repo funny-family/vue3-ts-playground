@@ -1,4 +1,4 @@
-@keyframes fade-in-down {
+@keyframes fadeInDown {
   from {
     -webkit-transform: translate3d(0, -40px, 0);
     transform: translate3d(0, -40px, 0);
@@ -11,21 +11,21 @@
   }
 }
 
-.fade-in-down-leave-to {
+.fadeInDownLeaveTo {
   -webkit-transform: opacity 0.3s;
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-.fade-in-down-enter-from {
+.fadeInDownEnterFrom {
   -webkit-transform: translate3d(0, -40px, 0);
   transform: translate3d(0, -40px, 0);
   opacity: 0;
 }
 
-.fade-in-down-enter-to {
+.fadeInDownEnterTo {
   opacity: 0;
-  animation-name: fade-in-down;
+  animation-name: fadeInDown;
   animation-duration: 0.7s;
   animation-fill-mode: both;
 }
