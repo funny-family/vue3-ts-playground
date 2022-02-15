@@ -7,9 +7,7 @@ import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
 const app = createApp(App);
 
-const environmentVariable = extractFromEnv(
-  process.env.NODE_ENV
-);
+const environmentVariable = extractFromEnv(process.env.NODE_ENV);
 
 const s = process.env.NODE_ENV as EnvironmentVariable | undefined;
 
