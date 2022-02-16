@@ -11,9 +11,11 @@ import {
   withDirectives,
   withScopeId,
   KeepAlive,
-  Transition
+  Transition,
+  UnwrapRef
 } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView, useLink, RouteMeta } from 'vue-router';
+import { RouterLink } from '@/app/shared/components/vue/router-link/router-link.component'
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import type { Gif404Slots } from '../../shared/components/gif-404/gif-404.slots';
@@ -30,7 +32,6 @@ import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
  * Writing Vue.js Render Functions in JSX
  * https://alligator.io/vuejs/jsx-render-functions/
  */
-
 
 export const NotFound = defineComponent({
   name: 'NotFound',
@@ -156,20 +157,33 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        {/* <KeepAlive
-          v-slots={{
-            default: () => (
-              <RouterLink to="/">
-                <h2>to home!</h2>
-              </RouterLink>
-            )
-          }}
-        /> */}
+        <>
+          {/* "KeepAlive" component does not work with "v-slots" directive */}
+          <KeepAlive
+            v-slots={{
+              default: () => (
+                <RouterLink to="/">
+                  <h2>to home!</h2>
+                </RouterLink>
+              )
+            }}
+          />
+        </>
 
         <KeepAlive>
-          <RouterLink to="/">
+          {/* <RouterLink to="/">
             <h2>to home!</h2>
-          </RouterLink>
+          </RouterLink> */}
+          <RouterLink
+            to="/"
+            v-slots={{
+              default: (args) => {
+                console.log('"RouterLink" args:', args);
+
+                return <h2>to home!</h2>;
+              }
+            }}
+          />
         </KeepAlive>
 
         <Header title="t45672" />
