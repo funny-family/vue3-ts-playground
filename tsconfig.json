@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -12,9 +13,9 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env", "node"],
-    "typeRoots": ["./src/@types/", "./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./src/@types/"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "plugins": [
@@ -26,15 +27,8 @@
       }
     ]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "cli/**/*.ts"
-  ],
-  "exclude": ["node_modules", "vue.config.js"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.vue"],
+  "exclude": ["./node_modules", "./vue.config.js"],
 
   "ts-node": {
     "compilerOptions": {
