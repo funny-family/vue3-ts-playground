@@ -15,7 +15,9 @@
     "types": ["webpack-env", "node"],
     "typeRoots": ["./node_modules/@types", "./src/@types/"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "vue-router": ["./src/@types/vue-router/index.ts"],
+      "vue": ["./src/@types/vue/index.ts"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "plugins": [
