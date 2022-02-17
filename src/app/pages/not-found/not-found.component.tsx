@@ -14,8 +14,7 @@ import {
   Transition,
   UnwrapRef
 } from 'vue';
-import { RouterView, useLink, RouteMeta } from 'vue-router';
-import { RouterLink } from '@/app/shared/components/vue/router-link/router-link.component'
+import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import type { Gif404Slots } from '../../shared/components/gif-404/gif-404.slots';
