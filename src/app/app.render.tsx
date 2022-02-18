@@ -10,7 +10,7 @@ export const render = function (this: AppBindings) {
   return (
     <RouterView
       v-slots={{
-        default: ({ Component, route }: { Component: any; route: any }) => (
+        default: ({ Component, route }) => (
           <Transition
             name={t.fadeInDown}
             enterToClass={t.fadeInDownEnterTo}
@@ -25,7 +25,9 @@ export const render = function (this: AppBindings) {
 
                 const DynamicComponent = resolveDynamicComponent(Component);
                 // if we keep "resolveDynamicComponent(Component)" as it is we will get "Symbol()" at first and then the page component
-                return typeof DynamicComponent === 'symbol' ? '' : DynamicComponent;
+                return typeof DynamicComponent === 'symbol'
+                  ? ''
+                  : DynamicComponent;
                 // return DynamicComponent;
               }
             }}
