@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'vue';
 
-type CSSClassAttribute = { class?: string };
+export type CSSClassAttribute = { class?: string };
 
 type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<T, 'class'>;
 
