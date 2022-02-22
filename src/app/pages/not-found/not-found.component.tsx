@@ -12,7 +12,9 @@ import {
   withScopeId,
   KeepAlive,
   Transition,
-  UnwrapRef
+  UnwrapRef,
+  setBlockTracking,
+  VNode
 } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
@@ -83,8 +85,27 @@ export const NotFound = defineComponent({
     };
   },
 
-  render() {
-    // console.log('this.$refs:', this.$refs);
+  // @ts-ignore
+  render(ctx, cache, props, setup, data, options) {
+    const _cache: VNode[] = cache;
+    // export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    //   return _cache[0] || (
+    //     _setBlockTracking(-1),
+    //     _cache[0] = _createElementVNode("div", null, [
+    //       _createTextVNode(" addadada ")
+    //     ]),
+    //     _setBlockTracking(1),
+    //     _cache[0]
+    //   )
+    // }
+    console.group();
+    console.log('ctx:', ctx);
+    console.log('cache:', cache);
+    console.log('props:', props);
+    console.log('setup:', setup);
+    console.log('data:', data);
+    console.log('options:', options);
+    console.groupEnd();
 
     const { textFieldRef } = this;
     const trimModifier = 'trim';
@@ -113,6 +134,7 @@ export const NotFound = defineComponent({
             <fieldset>
               <label>aduadaud</label>
               <input
+                class={1}
                 about="aduadaud"
                 type="text"
                 // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
@@ -224,11 +246,14 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        <Govno.Gif404 text="123131313" class="3434343343" title="11" />
-        {/* </div> */}
-        {/* {isGif404Visible.value === true &&
-          <Gif404 v-if={() => true} aria-label="this is giiifff!" />
-        } */}
+        {_cache[0] ||
+          (setBlockTracking(-1),
+          (_cache[0] = (
+            <Govno.Gif404 text="123131313" class="3434343343" title="11" />
+          )),
+          setBlockTracking(1),
+          _cache[0])}
+
         <button
           type="button"
           onClick={() => (this.isGif404Visible = !this.isGif404Visible)}
@@ -239,5 +264,7 @@ export const NotFound = defineComponent({
     );
   }
 });
+
+console.log(111111, (() => NotFound).toString());
 
 export default NotFound;
