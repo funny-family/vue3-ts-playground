@@ -40,8 +40,7 @@ export type UnionOfProperties<T> = {
 export type RecordOfBoolean<T extends string> = Record<T, boolean>;
 
 /**
- * @see
- * https://stackoverflow.com/questions/53899692/typescript-how-to-extract-only-the-optional-keys-from-a-type
+ * @see https://stackoverflow.com/questions/53899692/typescript-how-to-extract-only-the-optional-keys-from-a-type
  */
 export type OptionalPropertyOf<T extends object> = Exclude<
   {
