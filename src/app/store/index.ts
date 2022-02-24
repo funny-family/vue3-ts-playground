@@ -17,7 +17,7 @@
 // https://soshace.com/building-web-apps-with-vue-3-composition-api-typescript-vuex4-0/ !!!
 // https://dev.to/shubhadip/vue-3-vuex-4-modules-typescript-2i2o
 
-import { createPinia, defineStore } from "pinia";
+import { createPinia, defineStore } from 'pinia';
 
 export const store = createPinia();
 
@@ -25,7 +25,7 @@ export const rootStoreId = 'root';
 export const useRootStore = defineStore(rootStoreId, {
   state: () => ({
     counter: 0,
-    name: 'Eduardo',
+    name: 'Eduardo'
   }),
 
   // optional getters
@@ -36,7 +36,7 @@ export const useRootStore = defineStore(rootStoreId, {
     // use getters in other getters
     doubleCountPlusOne(): number {
       return this.doubleCount * 2 + 1;
-    },
+    }
   },
 
   // optional actions
@@ -44,6 +44,6 @@ export const useRootStore = defineStore(rootStoreId, {
     reset() {
       // `this` is the store instance
       this.counter = 0;
-    },
-  },
+    }
+  }
 });
