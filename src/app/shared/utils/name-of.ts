@@ -1,8 +1,25 @@
-/* eslint-disable no-useless-escape */
+// variable name regexp (https://mothereff.in/js-variables)
+// ^([a-zA-Z_$][a-zA-Z\\d_$]*)$
 
-// /function{return(.+)(;?)}/
+/*
+  /(((\b(function)\b)((\s|\t)*)?)(\(\)))|(((\s|\t)*)?(\{|\})((\n|\r)?))|(((\s|\t)*)?(\b(return)\b)((\s|\t)*)?)|(((\s|\t)*)?\;?((\s|\t)*)?)|(((\s|\t)*)?\})/g
+  this regexp match all except "Test"
 
-// https://mothereff.in/js-variables
+  example:
+
+  function() {
+    return Test;
+  }
+*/
+
+/*
+  /(\()(\))((\s?)*)(\=\>)((\s?)*)/g" or "/[ |\(\)=>]/g"
+  this regexp match all except "Test"
+
+  example:
+
+  () => Test
+*/
 
 /**
  * @see https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
@@ -18,8 +35,14 @@
 export const nameOf = (callback: Function) =>
   callback
     .toString()
-    .replace(/(\r\n|\n|\r)/gm, '')
-    .replace(/[ |\(\)=>]/g, '')
-
-    .replace(/function{return/g, '')
-    .replace(/(;?)}/g, '');
+    .replace(
+      /*
+      combination of
+      "(((\b(function)\b)((\s|\t)*)?)(\(\)))|(((\s|\t)*)?(\{|\})((\n|\r)?))|(((\s|\t)*)?(\b(return)\b)((\s|\t)*)?)|(((\s|\t)*)?\;?((\s|\t)*)?)|(((\s|\t)*)?\})"
+      and
+      "(\()(\))((\s?)*)(\=\>)((\s?)*)"
+    */
+      /((\()(\))((\s?)*)(\=\>)((\s?)*)|(((\b(function)\b)((\s|\t)*)?)(\(\)))|(((\s|\t)*)?(\{|\})((\n|\r)?))|(((\s|\t)*)?(\b(return)\b)((\s|\t)*)?)|(((\s|\t)*)?\;?((\s|\t)*)?)|(((\s|\t)*)?\}))/g,
+      ''
+    )
+    .replace(/((.*)(\.))(?:)/g, '');
