@@ -107,7 +107,6 @@ export const NotFound = defineComponent({
     console.log('options:', options);
     console.groupEnd();
 
-    const { textFieldRef } = this;
     const trimModifier = 'trim';
 
     return (
@@ -165,15 +164,11 @@ export const NotFound = defineComponent({
               // works! ;)
               // ref={nameOf(() => this.textFieldRef).split('.')[1]}
               // works! ;)
-              ref={createTemplateRef(nameOf(() => this.textFieldRef))}
+              ref={nameOf(() => this.textFieldRef)}
             />
           </>
-          <div>textFieldValue: {this.textFieldValue}</div>
-          <div>{nameOf(() => this.textFieldRef).split('.')[1]}</div>
-          <div>
-            "createTemplateRef(this.textFieldRef as any)"{' '}
-            {createTemplateRef(nameOf(() => this.textFieldRef))}
-          </div>
+          {/* <div>textFieldRef: {`${this.textFieldRef}`}</div> */}
+          <div>nameOf "textFieldValue": {nameOf(() => this.textFieldRef)}</div>
         </div>
 
         <hr />
@@ -264,7 +259,5 @@ export const NotFound = defineComponent({
     );
   }
 });
-
-console.log(111111, (() => NotFound).toString());
 
 export default NotFound;
