@@ -1,7 +1,7 @@
-interface TernaryObject<I, E> {
+interface TernaryObject<T, F> {
   condition: boolean;
-  onTruthy : () => I | void;
-  onFalsy: () => E | void;
+  onTruthy : () => T | void;
+  onFalsy: () => F | void;
 }
 
 /**
@@ -17,8 +17,8 @@ interface TernaryObject<I, E> {
  *    onFalsy: () => 'odd number!'
  * })
  */
-export const callTernary = <I, E>({
+export const callTernary = <T, F>({
   condition,
   onTruthy,
   onFalsy
-}: TernaryObject<I, E>) => (condition ? onTruthy() : onFalsy());
+}: TernaryObject<T, F>) => (condition ? onTruthy() : onFalsy());
