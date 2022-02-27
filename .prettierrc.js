@@ -3,4 +3,5 @@ module.exports = {
   htmlWhitespaceSensitivity: 'css',
   singleQuote: true,
   trailingComma: 'none',
+  printWidth: 80
 };
