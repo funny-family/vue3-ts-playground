@@ -1,7 +1,7 @@
 interface TernaryObject<T, F> {
   condition: boolean;
-  onTruthy : () => T | void;
-  onFalsy: () => F | void;
+  onTruthy : () => T;
+  onFalsy: () => F;
 }
 
 /**
