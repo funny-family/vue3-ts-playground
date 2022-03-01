@@ -1,9 +1,9 @@
 import type { VNode, VNodeTypes } from 'vue';
 import type { Data } from '@/app/shared/types';
 
-type D = Record<string, undefined>;
+type D = Data<undefined>;
 
-type RenderFunctionReturn = VNodeTypes | JSX.Element;
+type RenderFunctionReturnValue = VNodeTypes | JSX.Element;
 
 export type RenderFunction<
   This,
@@ -21,4 +21,4 @@ export type RenderFunction<
   $setup: $Setup,
   $data: $Data,
   $options: $Options
-) => RenderFunctionReturn;
+) => RenderFunctionReturnValue;
