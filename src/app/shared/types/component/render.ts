@@ -1,4 +1,4 @@
-import type { VNode, VNodeTypes } from 'vue';
+import type { VNodeTypes } from 'vue';
 import type { Data } from '@/app/shared/types';
 
 type D = Data<undefined>;
@@ -8,7 +8,7 @@ type RenderFunctionReturnValue = VNodeTypes | JSX.Element;
 export type RenderFunction<
   This,
   Ctx = D,
-  Cache = VNode[],
+  Cache = any[],
   $Props = D,
   $Setup = D,
   $Data = D,
