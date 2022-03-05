@@ -14,7 +14,8 @@ import {
   Transition,
   UnwrapRef,
   setBlockTracking,
-  VNode
+  VNode,
+  mergeProps
 } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
@@ -28,6 +29,7 @@ import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
 import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
+import { callTernary } from '@/app/shared/utils/call-ternary';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -63,6 +65,8 @@ export const NotFound = defineComponent({
 
     console.log('context:', context);
 
+    const counter = ref(0);
+
     onMounted(() => {
       console.log('"TextField" ref value:', textFieldRef.value);
       console.log('input ref value:', inputRef.value);
@@ -81,7 +85,8 @@ export const NotFound = defineComponent({
       textFieldRef,
       trimModifier,
       inputRef,
-      s
+      s,
+      counter
     };
   },
 
@@ -173,6 +178,7 @@ export const NotFound = defineComponent({
 
         <hr />
 
+        {/* =================================================================================== */}
         <>
           {/* "KeepAlive" component does not work with "v-slots" directive */}
           <KeepAlive
@@ -185,6 +191,7 @@ export const NotFound = defineComponent({
             }}
           />
         </>
+        {/* =================================================================================== */}
 
         <KeepAlive>
           {/* <RouterLink to="/">
@@ -201,6 +208,22 @@ export const NotFound = defineComponent({
             }}
           />
         </KeepAlive>
+
+        <br />
+
+        <div>
+          <div>
+            counter: <b>{this.counter}</b> is{' '}
+            {callTernary({
+              condition: this.counter % 2 === 0,
+              onTruthy: () => 'even number!',
+              onFalsy: () => 'odd number!'
+            })}
+          </div>
+          <button type="button" onClick={() => this.counter++}>
+            counter + 1
+          </button>
+        </div>
 
         <Header title="t45672" />
         {/* https://v3.vuejs.org/api/global-api.html#resolvecomponent */}
