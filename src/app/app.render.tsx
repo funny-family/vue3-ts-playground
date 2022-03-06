@@ -15,6 +15,9 @@ export const render: RenderFunction<AppBindings> = function () {
         default: ({ Component, route }) => (
           <Transition
             name={t.fadeInDown}
+            // {...{
+            //   enterToClass: t.fadeInDownEnterTo
+            // }}
             enterToClass={t.fadeInDownEnterTo}
             enterFromClass={t.fadeInDownEnterFrom}
             leaveToClass={t.fadeInDownLeaveTo}
