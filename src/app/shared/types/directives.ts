@@ -10,17 +10,11 @@ export namespace VSlots {
   };
 }
 
-/**
- * @see https://v3.vuejs.org/api/directives.html#v-once
- */
-export type VOnce = {
-  'v-once'?: boolean;
-};
-
 export namespace VModel {
   type Value = string | boolean;
   type Argument = string;
   type BaseModifier = `${Modifier.VModel.Base}`;
+  type CombinedModifier<T> = BaseModifier | T;
 
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-model
@@ -36,13 +30,13 @@ export namespace VModel {
           V,
           AdditionalModifier extends void
             ? BaseModifier[]
-            : (BaseModifier | AdditionalModifier)[]
+            : CombinedModifier<AdditionalModifier>[]
         ]
       | [
-          Value,
+          V,
           AdditionalModifier extends void
             ? BaseModifier[]
-            : (BaseModifier | AdditionalModifier)[]
+            : CombinedModifier<AdditionalModifier>[]
         ][]
       // ================================================
       | [
@@ -50,14 +44,15 @@ export namespace VModel {
           A,
           AdditionalModifier extends void
             ? BaseModifier[]
-            : (BaseModifier | AdditionalModifier)[]
+            : CombinedModifier<AdditionalModifier>[]
         ]
+      // ================================================
       | [
           V,
           A,
           AdditionalModifier extends void
             ? BaseModifier[]
-            : (BaseModifier | AdditionalModifier)[]
+            : CombinedModifier<AdditionalModifier>[]
         ][];
   };
 }
