@@ -11,11 +11,13 @@ interface TernaryObject<T, F> {
  * Functional abstraction for ternary operator.
  *
  * @example
- * callTernary({
- *    condition: this.counter % 2 === 0,
+ * const result = callTernary({
+ *    condition: this.counter % 2 === 0, // this.counter === 4
  *    onTruthy: () => 'even number!',
  *    onFalsy: () => 'odd number!'
  * })
+ *
+ * console.log(result); // "even number!"
  */
 export const callTernary = <T, F>({
   condition,
