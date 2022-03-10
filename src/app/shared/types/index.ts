@@ -48,3 +48,17 @@ export type OptionalPropertyOf<T extends object> = Exclude<
   }[keyof T],
   undefined
 >;
+
+/**
+ * @example
+ * type T1 = {
+ *   value1: any;
+ * };
+ *
+ * type T2 = {
+ *   value2: any;
+ * };
+ *
+ * type T3 = ExtractedKeys<T1 & T2>; // type T3 = "value1" | "value2"
+ */
+export type ExtractedKeys<T> = keyof T;
