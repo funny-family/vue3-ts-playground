@@ -1,6 +1,15 @@
 import type { Slots } from 'vue';
 import type { Modifier } from '@/app/shared/utils/modifiers';
 
+export namespace VShow {
+  /**
+   * @see https://vuejs.org/api/built-in-directives.html#v-show
+   */
+  export type Directive = {
+    'v-show'?: boolean;
+  };
+}
+
 export namespace VSlots {
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-slot
