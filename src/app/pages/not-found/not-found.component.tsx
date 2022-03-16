@@ -28,7 +28,6 @@ import type { TextFieldBindings } from '@/app/shared/components/text-field/text-
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
-import { createTemplateRef } from '@/app/shared/utils/create-template-ref';
 import { callTernary } from '@/app/shared/utils/call-ternary';
 
 /**
