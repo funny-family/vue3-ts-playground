@@ -140,9 +140,7 @@ export const NotFound = defineComponent({
                 class={1}
                 about="aduadaud"
                 type="text"
-                // v-model={[this.textFieldValue, [Modifier.VModel.Base.Trim]]}
                 v-model={[this.textFieldValue, ['trim']]}
-                // ref={this.inputRef}
                 ref="inputRef"
               />
             </fieldset>
@@ -160,14 +158,6 @@ export const NotFound = defineComponent({
               class="TextField"
               label="Text Field Label"
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
-              // {...{ 'v-model': [this.textFieldValue, ['trim']] }}
-              // do not work!
-              // ref={this.textFieldRef as any}
-              // works! ;)
-              // ref="textFieldRef"
-              // works! ;)
-              // ref={nameOf(() => this.textFieldRef).split('.')[1]}
-              // works! ;)
               ref={nameOf(() => this.textFieldRef)}
             />
           </>
