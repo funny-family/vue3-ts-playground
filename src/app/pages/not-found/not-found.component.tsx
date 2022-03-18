@@ -183,10 +183,6 @@ export const NotFound = defineComponent({
         {/* =================================================================================== */}
 
         <KeepAlive>
-          {/* <RouterLink to="/">
-            <h2>to home!</h2>
-          </RouterLink> */}
-          <RouterLink
             to="/"
             v-slots={{
               default: (args) => {
