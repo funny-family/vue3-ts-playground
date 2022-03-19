@@ -91,26 +91,6 @@ export const NotFound = defineComponent({
 
   // @ts-ignore
   render(ctx, cache, props, setup, data, options) {
-    const _cache: VNode[] = cache;
-    // export function render(_ctx, _cache, $props, $setup, $data, $options) {
-    //   return _cache[0] || (
-    //     _setBlockTracking(-1),
-    //     _cache[0] = _createElementVNode("div", null, [
-    //       _createTextVNode(" addadada ")
-    //     ]),
-    //     _setBlockTracking(1),
-    //     _cache[0]
-    //   )
-    // }
-    console.group();
-    console.log('ctx:', ctx);
-    console.log('cache:', cache);
-    console.log('props:', props);
-    console.log('setup:', setup);
-    console.log('data:', data);
-    console.log('options:', options);
-    console.groupEnd();
-
     const trimModifier = 'trim';
 
     return (
