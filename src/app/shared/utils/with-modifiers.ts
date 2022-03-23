@@ -1,13 +1,15 @@
-import { Events, withModifiers as _withModifiers } from 'vue';
+import type { Events } from 'vue';
 import type { UnionOfProperties } from '@/app/shared/types';
+import { withModifiers as _withModifiers } from 'vue';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { Modifier } from '@/app/shared/utils/modifiers';
+import { isArrayEmpty } from '@/app/shared/utils/is-array-empty';
+import { callTernary } from '@/app/shared/utils/call-ternary';
 
 type OnlyOneKey<K extends string, V = any> = {
-  [P in K]: (Record<P, V> &
-    Partial<Record<Exclude<K, P>, never>>) extends infer O
+  [P in K]: Record<P, V> & Partial<Record<Exclude<K, P>, never>> extends infer O
     ? { [Q in keyof O]: O[Q] }
-    : never
+    : never;
 }[K];
 
 type EventObject = {
@@ -54,8 +56,6 @@ export const withModifiers = (
       ] as string[]
     ).includes(modifier);
 
-  const isArrayEmpty = <T>(array: T[]): boolean => array.length === 0;
-
   const transformableModifiers = modifiers.filter((modifier) =>
     isModifierTransformable(modifier)
   );
@@ -69,9 +69,15 @@ export const withModifiers = (
   const outputEventName = `${inputEventName}${transformableModifiers
     .map(capitalize)
     .join('')}`;
-  const outputEventFunction = isArrayEmpty(nonTransformableModifiers)
-    ? inputEventFunction
-    : _withModifiers(inputEventFunction, [...nonTransformableModifiers]);
+  const isNonTransformableModifierListEmpty = isArrayEmpty(
+    nonTransformableModifiers
+  );
+  const outputEventFunction = callTernary({
+    condition: isNonTransformableModifierListEmpty,
+    onTruthy: () => inputEventFunction,
+    onFalsy: () =>
+      _withModifiers(inputEventFunction, [...nonTransformableModifiers])
+  });
 
   const eventObjetWithModifiers: EventObjetWithModifiers = {
     [outputEventName]: outputEventFunction
