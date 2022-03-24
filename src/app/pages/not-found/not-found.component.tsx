@@ -24,7 +24,7 @@ import type { Gif404Slots } from '../../shared/components/gif-404/gif-404.slots'
 import { Govno } from '../../shared/components/gif-404';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
-import type { TextFieldBindings } from '@/app/shared/components/text-field/text-field.setup';
+import type { TextFieldRef } from '@/app/shared/components/text-field/text-field.ref';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
@@ -58,7 +58,7 @@ export const NotFound = defineComponent({
 
     const textFieldValue = ref('');
     const textFieldValueNumber = ref(0);
-    const textFieldRef = ref<TextFieldBindings>();
+    const textFieldRef = ref<TextFieldRef>();
     const inputRef = ref();
 
     console.log('context:', context);
@@ -162,6 +162,7 @@ export const NotFound = defineComponent({
         {/* =================================================================================== */}
 
         <KeepAlive>
+          <RouterLink
             to="/"
             v-slots={{
               default: (args) => {
@@ -228,13 +229,13 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        {_cache[0] ||
+        {cache[0] ||
           (setBlockTracking(-1),
-          (_cache[0] = (
+          (cache[0] = (
             <Govno.Gif404 text="123131313" class="3434343343" title="11" />
           )),
           setBlockTracking(1),
-          _cache[0])}
+          cache[0])}
 
         <button
           type="button"
