@@ -1,4 +1,6 @@
 /**
+ * @see https://www.programiz.com/javascript/examples/first-letter-uppercase
+ *
  * @description
  * Capitalize first letter in a string.
  *

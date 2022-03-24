@@ -1,13 +1,21 @@
 module.exports = {
   presets: ['@vue/cli-plugin-babel/preset'],
-  // plugins: [
-  //   [
-  //     'babel-plugin-react-scoped-css',
-  //     {
-  //       // include: '.local.(sa|sc|c)ss$'
-  //       // include: '.w+.(sa|sc|c)ss$' // .\w+.(sa|sc|c)ss$
-  //       include: '.(sa|sc|c)ss$' // .\w+.(sa|sc|c)ss$
-  //     }
-  //   ]
-  // ]
+  plugins: [
+    [
+      '@vue/babel-plugin-jsx',
+      {
+        transformOn: true,
+        optimize: true,
+        enableObjectSlots: false
+      }
+    ]
+    // [
+    //   'react-css-modules', // babel-plugin-react-css-modules
+    //   {
+    //     attributeNames: {
+    //       styleName: 'class'
+    //     }
+    //   }
+    // ]
+  ]
 };
