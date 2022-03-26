@@ -3,10 +3,12 @@
  * @see https://www.codegrepper.com/code-examples/javascript/javascript+check+if+string+contains+capital+letter
  *
  * @description
- * adadadad
+ * Check if string has a capital letter as first character.
  *
  * @example
- * adada
+ * const capitalizedString = 'Hellooooo!';
+ * const hasStringCapitalCharacter = isCapitalized(capitalizedString);
+ * console.log(hasStringCapitalCharacter); // true
  */
 export const isCapitalized = (string: string): boolean =>
   /^[A-Z]/g.test(string);
