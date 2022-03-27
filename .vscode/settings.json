@@ -15,5 +15,12 @@
   "editor.formatOnSave": true,
   "files.exclude": {
     "node_modules/": true
-  }
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html"
+  ]
 }
