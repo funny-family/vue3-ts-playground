@@ -1,4 +1,4 @@
-import type { VNodeTypes } from 'vue';
+import type { VNodeTypes, ComponentPublicInstance } from 'vue';
 import type { Data } from '@/app/shared/types';
 
 type D = Data<undefined>;
@@ -10,12 +10,12 @@ export type RenderFunction<
   Ctx = D,
   Cache = any[],
   $Props = D,
-  $Setup = D,
+  $Setup = This,
   $Data = D,
-  $Options = D
+  $Options = any
 > = (
   this: This,
-  ctx: Ctx,
+  ctx: Ctx & ComponentPublicInstance,
   cache: Cache,
   $props: $Props,
   $setup: $Setup,
