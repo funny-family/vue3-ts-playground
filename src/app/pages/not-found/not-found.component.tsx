@@ -44,8 +44,8 @@ export const NotFound = defineComponent({
 
     const isRed = true;
 
-    console.log('isGif404Visible:', isGif404Visible.value);
-    console.log('isRed:', isRed);
+    // console.log('isGif404Visible:', isGif404Visible.value);
+    // console.log('isRed:', isRed);
 
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
@@ -60,8 +60,8 @@ export const NotFound = defineComponent({
     const counter = ref(0);
 
     onMounted(() => {
-      console.log('"TextField" ref value:', textFieldRef.value);
-      console.log('input ref value:', inputRef.value);
+      // console.log('"TextField" ref value:', textFieldRef.value);
+      // console.log('input ref value:', inputRef.value);
     });
 
     const trimModifier = 'trim';
@@ -86,7 +86,7 @@ export const NotFound = defineComponent({
   render(ctx, cache, props, setup, data, options) {
     const trimModifier = 'trim';
 
-    console.log(arguments);
+    // console.log(arguments);
 
     return (
       <div class="gif404">
