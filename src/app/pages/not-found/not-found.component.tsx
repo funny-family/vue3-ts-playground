@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
@@ -5,30 +6,23 @@ import {
   defineComponent,
   onMounted,
   ref,
-  resolveDynamicComponent,
-  // Component as DynamicComponent,
   h,
-  withDirectives,
   withScopeId,
   KeepAlive,
-  Transition,
-  UnwrapRef,
-  setBlockTracking,
-  VNode,
-  mergeProps
+  setBlockTracking
 } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
-import type { Gif404Slots } from '../../shared/components/gif-404/gif-404.slots';
-import { Govno } from '../../shared/components/gif-404';
-import { generateGuid } from '@/app/shared/utils/guid';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
 import type { TextFieldRef } from '@/app/shared/components/text-field/text-field.ref';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
 import { callTernary } from '@/app/shared/utils/call-ternary';
+import { renderOnce } from '@/app/shared/utils/render-once';
+import { generateGuid } from '@/app/shared/utils/guid';
+import { Govno } from '@/app/shared/components/gif-404';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -50,8 +44,8 @@ export const NotFound = defineComponent({
 
     const isRed = true;
 
-    console.log('isGif404Visible:', isGif404Visible.value);
-    console.log('isRed:', isRed);
+    // console.log('isGif404Visible:', isGif404Visible.value);
+    // console.log('isRed:', isRed);
 
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
@@ -66,8 +60,8 @@ export const NotFound = defineComponent({
     const counter = ref(0);
 
     onMounted(() => {
-      console.log('"TextField" ref value:', textFieldRef.value);
-      console.log('input ref value:', inputRef.value);
+      // console.log('"TextField" ref value:', textFieldRef.value);
+      // console.log('input ref value:', inputRef.value);
     });
 
     const trimModifier = 'trim';
@@ -91,6 +85,8 @@ export const NotFound = defineComponent({
   // @ts-ignore
   render(ctx, cache, props, setup, data, options) {
     const trimModifier = 'trim';
+
+    // console.log(arguments);
 
     return (
       <div class="gif404">
@@ -176,7 +172,47 @@ export const NotFound = defineComponent({
 
         <br />
 
-        <div>
+        {/* {cache[0] ||
+          (setBlockTracking(-1),
+          (cache[0] = (
+            <div>
+              <div>
+                counter: <b>{this.counter}</b> is{' '}
+                {callTernary({
+                  condition: this.counter % 2 === 0,
+                  onTruthy: () => 'even number!',
+                  onFalsy: () => 'odd number!'
+                })}
+              </div>
+              <button type="button" onClick={() => this.counter++}>
+                counter + 1
+              </button>
+            </div>
+          )),
+          setBlockTracking(1),
+          cache[0])} */}
+
+        {renderOnce({
+          renderFunctionArguments: arguments,
+          cacheSlot: 0,
+          node: (
+            <div>
+              <div>
+                counter: <b>{this.counter}</b> is{' '}
+                {callTernary({
+                  condition: this.counter % 2 === 0,
+                  onTruthy: () => 'even number!',
+                  onFalsy: () => 'odd number!'
+                })}
+              </div>
+              <button type="button" onClick={() => this.counter++}>
+                counter + 1
+              </button>
+            </div>
+          )
+        })}
+
+        {/* <div>
           <div>
             counter: <b>{this.counter}</b> is{' '}
             {callTernary({
@@ -188,7 +224,7 @@ export const NotFound = defineComponent({
           <button type="button" onClick={() => this.counter++}>
             counter + 1
           </button>
-        </div>
+        </div> */}
 
         <Header title="t45672" />
         {/* https://v3.vuejs.org/api/global-api.html#resolvecomponent */}
@@ -229,13 +265,20 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        {cache[0] ||
+        {/* {cache[0] ||
           (setBlockTracking(-1),
           (cache[0] = (
             <Govno.Gif404 text="123131313" class="3434343343" title="11" />
           )),
           setBlockTracking(1),
-          cache[0])}
+          cache[0])} */}
+
+        {/* <hr />
+
+        {renderOnce({
+          renderFunctionArguments: arguments,
+          node: <Govno.Gif404 text="123131313" class="3434343343" title="11" />
+        })} */}
 
         <button
           type="button"
