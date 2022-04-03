@@ -10,6 +10,10 @@ interface ArgumentsOfRenderOnceFunction {
 }
 
 /**
+ * @deprecated
+ *
+ * @private
+ *
  * @see https://vuejs.org/api/built-in-directives.html#v-once
  *
  * @description
@@ -32,34 +36,14 @@ interface ArgumentsOfRenderOnceFunction {
  * }
  * ...
  */
-// export const renderOnce = ({
-//   renderFunctionArguments,
-//   cacheSlot,
-//   node
-// }: ArgumentsOfRenderOnceFunction): Node => {
-// export const renderOnce = (
-//   renderFunctionArguments: IArguments,
-//   cacheSlot: number,
-//   node: Node
-// ): Node => {
-export const renderOnce = ({
-  cache,
-  cacheSlot,
-  node
-}: {
-  cache: any;
-  cacheSlot: number;
-  node: Node;
-}): Node => {
-  // const cache = renderFunctionArguments[1];
-  // const cache = renderFunctionArguments as any;
-
-  const cachedNode =
+export const renderOnce = (cache: any[], cacheSlot: number, node: Node) => {
+  return (
     cache[cacheSlot] ||
     (setBlockTracking(-1),
     (cache[cacheSlot] = node),
     setBlockTracking(1),
-    cache[cacheSlot]);
+    cache[cacheSlot])
+  );
 
   // const cachedNode =
   //   cache || (setBlockTracking(-1), (cache = node), setBlockTracking(1), cache);
@@ -71,5 +55,5 @@ export const renderOnce = ({
   //   throw new Error(message);
   // }
 
-  return cachedNode;
+  // return cachedNode;
 };
