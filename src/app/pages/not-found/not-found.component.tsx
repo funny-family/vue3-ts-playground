@@ -20,9 +20,9 @@ import { Modifier } from '@/app/shared/utils/modifiers';
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
 import { callTernary } from '@/app/shared/utils/call-ternary';
-import { renderOnce } from '@/app/shared/utils/render-once';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { Govno } from '@/app/shared/components/gif-404';
+import { renderOnce } from '@/app/shared/utils/render-once';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -86,7 +86,7 @@ export const NotFound = defineComponent({
   render(ctx, cache, props, setup, data, options) {
     const trimModifier = 'trim';
 
-    // console.log(arguments);
+    console.log('"args" of "not-found" component:', arguments);
 
     return (
       <div class="gif404">
@@ -192,19 +192,23 @@ export const NotFound = defineComponent({
           setBlockTracking(1),
           cache[0])}
 
-        {/* <div>
+        {/* {renderOnce(
+          cache,
+          0,
           <div>
-            counter: <b>{this.counter}</b> is{' '}
-            {callTernary({
-              condition: this.counter % 2 === 0,
-              onTruthy: () => 'even number!',
-              onFalsy: () => 'odd number!'
-            })}
+            <div>
+              counter: <b>{this.counter}</b> is{' '}
+              {callTernary({
+                condition: this.counter % 2 === 0,
+                onTruthy: () => 'even number!',
+                onFalsy: () => 'odd number!'
+              })}
+            </div>
+            <button type="button" onClick={() => this.counter++}>
+              counter + 1
+            </button>
           </div>
-          <button type="button" onClick={() => this.counter++}>
-            counter + 1
-          </button>
-        </div> */}
+        )} */}
 
         <Header title="t45672" />
         {/* https://v3.vuejs.org/api/global-api.html#resolvecomponent */}
