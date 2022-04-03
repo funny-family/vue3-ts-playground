@@ -172,7 +172,7 @@ export const NotFound = defineComponent({
 
         <br />
 
-        {/* {cache[0] ||
+        {cache[0] ||
           (setBlockTracking(-1),
           (cache[0] = (
             <div>
@@ -190,27 +190,7 @@ export const NotFound = defineComponent({
             </div>
           )),
           setBlockTracking(1),
-          cache[0])} */}
-
-        {renderOnce({
-          renderFunctionArguments: arguments,
-          cacheSlot: 0,
-          node: (
-            <div>
-              <div>
-                counter: <b>{this.counter}</b> is{' '}
-                {callTernary({
-                  condition: this.counter % 2 === 0,
-                  onTruthy: () => 'even number!',
-                  onFalsy: () => 'odd number!'
-                })}
-              </div>
-              <button type="button" onClick={() => this.counter++}>
-                counter + 1
-              </button>
-            </div>
-          )
-        })}
+          cache[0])}
 
         {/* <div>
           <div>
@@ -265,20 +245,13 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        {/* {cache[0] ||
+        {cache[1] ||
           (setBlockTracking(-1),
-          (cache[0] = (
+          (cache[1] = (
             <Govno.Gif404 text="123131313" class="3434343343" title="11" />
           )),
           setBlockTracking(1),
-          cache[0])} */}
-
-        {/* <hr />
-
-        {renderOnce({
-          renderFunctionArguments: arguments,
-          node: <Govno.Gif404 text="123131313" class="3434343343" title="11" />
-        })} */}
+          cache[1])}
 
         <button
           type="button"
