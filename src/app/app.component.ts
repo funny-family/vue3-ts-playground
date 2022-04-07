@@ -5,7 +5,7 @@ import { nameOf } from './shared/utils/name-of';
 
 export const App = defineComponent({});
 
-// @ts-ignore
+// @ts-expect-error
 App.name = nameOf(() => App);
 App.inheritAttrs = false;
 App.setup = setup;
