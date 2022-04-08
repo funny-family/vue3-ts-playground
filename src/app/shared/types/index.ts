@@ -62,3 +62,15 @@ export type OptionalPropertyOf<T extends object> = Exclude<
  * type T3 = ExtractedKeys<T1 & T2>; // type T3 = "value1" | "value2"
  */
 export type ExtractedKeys<T> = keyof T;
+
+/**
+ * @example
+ * const f1: FunctionWithZeroArguments = () => {
+ *    console.log('well... nothing to return...');
+ * };
+ *
+ * const f2: FunctionWithZeroArguments<string> = () => {
+ *    return 'I am a string!!!';
+ * };
+ */
+export type FunctionWithZeroArguments<T = void> = () => T;
