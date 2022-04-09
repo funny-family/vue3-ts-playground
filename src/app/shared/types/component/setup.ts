@@ -9,3 +9,16 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   slots: S;
   emit: EmitFunction<E>;
 }
+
+export type SetupFunction<Props = {}, Context = SetupCtx> = (
+  props: Readonly<Props>,
+  context: Context
+) => {};
+
+// function setup1(p, c): SetupFunction {
+//   //
+// }
+
+// const setup2: SetupFunction = (p, c) => {
+//   //
+// };
