@@ -10,15 +10,14 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
   emit: EmitFunction<E>;
 }
 
-export type SetupFunction<Props = {}, Context = SetupCtx> = (
-  props: Readonly<Props>,
-  context: Context
-) => {};
+export type PropsOfSetupFunction<T = {}> = Readonly<T>;
 
-// function setup1(p, c): SetupFunction {
-//   //
-// }
-
-// const setup2: SetupFunction = (p, c) => {
-//   //
-// };
+export type ContextOfSetupFunction<
+  E = EmitsOptions,
+  A = Data,
+  S = Slots
+> = SetupContext<E> & {
+  attrs: A;
+  slots: S;
+  emit: EmitFunction<E>;
+};
