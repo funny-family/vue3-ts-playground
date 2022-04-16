@@ -1,3 +1,5 @@
+import type { FunctionWithZeroArguments } from '@/app/shared/types';
+
 // variable name regexp (https://mothereff.in/js-variables)
 // ^([a-zA-Z_$][a-zA-Z\\d_$]*)$
 
@@ -32,7 +34,7 @@
  * const nameOfEmptyStringVariable = nameOf(() => emptyString);
  * console.log(nameOfEmptyStringVariable); // emptyString
  */
-export const nameOf = (callback: Function) =>
+export const nameOf = (callback: FunctionWithZeroArguments<unknown>) =>
   callback
     .toString()
     .replace(
