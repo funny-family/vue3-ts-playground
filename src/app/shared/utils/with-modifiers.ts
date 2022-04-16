@@ -20,6 +20,8 @@ type EventObjetWithModifiers = {
   [eventName: string]: Function;
 };
 
+type EventModifier = `${Modifier.Event}`;
+
 /**
  * @see
  * https://v3.vuejs.org/guide/migration/keycode-modifiers.html#keycode-modifiers
@@ -45,7 +47,7 @@ type EventObjetWithModifiers = {
  */
 export const withModifiers = (
   eventObject: UnionOfProperties<EventObject>,
-  modifiers: string[]
+  modifiers: EventModifier[]
 ): EventObjetWithModifiers => {
   const isModifierTransformable = (modifier: string): boolean =>
     (
@@ -56,27 +58,37 @@ export const withModifiers = (
       ] as string[]
     ).includes(modifier);
 
-  const transformableModifiers = modifiers.filter((modifier) =>
-    isModifierTransformable(modifier)
-  );
-  const nonTransformableModifiers = modifiers.filter(
-    (modifier) => !isModifierTransformable(modifier)
-  );
+  let transformableModifiers: string[] = [];
+  let nonTransformableModifiers: string[] = [];
+
+  for (let i = 0; i < modifiers.length; i++) {
+    const modifier = modifiers[i];
+    const isCurrentModifierTransformable = isModifierTransformable(modifier);
+
+    if (isCurrentModifierTransformable === true) {
+      transformableModifiers.push(modifier);
+    }
+
+    nonTransformableModifiers.push(modifier);
+  }
 
   const inputEventName = Object.keys(eventObject)[0];
   const inputEventFunction = Object.values(eventObject)[0] as Function;
 
-  const outputEventName = `${inputEventName}${transformableModifiers
-    .map(capitalize)
-    .join('')}`;
+  const isTransformableModifierListEmpty = isArrayEmpty(transformableModifiers);
+  const transformableModifiersAsString = callTernary({
+    condition: isTransformableModifierListEmpty,
+    onTruthy: () => '',
+    onFalsy: () => transformableModifiers.map(capitalize).join('')
+  });
+  const outputEventName = `${inputEventName}${transformableModifiersAsString}`;
   const isNonTransformableModifierListEmpty = isArrayEmpty(
     nonTransformableModifiers
   );
   const outputEventFunction = callTernary({
     condition: isNonTransformableModifierListEmpty,
     onTruthy: () => inputEventFunction,
-    onFalsy: () =>
-      _withModifiers(inputEventFunction, [...nonTransformableModifiers])
+    onFalsy: () => _withModifiers(inputEventFunction, nonTransformableModifiers)
   });
 
   const eventObjetWithModifiers: EventObjetWithModifiers = {
