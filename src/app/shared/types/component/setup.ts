@@ -16,7 +16,7 @@ export type ContextOfSetupFunction<
   E = EmitsOptions,
   A = Data,
   S = Slots
-> = SetupContext<E> & {
+> = SetupCtx<E> & {
   attrs: A;
   slots: S;
   emit: EmitFunction<E>;
