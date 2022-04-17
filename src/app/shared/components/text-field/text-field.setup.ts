@@ -5,6 +5,7 @@ import type {
   ContextOfSetupFunction,
   PropsOfSetupFunction
 } from '@/app/shared/types/component/setup';
+import type { EventHandler } from '@/app/shared/types';
 import { emitName } from './text-field.emits';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { isCapitalized } from '@/app/shared/utils/is-capitalized';
@@ -16,7 +17,7 @@ type Context = ContextOfSetupFunction<
 >;
 
 export const setup = (props: Props, context: Context) => {
-  const onInput = (event: Event): void => {
+  const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;
 
     if (
