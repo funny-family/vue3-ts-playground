@@ -3,12 +3,15 @@
 // separate setup????? https://github.com/vuejs/composition-api/issues/650
 // https://mrcrmn.dev/articles/lightweight-components-with-vue3-and-jsx/
 
-import type { EmitsOptions, SetupContext } from 'vue';
+import type {
+  ContextOfSetupFunction,
+  PropsOfSetupFunction
+} from '@/app/shared/types/component/setup';
 
-export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
-  const props = p;
-  const context = ctx;
+type Context = ContextOfSetupFunction;
+type Props = PropsOfSetupFunction;
 
+export const setup = (props: Props, context: Context) => {
   return {
     props,
     context
