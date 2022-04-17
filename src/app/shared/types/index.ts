@@ -33,6 +33,16 @@ type SingleProperty<T, K extends keyof T> = K extends any
   ? { [Prop in K]: T[Prop] }
   : never;
 
+/**
+ * @example
+ * type SomeEvenType = {
+ *   onCopy: ((event: ClipboardEvent) => void) | undefined;
+ *   onCut: ((event: ClipboardEvent) => void) | undefined;
+ *   onPaste: ((event: ClipboardEvent) => void) | undefined;
+ * };
+ *
+ * type SomeEvenTypeAsUnionOfProperties = UnionOfProperties<SomeEvenType>; // type SomeEvenTypeAsUnionOfProperties = "onCopy: ((event: ClipboardEvent) => void) | undefined" | "onCut: ((event: ClipboardEvent) => void) | undefined" | "onPaste: ((event: ClipboardEvent) => void) | undefined"
+ */
 export type UnionOfProperties<T> = {
   [K in keyof T]: SingleProperty<T, K>;
 }[keyof T];
@@ -74,3 +84,36 @@ export type ExtractedKeys<T> = keyof T;
  * };
  */
 export type FunctionWithZeroArguments<T = void> = () => T;
+
+/**
+ * @description
+ * Define type for event with generic type.
+ *
+ * @example
+ * const onInput: EventHandler<Event> = (event) => {
+ *   ...
+ * };
+ */
+export type EventHandler<E> = (event: E) => void;
+
+/**
+ * @see https://stackoverflow.com/questions/56006111/is-it-possible-to-define-a-non-empty-array-type-in-typescript
+ *
+ * @description
+ * Define an array containing at least one element.
+ *
+ * @example
+ * const okay: NonEmptyArray<number> = [1, 2];
+ * const alsoOkay: NonEmptyArray<number> = [1];
+ * const err: NonEmptyArray<number> = []; // error!
+ */
+export type NonEmptyArray<T> = [T, ...T[]];
+
+/**
+ * @see https://stackoverflow.com/questions/56006111/is-it-possible-to-define-a-non-empty-array-type-in-typescript
+ *
+ * @example
+ * const x: NonEmpty<string[]> = ['myString'];
+ * const err: NonEmpty<string[]> = []; // error!
+ */
+export type NonEmpty<T> = T extends Array<infer U> ? U[] & { '0': U } : never;
