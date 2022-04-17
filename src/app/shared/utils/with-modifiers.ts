@@ -1,16 +1,10 @@
 import type { Events } from 'vue';
-import type { UnionOfProperties } from '@/app/shared/types';
+import type { NonEmptyArrayOf, UnionOfProperties } from '@/app/shared/types';
 import { withModifiers as _withModifiers } from 'vue';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { Modifier } from '@/app/shared/utils/modifiers';
 import { isArrayEmpty } from '@/app/shared/utils/is-array-empty';
 import { callTernary } from '@/app/shared/utils/call-ternary';
-
-type OnlyOneKey<K extends string, V = any> = {
-  [P in K]: Record<P, V> & Partial<Record<Exclude<K, P>, never>> extends infer O
-    ? { [Q in keyof O]: O[Q] }
-    : never;
-}[K];
 
 type EventObject = {
   [key in keyof Events]: ((event: Events[key]) => void) | undefined;
@@ -23,8 +17,8 @@ type EventObjetWithModifiers = {
 type EventModifier = `${Modifier.Event}`;
 
 /**
- * @see
- * https://v3.vuejs.org/guide/migration/keycode-modifiers.html#keycode-modifiers
+ * @see https://v3.vuejs.org/guide/migration/keycode-modifiers.html#keycode-modifiers
+ * @see https://vuejs.org/api/render-function.html#withmodifiers
  *
  * @description
  * Adds modifier to event function.
@@ -47,7 +41,7 @@ type EventModifier = `${Modifier.Event}`;
  */
 export const withModifiers = (
   eventObject: UnionOfProperties<EventObject>,
-  modifiers: EventModifier[]
+  modifiers: NonEmptyArrayOf<EventModifier>
 ): EventObjetWithModifiers => {
   const isModifierTransformable = (modifier: string): boolean =>
     (
@@ -61,15 +55,24 @@ export const withModifiers = (
   let transformableModifiers: string[] = [];
   let nonTransformableModifiers: string[] = [];
 
-  for (let i = 0; i < modifiers.length; i++) {
-    const modifier = modifiers[i];
-    const isCurrentModifierTransformable = isModifierTransformable(modifier);
+  if (modifiers.length > 1) {
+    for (let i = 0; i < modifiers.length; i++) {
+      const modifier = modifiers[i];
+      const isCurrentModifierTransformable = isModifierTransformable(modifier);
 
-    if (isCurrentModifierTransformable === true) {
-      transformableModifiers.push(modifier);
+      if (isCurrentModifierTransformable === true) {
+        transformableModifiers.push(modifier);
+      }
+
+      nonTransformableModifiers.push(modifier);
     }
+  } else {
+    const firstModifierInList = modifiers[0];
+    const isFirstModifierTransformable = isModifierTransformable(firstModifierInList);
 
-    nonTransformableModifiers.push(modifier);
+    if (isFirstModifierTransformable === true) {
+      transformableModifiers.push(firstModifierInList);
+    }
   }
 
   const inputEventName = Object.keys(eventObject)[0];
