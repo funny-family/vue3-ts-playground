@@ -107,7 +107,7 @@ export type EventHandler<E> = (event: E) => void;
  * const alsoOkay: NonEmptyArray<number> = [1];
  * const err: NonEmptyArray<number> = []; // error!
  */
-export type NonEmptyArray<T> = [T, ...T[]];
+export type NonEmptyArrayOf<T> = [T, ...T[]];
 
 /**
  * @see https://stackoverflow.com/questions/56006111/is-it-possible-to-define-a-non-empty-array-type-in-typescript
@@ -117,3 +117,32 @@ export type NonEmptyArray<T> = [T, ...T[]];
  * const err: NonEmpty<string[]> = []; // error!
  */
 export type NonEmpty<T> = T extends Array<infer U> ? U[] & { '0': U } : never;
+
+/**
+ * @see https://stackoverflow.com/questions/57571664/typescript-type-for-an-object-with-only-one-key-no-union-type-allowed-as-a-key
+ */
+export type OnlyOneKey<K extends string, V = any> = {
+  [P in K]: Record<P, V> & Partial<Record<Exclude<K, P>, never>> extends infer O
+    ? { [Q in keyof O]: O[Q] }
+    : never;
+}[K];
+
+type InArray<T, X> = T extends readonly [X, ...infer _Rest]
+  ? true
+  : T extends readonly [X]
+  ? true
+  : T extends readonly [infer _, ...infer Rest]
+  ? InArray<Rest, X>
+  : false;
+
+/**
+ * @see https://stackoverflow.com/questions/57016728/is-there-a-way-to-define-type-for-array-with-unique-items-in-typescript
+ *
+ * @description
+ * Define type for array with unique items.
+ */
+export type UniqueArray<T> = T extends readonly [infer X, ...infer Rest]
+  ? InArray<Rest, X> extends true
+    ? ['Encountered value with duplicates:', X]
+    : readonly [X, ...UniqueArray<Rest>]
+  : T;
