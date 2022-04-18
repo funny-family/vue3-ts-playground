@@ -29,6 +29,29 @@ export type Writeable<T extends { [x: string]: any }, K extends string> = {
 export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
+/**
+ * @example
+ * type SomeEvenType = {
+ *   onCopy: ((event: ClipboardEvent) => void) | undefined;
+ *   onCut: ((event: ClipboardEvent) => void) | undefined;
+ *   onPaste: ((event: ClipboardEvent) => void) | undefined;
+ * };
+ *
+ * type SomeEvenTypeAsSingleProperty = SingleProperty<SomeEvenType>;
+ * // =============================================================
+ * {
+ *   onCopy: {
+ *       onCopy: ((event: ClipboardEvent) => void) | undefined;
+ *   };
+ *   onCut: {
+ *       onCut: ((event: ClipboardEvent) => void) | undefined;
+ *   };
+ *   onPaste: {
+ *       onPaste: ((event: ClipboardEvent) => void) | undefined;
+ *   };
+ * }
+ * // =============================================================
+ */
 type SingleProperty<T, K extends keyof T> = K extends any
   ? { [Prop in K]: T[Prop] }
   : never;
@@ -51,6 +74,21 @@ export type RecordOfBoolean<T extends string> = Record<T, boolean>;
 
 /**
  * @see https://stackoverflow.com/questions/53899692/typescript-how-to-extract-only-the-optional-keys-from-a-type
+ *
+ * @example
+ * type User = {
+ *   uid: string,
+ *   displayName?: string,
+ *   bestFriend?: string,
+ * };
+ *
+ * type OptionalPropertyOf<T extends object> = Exclude<{
+ *   [K in keyof T]: T extends Record<K, T[K]>
+ *     ? never
+ *     : K
+ * }[keyof T], undefined>;
+ *
+ * type UserOptionalProperties = OptionalPropertyOf<User> // type UserOptionalProperties = "displayName" | "bestFriend"
  */
 export type OptionalPropertyOf<T extends object> = Exclude<
   {
