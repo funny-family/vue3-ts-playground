@@ -44,9 +44,6 @@ export const NotFound = defineComponent({
 
     const isRed = true;
 
-    // console.log('isGif404Visible:', isGif404Visible.value);
-    // console.log('isRed:', isRed);
-
     const componentId = generateGuid();
     const withId = withScopeId(componentId);
 
