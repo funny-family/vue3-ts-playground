@@ -6,7 +6,7 @@ export const render: RenderFunction<TextFieldBindings> = function () {
   const { props, context, onInput } = this;
 
   return (
-    <fieldset class={styles.textField}>
+    <div class={styles.textField}>
       {props.label && (
         <label class={styles.textField__label}>{props.label}</label>
       )}
@@ -17,6 +17,6 @@ export const render: RenderFunction<TextFieldBindings> = function () {
         value={props.modelValue}
         onInput={onInput}
       />
-    </fieldset>
+    </div>
   );
 };
