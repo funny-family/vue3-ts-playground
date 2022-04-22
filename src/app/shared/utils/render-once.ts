@@ -1,4 +1,4 @@
-import type { VNodeTypes } from 'vue';
+import type { VNode, VNodeTypes } from 'vue';
 import { setBlockTracking } from 'vue';
 
 type Node = VNodeTypes | JSX.Element;
@@ -36,13 +36,20 @@ interface ArgumentsOfRenderOnceFunction {
  * }
  * ...
  */
-export const renderOnce = (cache: any[], cacheSlot: number, node: Node) => {
+// memoizeOne
+export const renderOnce = (
+  render: () => VNode<any, any>,
+  cache: any[],
+  index: number
+) => {
+  const ret = render();
+
   return (
-    cache[cacheSlot] ||
+    cache[index] ||
     (setBlockTracking(-1),
-    (cache[cacheSlot] = node),
+    (cache[index] = ret),
     setBlockTracking(1),
-    cache[cacheSlot])
+    cache[index])
   );
 
   // const cachedNode =
