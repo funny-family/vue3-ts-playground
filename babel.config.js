@@ -4,7 +4,7 @@ module.exports = {
     [
       '@vue/babel-plugin-jsx',
       {
-        transformOn: true,
+        transformOn: false,
         optimize: true,
         enableObjectSlots: false
       }
