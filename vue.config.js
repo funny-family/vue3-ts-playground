@@ -59,22 +59,32 @@ module.exports = {
     /* ==================== vue-svg-loader ==================== */
 
     /* ==================== html-webpack-plugin ==================== */
-    config.plugin('html').tap((args) => {
-      args[0].title = 'ABAOBA App';
-      args[0].template = path.resolve('./src/index.html');
+    // config.plugin('html').tap((args) => {
+    //   args[0].title = 'ABAOBA App';
+    //   args[0].template = path.resolve('./src/index.html');
 
-      return args;
-    });
+    //   return args;
+    // });
     /* ==================== html-webpack-plugin ==================== */
   },
 
   configureWebpack: () => {
     return {
+      // plugins: [
+      //   /* config.plugin('copy') */
+      //   new CopyPlugin([
+      //     {
+      //       from: path.resolve('./src/assets/images/favicons/favicon.ico'),
+      //       to: path.resolve('./dist'),
+      //       ignore: ['.DS_Store']
+      //     }
+      //   ])
+      // ]
       plugins: [
         /* config.plugin('copy') */
         new CopyPlugin([
           {
-            from: path.resolve('./src/assets/images/favicons/favicon.ico'),
+            from: path.resolve('./src/public'),
             to: path.resolve('./dist'),
             ignore: ['.DS_Store']
           }

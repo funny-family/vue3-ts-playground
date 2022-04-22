@@ -31,10 +31,7 @@ export const Gif404 = defineComponent<
             <b>{this.c}</b>
           </label>
           <a href="#">
-            <img
-              src={require('../../../../assets/images/pngs/logo.png')}
-              alt="Vue.js."
-            />
+            <img src={require('@/app/images/pngs/logo.png')} alt="Vue.js." />
           </a>
           <RouterLink to="/">adadad</RouterLink>
           <h3 class={mergeClassNames(styles.gif404__text, styles.hidden)}>

@@ -9,7 +9,8 @@ import {
   h,
   withScopeId,
   KeepAlive,
-  setBlockTracking
+  setBlockTracking,
+  withMemo
 } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
@@ -260,6 +261,49 @@ export const NotFound = defineComponent({
         >
           show/hide
         </button>
+
+        <hr />
+
+        {withMemo(
+          [],
+          () => (
+            <div>
+              <div>
+                counter: <b>{this.counter}</b> is{' '}
+                {callTernary({
+                  condition: this.counter % 2 === 0,
+                  onTruthy: () => 'even number!',
+                  onFalsy: () => 'odd number!'
+                })}
+              </div>
+              <button type="button" onClick={() => this.counter++}>
+                counter + 1
+              </button>
+            </div>
+          ),
+          cache,
+          2
+        )}
+
+        {/* {renderOnce(
+          () => (
+            <div>
+              <div>
+                counter: <b>{this.counter}</b> is{' '}
+                {callTernary({
+                  condition: this.counter % 2 === 0,
+                  onTruthy: () => 'even number!',
+                  onFalsy: () => 'odd number!'
+                })}
+              </div>
+              <button type="button" onClick={() => this.counter++}>
+                counter + 1
+              </button>
+            </div>
+          ),
+          cache,
+          2
+        )} */}
       </div>
     );
   }

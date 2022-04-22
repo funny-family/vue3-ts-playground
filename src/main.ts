@@ -5,6 +5,8 @@ import { store } from './app/store';
 import type { EnvironmentVariable } from '@/app/shared/types';
 import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
+import '@/app/shared/utils/custom-directive';
+
 const app = createApp(App);
 
 const environmentVariable = extractFromEnv(process.env.NODE_ENV);
@@ -32,6 +34,15 @@ if (environmentVariable === 'development') {
   //   console.groupEnd();
   // };
 }
+
+// app.directive('adad', {
+//   beforeMount() {
+//     //
+//   },
+//   created() {
+//     //
+//   }
+// });
 
 app.use(store);
 app.use(router);

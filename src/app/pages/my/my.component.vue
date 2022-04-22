@@ -9,7 +9,7 @@
       <router-view/>
     </pre>
 
-    <img src="../../../assets/images/pngs/logo.png" alt="vue logo." />
+    <img src="../../images/pngs/logo.png" alt="vue logo." />
   </div>
 </template>
 

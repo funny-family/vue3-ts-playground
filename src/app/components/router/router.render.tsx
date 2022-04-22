@@ -2,7 +2,7 @@ import { Transition, resolveDynamicComponent, Suspense } from 'vue';
 import { RouterView } from 'vue-router';
 import type { RenderFunction } from '@/app/shared/types/component/render';
 import { callTernary } from '@/app/shared/utils/call-ternary';
-import t from '../../../assets/styles/transitions/fade-in-down.transition.scss';
+import t from '../../styles/transitions/fade-in-down.transition.scss';
 
 export const render: RenderFunction<{}> = function () {
   return (
