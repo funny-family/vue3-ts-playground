@@ -4,5 +4,5 @@ import { RouteName } from '../names';
 export default {
   path: '/my',
   name: RouteName.my,
-  component: () => import('../../../pages/my/my.component.vue')
+  component: () => import('@/app/components/my/my.component.vue')
 } as RouteRecordRawWithoutChildren;
