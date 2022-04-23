@@ -24,6 +24,7 @@ import { callTernary } from '@/app/shared/utils/call-ternary';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { Govno } from '@/app/shared/components/gif-404';
 import { renderOnce } from '@/app/shared/utils/render-once';
+import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -88,6 +89,8 @@ export const NotFound = defineComponent({
 
     return (
       <div class="gif404">
+        {/* @ts-ignore */}
+        <EmojiBlinkLeftIcon />
         <form
           {...withModifiers(
             {
