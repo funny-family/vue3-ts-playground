@@ -7,9 +7,10 @@ export const render: RenderFunction<TextFieldBindings> = function () {
 
   return (
     <div class={styles.textField}>
-      {props.label && (
+      {props.label !== undefined && (
         <label class={styles.textField__label}>{props.label}</label>
       )}
+
       <input
         {...context.attrs}
         class={styles.textField__input}
