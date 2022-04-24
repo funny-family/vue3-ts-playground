@@ -5,7 +5,7 @@ import { store } from './app/store';
 import type { EnvironmentVariable } from '@/app/shared/types';
 import { extractFromEnv } from './app/shared/utils/extract-from-env';
 
-import '@/app/shared/utils/custom-directive';
+// import '@/app/shared/utils/custom-directive';
 
 const app = createApp(App);
 
