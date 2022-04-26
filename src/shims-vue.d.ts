@@ -15,7 +15,20 @@ declare module '*.scss' {
   export default classes;
 }
 
+declare module '*.png' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.jpeg' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.svg' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
+  import type { DefineComponent, SVGAttributes } from 'vue';
+  const component: new () => {
+    $props: SVGAttributes;
+  };
+  export default component;
 }
