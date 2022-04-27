@@ -24,15 +24,14 @@ export const render: RenderFunction<{}> = function () {
                 console.log('Component:', Component);
                 console.log('route:', route);
 
+                const DynamicComponent = resolveDynamicComponent(Component);
+                const isDynamicComponentASymbolType =
+                  typeof DynamicComponent === 'symbol';
+
                 return (
                   <Suspense
                     v-slots={{
                       default: () => {
-                        const DynamicComponent =
-                          resolveDynamicComponent(Component);
-                        const isDynamicComponentASymbolType =
-                          typeof DynamicComponent === 'symbol';
-
                         return callTernary({
                           condition: isDynamicComponentASymbolType,
                           // if we keep "resolveDynamicComponent(Component)" as it is we will get "Symbol()" at first and then the page component
