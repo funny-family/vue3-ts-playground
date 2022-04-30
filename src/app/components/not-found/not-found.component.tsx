@@ -12,6 +12,7 @@ import {
   setBlockTracking,
   withMemo
 } from 'vue';
+import styles from './not-found.styles.scss';
 import { RouterLink } from 'vue-router';
 import { Header } from '../../shared/components/header/header.component';
 import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
@@ -24,7 +25,8 @@ import { callTernary } from '@/app/shared/utils/call-ternary';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { Govno } from '@/app/shared/components/gif-404';
 import { renderOnce } from '@/app/shared/utils/render-once';
-import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
+import emojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
+import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -89,8 +91,14 @@ export const NotFound = defineComponent({
 
     return (
       <div class="gif404">
-        {/* @ts-ignore */}
-        <EmojiBlinkLeftIcon />
+        <div>
+          <img src={emojiBlinkLeftIcon} alt="EmojiBlinkLeftIcon." />
+          <hr />
+          <div class={styles.emojiBlinkLeftIconContainer} />
+          <hr />
+          <EmojiBlinkLeftIcon />
+        </div>
+
         <form
           {...withModifiers(
             {
