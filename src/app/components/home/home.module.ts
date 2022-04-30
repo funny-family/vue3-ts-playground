@@ -1,5 +1,5 @@
 import { defineComponent, onMounted, ref } from 'vue';
-import EmojiBlinkLeftIcon from '@/app/components/not-found/images/emoji-blink-left.icon.svg';
+import EmojiBlinkLeftIcon from '@/app/components/not-found/images/emoji-blink-left.icon.svg?inline';
 
 // https://www.npmjs.com/package/vue-svg-loader
 
