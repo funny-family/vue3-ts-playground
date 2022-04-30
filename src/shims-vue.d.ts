@@ -16,16 +16,21 @@ declare module '*.scss' {
 }
 
 declare module '*.png' {
-  const content: string;
+  const filePath: string;
   export default content;
 }
 
 declare module '*.jpeg' {
-  const content: string;
+  const filePath: string;
   export default content;
 }
 
 declare module '*.svg' {
+  const filePath: string;
+  export default filePath;
+}
+
+declare module '*.svg?inline' {
   import type { DefineComponent, SVGAttributes } from 'vue';
   const component: new () => {
     $props: SVGAttributes;
