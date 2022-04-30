@@ -1,7 +1,15 @@
 import { defineComponent, onMounted, ref } from 'vue';
+import EmojiBlinkLeftIcon from '@/app/components/not-found/images/emoji-blink-left.icon.svg';
+
+// https://www.npmjs.com/package/vue-svg-loader
 
 export default defineComponent({
   name: 'Home',
+
+  components: {
+    EmojiBlinkLeftIcon
+  },
+
   setup() {
     const count = ref(0);
     const countPlusOne = () => {

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- <EmojiBlinkLeftIcon /> -->
+
     <div v-once class="counter">
       <h1>{{ inputValue }}</h1>
     </div>
