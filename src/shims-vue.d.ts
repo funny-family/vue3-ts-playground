@@ -1,6 +1,7 @@
 /* eslint-disable */
 declare module '*.vue' {
   import type { DefineComponent } from 'vue';
+
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
@@ -32,8 +33,7 @@ declare module '*.svg' {
 
 declare module '*.svg?inline' {
   import type { DefineComponent, SVGAttributes } from 'vue';
-  const component: new () => {
-    $props: SVGAttributes;
-  };
+
+  const component: DefineComponent<SVGAttributes>;
   export default component;
 }
