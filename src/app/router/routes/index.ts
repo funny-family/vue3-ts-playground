@@ -2,6 +2,105 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { normalize as normalizePath } from 'path';
 
+// =================================================================
+
+type RouteFilePath = {
+  filePath: string;
+};
+
+type RouteRecordRawWithFilePath = RouteRecordRaw & RouteFilePath;
+
+type WebpackRequireContext = ReturnType<typeof require.context>;
+
+interface RouteTreeInterface {
+  create: RouteRecordRaw[];
+  readonly context: WebpackRequireContext;
+  readonly childFolderName: string;
+}
+
+type RouteTreeConstructor = Pick<
+  RouteTreeInterface,
+  'context' | 'childFolderName'
+>;
+
+export class RouteTree1 implements RouteTreeInterface {
+  public readonly requireRoutes: RouteTreeInterface['context'];
+  public readonly childFolderName: RouteTreeInterface['childFolderName'];
+
+  private routeRecordsWithFilePath: RouteRecordRawWithFilePath[] = [];
+
+  public constructor({ context, childFolderName }: RouteTreeConstructor) {
+    this.requireRoutes = context;
+    this.childFolderName = childFolderName;
+
+    this.collectAllRoutes();
+  }
+
+  // @ts-expect-error
+  public create(): RouteTreeInterface['create'] {
+    return [];
+  }
+
+  private collectAllRoutes() {
+    const pathListToRouteFiles = this.requireRoutes.keys();
+
+    for (let i = 0; i < pathListToRouteFiles.length; i++) {
+      const pathToRouteFile = pathListToRouteFiles[i];
+      const normalizedPathToRouteFile = normalizePath(pathToRouteFile);
+      const routeRecordRaw: RouteRecordRaw =
+        this.requireRoutes(pathToRouteFile).default;
+
+      const routeRecordWithFilePath: RouteRecordRawWithFilePath = {
+        ...routeRecordRaw,
+        filePath: normalizedPathToRouteFile
+      };
+
+      if (i === 0) {
+        this.routeRecordsWithFilePath.push(routeRecordWithFilePath);
+      } else {
+        const numberOfSlashesInFilePath =
+          routeRecordWithFilePath.filePath.split('/').length - 1;
+
+        // console.log(
+        //   numberOfSlashesInFilePath,
+        //   this.routeRecordsWithFilePath[i - 1]?.filePath.split('/').length - 1
+        // );
+
+        if (
+          numberOfSlashesInFilePath <
+          this.routeRecordsWithFilePath[i - 1]?.filePath.split('/').length - 1
+        ) {
+          this.routeRecordsWithFilePath.push(routeRecordWithFilePath);
+        } else {
+          this.routeRecordsWithFilePath.unshift(routeRecordWithFilePath);
+        }
+      }
+    }
+
+    // console.log('pathListToRouteFiles:', pathListToRouteFiles);
+    // console.log('routeRecordsWithFilePath:', this.routeRecordsWithFilePath);
+    // console.log(
+    //   'routeRecordsWithFilePath:',
+    //   this.routeRecordsWithFilePath.map(({ filePath }) => filePath)
+    // );
+  }
+
+  private method2() {
+    //
+  }
+}
+
+const routeTree1 = new RouteTree1({
+  context: require.context(
+    '.',
+    true,
+    /(\b[a-z]+(-[a-z]+)*)(\.)(route)(\.)(js|ts)/
+  ),
+  childFolderName: 'children'
+});
+
+console.log('routeTree1:', routeTree1);
+
 /**
  * "Recursive Map function"
  * @see https://stackoverflow.com/questions/54245284/recursive-map-function
@@ -50,8 +149,10 @@ class RouteTree {
     const routesMapSortedByLengthOfFilePath = Object.entries(routesRecord).sort(
       (a, b) => a[0].split('/').length - b[0].split('/').length
     );
+
     const isChildRoute = (pathToRouteFile: string) =>
       pathToRouteFile.includes(this.childRoutesFolderName);
+
     const routesMapOfRootRoutes = routesMapSortedByLengthOfFilePath.filter(
       (route) => !isChildRoute(route[0])
     );
