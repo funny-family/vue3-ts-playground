@@ -1,6 +1,10 @@
-import type { VNode } from 'vue';
+import type { VNode, ObjectDirective } from 'vue';
 import type { Data } from '@/app/shared/types';
 import type { _DirectiveBinding } from '@/app/shared/types/component/directive';
+
+type OD<T = ObjectDirective> = {
+  [Property in keyof T]: any;
+};
 
 type ElArgument = HTMLElement;
 
@@ -9,8 +13,6 @@ type BindingArgument = _DirectiveBinding<ElArgument>;
 
 type VNodeArgument = VNode<any, ElArgument>;
 
-type PrevVNodeArgument = VNode<any, HTMLElement> | null;
-
 export class VFocusDirective {
   deep = false;
 
@@ -18,8 +20,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: null
+  ): void {
     //
   }
 
@@ -27,8 +29,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: null
+  ): void {
     //
   }
 
@@ -36,8 +38,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: null
+  ): void {
     el.focus();
   }
 
@@ -45,8 +47,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: VNode<any, ElArgument>
+  ): void {
     //
   }
 
@@ -54,8 +56,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: VNode<any, ElArgument>
+  ): void {
     //
   }
 
@@ -63,8 +65,8 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: null
+  ): void {
     //
   }
 
@@ -72,13 +74,19 @@ export class VFocusDirective {
     el: ElArgument,
     binding: BindingArgument,
     vnode: VNodeArgument,
-    prevVNode: PrevVNodeArgument
-  ) {
+    prevVNode: null
+  ): void {
     //
   }
 
   getSSRProps(binding: BindingArgument, vnode: VNode): Data | undefined {
     return undefined;
+  }
+
+  use(): OD {
+    const { use, ...directiveHook } = this;
+
+    return directiveHook;
   }
 }
 
