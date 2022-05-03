@@ -77,10 +77,20 @@ module.exports = {
       /* ==================== external svg ==================== */
       .end()
       .oneOf('external')
+      // https://v4.webpack.js.org/loaders/file-loader/#options
       .use('file-loader')
       .loader('file-loader')
       .options({
-        name: 'assets/[name].[hash:8].[ext]'
+        get name() {
+          if (process.env.NODE_ENV === isDevelopment) {
+            return '[path][name].[ext]';
+          }
+
+          // return 'assets/[name].[hash:8].[ext]';
+          // return '[contenthash].[ext]';
+          // return 'dirname/[contenthash].[ext]';
+          return '[path][name].[ext]?[contenthash]';
+        }
       });
     /* ==================== external svg ==================== */
     /* ==================== vue-svg-loader ==================== */
