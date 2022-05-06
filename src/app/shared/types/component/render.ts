@@ -14,7 +14,7 @@ export type RenderFunction<
   $Data = D,
   $Options = any
 > = (
-  this: This,
+  this: This & ComponentPublicInstance,
   ctx: Ctx & ComponentPublicInstance,
   cache: Cache,
   $props: $Props,
