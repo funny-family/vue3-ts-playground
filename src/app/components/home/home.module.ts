@@ -3,8 +3,16 @@ import EmojiBlinkLeftIcon from '@/app/components/not-found/images/emoji-blink-le
 
 // https://www.npmjs.com/package/vue-svg-loader
 
+const focus = {
+  mounted: (el: any) => el.focus()
+};
+
 export default defineComponent({
   name: 'Home',
+
+  directives: {
+    focus
+  },
 
   components: {
     EmojiBlinkLeftIcon
