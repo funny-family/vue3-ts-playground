@@ -10,7 +10,11 @@ import {
   withScopeId,
   KeepAlive,
   setBlockTracking,
-  withMemo
+  withMemo,
+  withDirectives,
+  resolveDirective,
+  isVNode,
+  openBlock
 } from 'vue';
 import styles from './not-found.styles.scss';
 import { RouterLink } from 'vue-router';
@@ -27,11 +31,19 @@ import { Govno } from '@/app/shared/components/gif-404';
 import { renderOnce } from '@/app/shared/utils/render-once';
 import emojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
 import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
+import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
+import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composable';
 
 /**
  * Writing Vue.js Render Functions in JSX
  * https://alligator.io/vuejs/jsx-render-functions/
  */
+
+const focus = {
+  mounted(el: any) {
+    el.focus();
+  }
+};
 
 export const NotFound = defineComponent({
   name: 'NotFound',
@@ -61,9 +73,11 @@ export const NotFound = defineComponent({
     const counter = ref(0);
 
     onMounted(() => {
-      // console.log('"TextField" ref value:', textFieldRef.value);
+      console.log('"TextField" ref value $el:', textFieldRef.value);
       // console.log('input ref value:', inputRef.value);
     });
+
+    const textFieldFunctionalRef = useForwardRef();
 
     const trimModifier = 'trim';
 
@@ -79,13 +93,15 @@ export const NotFound = defineComponent({
       trimModifier,
       inputRef,
       s,
-      counter
+      counter,
+      textFieldFunctionalRef
     };
   },
 
   // @ts-ignore
   render(ctx, cache, props, setup, data, options) {
     const trimModifier = 'trim';
+    const directiveFocus = resolveDirective('focus');
 
     console.log('"args" of "not-found" component:', arguments);
 
@@ -112,7 +128,12 @@ export const NotFound = defineComponent({
           )}
           style={{ border: '2px solid green' }}
         >
-          <input placeholder="some shit info" type="text" />
+          <input
+            // @ts-ignore
+            v-focus
+            placeholder="some shit info"
+            type="text"
+          />
           <button type="submit">submit from</button>
         </form>
 
@@ -120,13 +141,31 @@ export const NotFound = defineComponent({
           <>
             <fieldset>
               <label>aduadaud</label>
-              <input
+
+              {withDirectives(
+                (openBlock(),
+                (
+                  <input
+                    class={1}
+                    about="aduadaud"
+                    type="text"
+                    v-model={[this.textFieldValue, ['trim']]}
+                    ref="inputRef"
+                  />
+                )),
+                [[focus]]
+              )}
+              {/* <input
+                // // @ts-ignore
+                // v-focus
                 class={1}
                 about="aduadaud"
                 type="text"
+                // // @ts-ignore
+                // vModel={[this.textFieldValue, ['trim']]}
                 v-model={[this.textFieldValue, ['trim']]}
                 ref="inputRef"
-              />
+              /> */}
             </fieldset>
           </>
 
@@ -143,6 +182,7 @@ export const NotFound = defineComponent({
               label="Text Field Label"
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               ref={nameOf(() => this.textFieldRef)}
+              // ref={this.textFieldFunctionalRef}
             />
           </>
           {/* <div>textFieldRef: {`${this.textFieldRef}`}</div> */}
@@ -319,5 +359,9 @@ export const NotFound = defineComponent({
     );
   }
 });
+
+NotFound.directives = {
+  focus
+};
 
 export default NotFound;
