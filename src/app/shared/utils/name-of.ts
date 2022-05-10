@@ -23,6 +23,8 @@ import type { FunctionWithZeroArguments } from '@/app/shared/types';
   () => Test
 */
 
+type NameOfFunction = (callback: () => any) => string;
+
 /**
  * @see https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
  *
@@ -34,7 +36,7 @@ import type { FunctionWithZeroArguments } from '@/app/shared/types';
  * const nameOfEmptyStringVariable = nameOf(() => emptyString);
  * console.log(nameOfEmptyStringVariable); // emptyString
  */
-export const nameOf = (callback: FunctionWithZeroArguments<unknown>) =>
+export const nameOf: NameOfFunction = (callback) =>
   callback
     .toString()
     .replace(
