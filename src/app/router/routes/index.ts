@@ -41,11 +41,22 @@ export class RouteTree1 implements RouteTreeInterface {
     return [];
   }
 
-  private collectAllRoutes() {
-    const pathListToRouteFiles = this.requireRoutes.keys();
+  private getPathDepth(filePath: string): number {
+    return filePath.split('/').length - 1;
+  }
 
-    for (let i = 0; i < pathListToRouteFiles.length; i++) {
-      const pathToRouteFile = pathListToRouteFiles[i];
+  private collectAllRoutes() {
+    const listOfPathsToRouteFiles = this.requireRoutes.keys();
+    const lengthOfListOfPathsToRouteFiles = listOfPathsToRouteFiles.length;
+    // const arr: number[] = [0, 0, 0];
+    // const minFileDepth = arr[0];
+    // const averageFileDepth = arr[1];
+    // const maxFileDepth = arr[2];
+
+    const a = [];
+
+    for (let i = 0; i < lengthOfListOfPathsToRouteFiles; i++) {
+      const pathToRouteFile = listOfPathsToRouteFiles[i];
       const normalizedPathToRouteFile = normalizePath(pathToRouteFile);
       const routeRecordRaw: RouteRecordRaw =
         this.requireRoutes(pathToRouteFile).default;
@@ -55,27 +66,12 @@ export class RouteTree1 implements RouteTreeInterface {
         filePath: normalizedPathToRouteFile
       };
 
-      if (i === 0) {
-        this.routeRecordsWithFilePath.push(routeRecordWithFilePath);
-      } else {
-        const numberOfSlashesInFilePath =
-          routeRecordWithFilePath.filePath.split('/').length - 1;
-
-        // console.log(
-        //   numberOfSlashesInFilePath,
-        //   this.routeRecordsWithFilePath[i - 1]?.filePath.split('/').length - 1
-        // );
-
-        if (
-          numberOfSlashesInFilePath <
-          this.routeRecordsWithFilePath[i - 1]?.filePath.split('/').length - 1
-        ) {
-          this.routeRecordsWithFilePath.push(routeRecordWithFilePath);
-        } else {
-          this.routeRecordsWithFilePath.unshift(routeRecordWithFilePath);
-        }
-      }
+      a.push(this.getPathDepth(normalizedPathToRouteFile));
+      //
+      this.routeRecordsWithFilePath[i] = routeRecordWithFilePath;
     }
+
+    // console.log(a.sort((a, b) => a - b));
 
     // console.log('pathListToRouteFiles:', pathListToRouteFiles);
     // console.log('routeRecordsWithFilePath:', this.routeRecordsWithFilePath);

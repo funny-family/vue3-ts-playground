@@ -15,7 +15,7 @@
     <hr />
 
     <fieldset>
-      <input type="text" v-model.trim="inputValue" ref="inputRef" />
+      <input type="text" v-model.trim="inputValue" ref="inputRef" v-focus />
 
       <div>inputValue: {{ inputValue }}</div>
     </fieldset>
