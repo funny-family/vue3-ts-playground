@@ -11,7 +11,7 @@ import {
   KeepAlive,
   setBlockTracking,
   withMemo,
-  withDirectives,
+  withDirectives as _withDirectives,
   resolveDirective,
   isVNode,
   openBlock
@@ -33,6 +33,11 @@ import emojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
 import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
 import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
 import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composable';
+import { withDirectives } from '@/app/shared/utils/with-directives';
+import {
+  getForwardElementOfComponent,
+  getForwardElementOfComponent1
+} from '@/app/shared/utils/forward-el';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -41,7 +46,16 @@ import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composab
 
 const focus = {
   mounted(el: any) {
-    el.focus();
+    const id = el.dataset.componentRootElId;
+    const componentEl = getForwardElementOfComponent(id) || el;
+
+    console.group();
+    console.log('"el" from directive', el, { el });
+    console.log('componentEl:', componentEl);
+    console.log(1231312312321, getForwardElementOfComponent1(el.__vnode));
+    console.groupEnd();
+
+    componentEl.focus();
   }
 };
 
@@ -142,7 +156,7 @@ export const NotFound = defineComponent({
             <fieldset>
               <label>aduadaud</label>
 
-              {withDirectives(
+              {/* {_withDirectives(
                 (openBlock(),
                 (
                   <input
@@ -154,7 +168,19 @@ export const NotFound = defineComponent({
                   />
                 )),
                 [[focus]]
-              )}
+              )} */}
+
+              {/* {withDirectives(
+                <input
+                  class={1}
+                  about="aduadaud"
+                  type="text"
+                  v-model={[this.textFieldValue, ['trim']]}
+                  ref="inputRef"
+                />,
+                [[focus]]
+              )} */}
+
               {/* <input
                 // // @ts-ignore
                 // v-focus
@@ -177,13 +203,24 @@ export const NotFound = defineComponent({
             {/* https://github.com/michitaro/vue-menu/issues/20 */}
             {/* https://github.com/vuejs/vue-next/blob/2937530beff5c6bb57286c2556307859e37aa809/packages/compiler-core/src/ast.ts#L426 */}
             {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
-            <TextField
+            {withDirectives(
+              <TextField
+                class="TextField-1231231313"
+                label="Text Field Label"
+                v-model={[this.textFieldValue, ['trim', 'capitalize']]}
+                ref={nameOf(() => this.textFieldRef)}
+                // ref={this.textFieldFunctionalRef}
+              />,
+              [[focus]]
+            )}
+
+            {/* <TextField
               class="TextField"
               label="Text Field Label"
               v-model={[this.textFieldValue, ['trim', 'capitalize']]}
               ref={nameOf(() => this.textFieldRef)}
               // ref={this.textFieldFunctionalRef}
-            />
+            /> */}
           </>
           {/* <div>textFieldRef: {`${this.textFieldRef}`}</div> */}
           <div>nameOf "textFieldValue": {nameOf(() => this.textFieldRef)}</div>
