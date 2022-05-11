@@ -105,7 +105,9 @@ module.exports = {
     /* ==================== html-webpack-plugin ==================== */
   },
 
-  configureWebpack: () => {
+  configureWebpack: (config) => {
+    config.devtool = 'source-map';
+
     return {
       plugins: [
         /* config.plugin('copy') */
