@@ -4,6 +4,7 @@
   "cSpell.words": [
     "Booleanish",
     "clsx",
+    "codegen",
     "enumify",
     "favicons",
     "hygen",
@@ -11,6 +12,7 @@
     "nocheck",
     "Numberish",
     "pinia",
+    "scripthost",
     "vuex"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
