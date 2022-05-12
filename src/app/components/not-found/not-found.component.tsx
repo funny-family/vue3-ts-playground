@@ -178,7 +178,7 @@ export const NotFound = defineComponent({
                   v-model={[this.textFieldValue, ['trim']]}
                   ref="inputRef"
                 />,
-                [[focus]]
+                [vFocusDirective.use()]
               )} */}
 
               {/* <input
@@ -203,7 +203,7 @@ export const NotFound = defineComponent({
             {/* https://github.com/michitaro/vue-menu/issues/20 */}
             {/* https://github.com/vuejs/vue-next/blob/2937530beff5c6bb57286c2556307859e37aa809/packages/compiler-core/src/ast.ts#L426 */}
             {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
-            {withDirectives(
+            {/* {withDirectives(
               <TextField
                 class="TextField-1231231313"
                 label="Text Field Label"
@@ -212,6 +212,16 @@ export const NotFound = defineComponent({
                 // ref={this.textFieldFunctionalRef}
               />,
               [[focus]]
+            )} */}
+            {withDirectives(
+              <TextField
+                class="TextField"
+                label="Text Field Label"
+                v-model={[this.textFieldValue, ['trim', 'capitalize']]}
+                ref={nameOf(() => this.textFieldRef)}
+                // ref={this.textFieldFunctionalRef}
+              />,
+              [vFocusDirective.use()]
             )}
 
             {/* <TextField
@@ -398,7 +408,8 @@ export const NotFound = defineComponent({
 });
 
 NotFound.directives = {
-  focus
+  // focus
+  ...vFocusDirective.register()
 };
 
 export default NotFound;
