@@ -37,6 +37,10 @@ export const getForwardElementOfComponent = (componentUid: number) => {
 
 // https://stackoverflow.com/questions/69393873/binary-search-in-array-of-object-javascript
 
+// https://github.com/vuejs/rfcs/issues/258
+
+// https://stackoverflow.com/questions/53938203/javascript-recursive-search-on-an-array-of-objects
+
 export const getForwardElementOfComponent1 = <T extends any>(el: VNode<T>) => {
   if (el.children === null) {
     return el;
