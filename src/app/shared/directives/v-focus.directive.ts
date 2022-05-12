@@ -1,15 +1,9 @@
-import type { VNode, ObjectDirective } from 'vue';
+import type { VNode, ObjectDirective, Directive } from 'vue';
 import type { Data } from '@/app/shared/types';
 import type {
   _DirectiveBinding,
   DirectiveModifier
 } from '@/app/shared/types/component/directive';
-
-type OD<T = ObjectDirective> = {
-  [Property in keyof T]: any;
-};
-
-type ODL = keyof ObjectDirective;
 
 type ElArgument = HTMLElement;
 
@@ -24,190 +18,127 @@ type DirectiveOption = {
   modifiers?: DirectiveModifier<string>;
 };
 
-// class VFocusDirective {
-//   readonly name = 'focus';
-//   readonly deep = false;
+type DirectiveHookOption = {
+  created?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: null
+  ) => void;
 
-//   created(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: null
-//   ): void {
-//     //
-//   }
+  beforeMount?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: null
+  ) => void;
 
-//   beforeMount(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: null
-//   ): void {
-//     //
-//   }
+  mounted?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: null
+  ) => void;
 
-//   mounted(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: null
-//   ): void {
-//     console.log(34535435, el);
+  beforeUpdate?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: VNode<any, ElArgument>
+  ) => void;
 
-//     el.focus();
-//   }
+  updated?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: VNode<any, ElArgument>
+  ) => void;
 
-//   beforeUpdate(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: VNode<any, ElArgument>
-//   ): void {
-//     //
-//   }
+  beforeUnmount?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: null
+  ) => void;
 
-//   updated(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: VNode<any, ElArgument>
-//   ): void {
-//     //
-//   }
+  unmounted?: (
+    el: ElArgument,
+    binding: BindingArgument,
+    vnode: VNodeArgument,
+    prevVNode: null
+  ) => void;
 
-//   beforeUnmount(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: null
-//   ): void {
-//     //
-//   }
+  getSSRProps?: (binding: BindingArgument, vnode: VNode) => Data | undefined;
+};
 
-//   unmounted(
-//     el: ElArgument,
-//     binding: BindingArgument,
-//     vnode: VNodeArgument,
-//     prevVNode: null
-//   ): void {
-//     //
-//   }
+type DirectiveDeepOption = {
+  deep?: boolean;
+};
 
-//   getSSRProps(binding: BindingArgument, vnode: VNode): Data | undefined {
-//     return undefined;
-//   }
+type DirectiveName = {
+  name: Readonly<string>;
+};
 
-//   register() {
-//     const { register, use, name, ...directiveHook } = this;
+type DirectiveRegisterFunction = {
+  register: () => {
+    /*
+      we have to use "any" ((DirectiveHookOption & DirectiveDeepOption) | any)
+      instead of "DirectiveHookOption & DirectiveDeepOption"
+      otherwise type "directives?: Record<string, Directive>;" from "ComponentOptionsBase" will throw error
+    */
+    [name: string]: (DirectiveHookOption & DirectiveDeepOption) | any;
+  };
+};
 
-//     return {
-//       [name]: directiveHook
-//     };
-//   }
+type DirectiveUseFunction = {
+  use: (directiveOption?: DirectiveOption) => any[];
+  // use: (directiveOption?: DirectiveOption) => Directive<any, any>;
+};
 
-//   use(directiveOption?: DirectiveOption) {
-//     const { register, use, name, ...directiveHook } = this;
+type VFocusDirectiveObject = DirectiveHookOption &
+  DirectiveDeepOption &
+  DirectiveName &
+  DirectiveRegisterFunction &
+  DirectiveUseFunction;
 
-//     console.log(345353, Object.getPrototypeOf(this));
-
-//     // [directive, value, argument, modifiers]
-//     const directiveArray = [];
-
-//     directiveArray[0] = directiveHook;
-
-//     if (directiveOption?.value !== undefined) {
-//       directiveArray[1] = directiveOption?.value;
-//     }
-
-//     if (directiveOption?.argument !== undefined) {
-//       directiveArray[2] = directiveOption?.argument;
-//     }
-
-//     if (directiveOption?.modifiers !== undefined) {
-//       directiveArray[3] = directiveOption?.modifiers;
-//     }
-
-//     return directiveArray;
-//   }
-// }
-
-// export const vFocusDirective = new VFocusDirective();
-
-export const vFocusDirective: OD & { name: string } & { register: Function } & {
-  use: Function;
-} = {
+export const vFocusDirective: VFocusDirectiveObject = {
   name: 'focus',
 
   deep: false,
 
-  created(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: null
-  ): void {
+  created(el, binding, vnode, prevVNode) {
     //
   },
 
-  beforeMount(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: null
-  ): void {
+  beforeMount(el, binding, vnode, prevVNode) {
     //
   },
 
-  mounted(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: null
-  ): void {
-    console.log(34535435, el);
+  mounted(el, binding, vnode, prevVNode) {
+    console.log('mounted el:', el, { el });
 
     el.focus();
   },
 
-  beforeUpdate(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: VNode<any, ElArgument>
-  ): void {
+  beforeUpdate(el, binding, vnode, prevVNode) {
     //
   },
 
-  updated(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: VNode<any, ElArgument>
-  ): void {
+  updated(el, binding, vnode, prevVNode) {
     //
   },
 
-  beforeUnmount(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: null
-  ): void {
+  beforeUnmount(el, binding, vnode, prevVNode) {
     //
   },
 
-  unmounted(
-    el: ElArgument,
-    binding: BindingArgument,
-    vnode: VNodeArgument,
-    prevVNode: null
-  ): void {
+  unmounted(el, binding, vnode, prevVNode) {
     //
   },
 
-  // getSSRProps(binding: BindingArgument, vnode: VNode): Data | undefined {
-  //   return undefined;
-  // },
+  getSSRProps(binding, vnode) {
+    return undefined;
+  },
 
   register() {
     const { register, use, name, ...directiveHook } = this;
@@ -217,36 +148,17 @@ export const vFocusDirective: OD & { name: string } & { register: Function } & {
     };
   },
 
-  use(directiveOption?: DirectiveOption) {
+  use(directiveOption) {
     const { register, use, name, ...directiveHook } = this;
 
-    // console.log(345353, Object.getPrototypeOf(this));
+    const directive = [
+      directiveHook,
+      directiveOption?.value,
+      directiveOption?.argument,
+      directiveOption?.modifiers
+    ];
 
-    // [directive, value, argument, modifiers]
-    const directiveArray = [];
-
-    directiveArray[0] = directiveHook;
-
-    if (directiveOption?.value !== undefined) {
-      directiveArray[1] = directiveOption?.value;
-    }
-
-    if (directiveOption?.argument !== undefined) {
-      directiveArray[2] = directiveOption?.argument;
-    }
-
-    if (directiveOption?.modifiers !== undefined) {
-      directiveArray[3] = directiveOption?.modifiers;
-    }
-
-    return directiveArray;
+    // return directive as Directive<any, any>;
+    return directive;
   }
 };
-
-// https://github.com/vuejs/rfcs/issues/258
-
-console.group();
-console.log('vFocusDirective:', vFocusDirective);
-console.log('vFocusDirective, "name":', vFocusDirective);
-console.log('vFocusDirective "use":', vFocusDirective.use());
-console.groupEnd();
