@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
+/**
+ * @typedef { import("@vue/cli-service").ProjectOptions } ProjectOption
+ * @typedef { import("webpack-chain") ChainWebpack }
+ */
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const { generateScopeName } = require('./utils/scope-name-generator');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+// https://github.com/vuejs/vue-cli/issues/2138
+
+/** @type {ProjectOption} */
 module.exports = {
   devServer: {
     port: 6412
@@ -44,6 +50,7 @@ module.exports = {
 
   // https://cli.vuejs.org/guide/html-and-static-assets.html#the-index-file
 
+  /** @type {ChainWebpack } */
   chainWebpack: (config) => {
     /* ==================== vue-svg-loader ==================== */
     // https://vue-svg-loader.js.org/faq.html#how-to-use-both-inline-and-external-svgs
