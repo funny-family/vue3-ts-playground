@@ -19,21 +19,28 @@ const ev = extractFromEnv(s);
 if (environmentVariable === 'development') {
   app.config.performance = true;
 
-  // app.config.errorHandler = (err, instance, info) => {
-  //   console.group('app error');
-  //   console.log('err:', err);
-  //   console.log('instance:', instance);
-  //   console.log('info:', info);
-  //   console.groupEnd();
-  // };
+  // {
+  //   const log = console.log.bind(console);
+  //   console.log = (...args: any[]) => {
+  //     log(...args);
+  //   };
+  // }
 
-  // app.config.warnHandler = (msg, instance, trace) => {
-  //   console.group('%c app warning', 'background-color: #250221; color: #f08784;');
-  //   console.error('msg:', msg);
-  //   console.log('instance:', instance);
-  //   console.log('trace:', trace);
-  //   console.groupEnd();
-  // };
+  {
+    const warn = console.warn.bind(console);
+    console.warn = (...args: any[]) => {
+      const consoleArgs = [...args];
+      if (
+        Array.isArray(consoleArgs) &&
+        typeof consoleArgs[0] === 'string' &&
+        (consoleArgs[0] as string).startsWith('[Vue warn]')
+      ) {
+        throw new Error(...args);
+      }
+
+      warn(...args);
+    };
+  }
 }
 
 // app.directive('focus', {
