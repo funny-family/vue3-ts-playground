@@ -1,5 +1,4 @@
 import type { Numberish } from '@/app/shared/types';
-import type { VNode } from 'vue';
 
 export const nameOfComponentRootElDataset = 'data-component-root-el-id';
 export const nameOfComponentForwardElDataset = 'data-component-forward-el-id';
@@ -13,21 +12,65 @@ export type DatasetComponentForwardElId = {
 };
 
 /**
+ * @description
+ * Extract component's uid from DOM's "dataset" attribute.
+ *
+ * @example
+ * const componentUid = extractComponentUid(el);
+ * console.log(el); // 7
+ */
+const extractComponentUidFromDataset = <T extends HTMLElement>(
+  el: T
+): number | null => {
+  const datasetComponentRootElId = el.dataset['componentRootElId'];
+
+  if (datasetComponentRootElId === undefined) {
+    return null;
+  }
+
+  return +datasetComponentRootElId;
+};
+
+/**
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
  *
  * @description
- * adada
+ * Find component's forward element base on uid of component.
  *
  * @example
- * adad
+ * const element = querySelectForwardElByComponentUid(7);
+ * console.log(element); // <input class="textField__input[vub6a]" type="text" data-component-forward-el-id="7">
  */
-export const getForwardElementOfComponent = (componentUid: number) => {
+const querySelectForwardElByComponentUid = <T extends Element>(
+  componentUid: number | null
+): T | null => {
+  if (componentUid === null) {
+    return null;
+  }
+
   const selector =
     `[${nameOfComponentRootElDataset}="${componentUid}"] [${nameOfComponentForwardElDataset}="${componentUid}"]` as const;
   const element = document.querySelector(selector);
 
-  return element;
+  return element as T;
 };
+
+/**
+ * @description
+ * Find component's forward element base on root element.
+ * Works only if component' root and forward element marked with specified dataset name.
+ *
+ * @example
+ * // el = <div class="textField[3z8wz]" data-component-root-el-id="7">
+ * const forwardEl = findComponentForwardEl(el);
+ * console.log(el); // <input class="textField__input[vub6a]" type="text" data-component-forward-el-id="7">
+ */
+export const findComponentForwardEl = <T extends HTMLElement>(
+  el: T
+): T | null =>
+  querySelectForwardElByComponentUid(
+    extractComponentUidFromDataset(el)
+  ) as T | null;
 
 // document.querySelector('#v-id-7 > [data-root-el="true"]')
 
@@ -40,13 +83,3 @@ export const getForwardElementOfComponent = (componentUid: number) => {
 // https://github.com/vuejs/rfcs/issues/258
 
 // https://stackoverflow.com/questions/53938203/javascript-recursive-search-on-an-array-of-objects
-
-export const getForwardElementOfComponent1 = <T extends any>(el: VNode<T>) => {
-  if (el.children === null) {
-    return el;
-  }
-
-  (el.children as VNode<any>[]).forEach((childrenElement) => {
-    console.log('childrenElement:', childrenElement);
-  });
-};

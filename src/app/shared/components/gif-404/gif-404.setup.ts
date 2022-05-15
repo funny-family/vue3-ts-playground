@@ -21,7 +21,7 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const title = 'Not found page!';
   const isImageVisible = ref(true);
 
-  console.log('Gif404 context:', context.attrs);
+  // console.log('Gif404 context:', context.attrs);
 
   const c = context.attrs.class;
 

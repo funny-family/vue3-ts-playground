@@ -3,7 +3,7 @@ import { routes } from './routes';
 import { pageTitle } from './guards/global/page-title.guard';
 import { justLog } from './guards/global/just-log.guard';
 
-console.table(routes);
+// console.table(routes);
 
 export const router = createRouter({
   history: createWebHistory(),

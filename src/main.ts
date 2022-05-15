@@ -26,6 +26,9 @@ if (environmentVariable === 'development') {
   //   };
   // }
 
+  /**
+   * @see https://stackoverflow.com/questions/9216441/intercept-calls-to-console-log-in-chrome
+   */
   {
     const warn = console.warn.bind(console);
     console.warn = (...args: any[]) => {

@@ -34,30 +34,11 @@ import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
 import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
 import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composable';
 import { withDirectives } from '@/app/shared/utils/with-directives';
-import {
-  getForwardElementOfComponent,
-  getForwardElementOfComponent1
-} from '@/app/shared/utils/forward-el';
 
 /**
  * Writing Vue.js Render Functions in JSX
  * https://alligator.io/vuejs/jsx-render-functions/
  */
-
-const focus = {
-  mounted(el: any) {
-    const id = el.dataset.componentRootElId;
-    const componentEl = getForwardElementOfComponent(id) || el;
-
-    console.group();
-    console.log('"el" from directive', el, { el });
-    console.log('componentEl:', componentEl);
-    console.log(1231312312321, getForwardElementOfComponent1(el.__vnode));
-    console.groupEnd();
-
-    componentEl.focus();
-  }
-};
 
 export const NotFound = defineComponent({
   name: 'NotFound',
@@ -144,7 +125,7 @@ export const NotFound = defineComponent({
         >
           <input
             // @ts-ignore
-            v-focus
+            // v-focus
             placeholder="some shit info"
             type="text"
           />
@@ -213,6 +194,7 @@ export const NotFound = defineComponent({
               />,
               [[focus]]
             )} */}
+
             {withDirectives(
               <TextField
                 class="TextField"
@@ -234,6 +216,7 @@ export const NotFound = defineComponent({
           </>
           {/* <div>textFieldRef: {`${this.textFieldRef}`}</div> */}
           <div>nameOf "textFieldValue": {nameOf(() => this.textFieldRef)}</div>
+          <div>textFieldValue: {this.textFieldValue}</div>
         </div>
 
         <hr />
@@ -408,7 +391,6 @@ export const NotFound = defineComponent({
 });
 
 NotFound.directives = {
-  // focus
   ...vFocusDirective.register()
 };
 
