@@ -1,3 +1,4 @@
+import { findComponentForwardEl } from '@/app/shared/utils/forward-el';
 import type { VNode, ObjectDirective, Directive } from 'vue';
 import type { Data } from '@/app/shared/types';
 import type {
@@ -115,9 +116,20 @@ export const vFocusDirective: VFocusDirectiveObject = {
   },
 
   mounted(el, binding, vnode, prevVNode) {
-    console.log('mounted el:', el, { el });
+    const element = findComponentForwardEl(el) || el;
 
-    el.focus();
+    console.group();
+    // console.log(
+    //   'mounted forward-el of el:',
+    //   // @ts-ignore
+    //   findForwardElement(el.__vnode)
+    // );
+    // console.log('mounted forward-el of el:', { forwardEl });
+    // console.log('mounted el:', el, { el });
+    console.log('"mounted" element', element);
+    console.groupEnd();
+
+    element.focus();
   },
 
   beforeUpdate(el, binding, vnode, prevVNode) {
