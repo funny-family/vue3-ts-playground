@@ -95,7 +95,7 @@ const routeTree1 = new RouteTree1({
   childFolderName: 'children'
 });
 
-console.log('routeTree1:', routeTree1);
+// console.log('routeTree1:', routeTree1);
 
 /**
  * "Recursive Map function"
