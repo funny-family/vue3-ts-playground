@@ -4,7 +4,6 @@ import { styles } from './styles/text-field.styles';
 
 export const render: RenderFunction<TextFieldBindings> = function () {
   const { props, context, onInput, $ } = this;
-  console.log('TextField $:', $);
   const uid = $.uid;
 
   return (
