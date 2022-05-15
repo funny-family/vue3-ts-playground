@@ -21,8 +21,8 @@ export const render: RenderFunction<{}> = function () {
             mode="out-in"
             v-slots={{
               default: () => {
-                console.log('Component:', Component);
-                console.log('route:', route);
+                // console.log('Component:', Component);
+                // console.log('route:', route);
 
                 const DynamicComponent = resolveDynamicComponent(Component);
                 const isDynamicComponentASymbolType =
