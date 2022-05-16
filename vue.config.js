@@ -43,14 +43,13 @@ module.exports = {
            */
           /* ==================== class name (styles) ==================== */
         },
-        localsConvention: 'asIs'
+        localsConvention: 'asIs',
       }
     }
   },
 
   // https://cli.vuejs.org/guide/html-and-static-assets.html#the-index-file
 
-  /** @type {ChainWebpack } */
   chainWebpack: (config) => {
     /* ==================== vue-svg-loader ==================== */
     // https://vue-svg-loader.js.org/faq.html#how-to-use-both-inline-and-external-svgs
@@ -89,7 +88,7 @@ module.exports = {
       .loader('file-loader')
       .options({
         get name() {
-          if (process.env.NODE_ENV === isDevelopment) {
+          if (isDevelopment) {
             return '[path][name].[ext]';
           }
 
