@@ -188,3 +188,5 @@ export type UniqueArray<T> = T extends readonly [infer X, ...infer Rest]
 export type Booleanish = boolean | 'true' | 'false';
 
 export type Numberish = number | string;
+
+export type AnyFunction = (...args: any) => any;
