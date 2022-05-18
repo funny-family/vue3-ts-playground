@@ -1,9 +1,12 @@
+import { ref, shallowRef } from 'vue';
 import type { TextFieldProps } from './text-field.props';
 import type { TextFieldAttrs } from './text-field.attrs';
 import type { TextFieldEmits } from './text-field.emits';
 import type {
   ContextOfSetupFunction,
-  PropsOfSetupFunction
+  PropsOfSetupFunction,
+  BindingsOfSetupFunction,
+  UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
 import type { EventHandler } from '@/app/shared/types';
 import { emitName } from './text-field.emits';
@@ -17,6 +20,20 @@ type Context = ContextOfSetupFunction<
 >;
 
 export const setup = (props: Props, context: Context) => {
+  const shallowObj = shallowRef({
+    one: 1,
+    two: 2,
+    three: 3
+  });
+
+  const deepObj = ref({
+    one: {
+      two: {
+        three: {}
+      }
+    }
+  });
+
   const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;
 
@@ -37,8 +54,13 @@ export const setup = (props: Props, context: Context) => {
   return {
     props,
     context,
-    onInput
+    onInput,
+    shallowObj,
+    deepObj
   };
 };
 
-export type TextFieldBindings = ReturnType<typeof setup>;
+export type TextFieldSetupFunction = typeof setup;
+export type TextFieldBindings = BindingsOfSetupFunction<TextFieldSetupFunction>;
+export type TextFieldUnwrappedBindings =
+  UnwrappedBindingsOfSetupFunction<TextFieldSetupFunction>;

@@ -1,10 +1,11 @@
-import type { TextFieldBindings } from './text-field.setup';
+import type { TextFieldUnwrappedBindings } from './text-field.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
 import { styles } from './styles/text-field.styles';
 
-export const render: RenderFunction<TextFieldBindings> = function () {
-  const { props, context, onInput, $ } = this;
+export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {
+  const { props, context, onInput, $, shallowObj, deepObj } = this;
   const uid = $.uid;
+  const value = props.modelValue || '';
 
   return (
     <div class={styles.textField} data-component-root-el-id={uid}>
@@ -16,7 +17,7 @@ export const render: RenderFunction<TextFieldBindings> = function () {
         {...context.attrs}
         class={styles.textField__input}
         type="text"
-        value={props.modelValue}
+        value={value}
         onInput={onInput}
         data-component-forward-el-id={uid}
       />
