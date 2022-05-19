@@ -1,5 +1,3 @@
-import type { FunctionWithZeroArguments } from '@/app/shared/types';
-
 // variable name regexp (https://mothereff.in/js-variables)
 // ^([a-zA-Z_$][a-zA-Z\\d_$]*)$
 
