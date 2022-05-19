@@ -190,3 +190,39 @@ export type Booleanish = boolean | 'true' | 'false';
 export type Numberish = number | string;
 
 export type AnyFunction = (...args: any) => any;
+
+/**
+ * @see https://docs.microsoft.com/en-us/javascript/api/@azure/keyvault-certificates/requireatleastone?view=azure-node-latest
+ *
+ * @description
+ * adad
+ *
+ * @example
+ * adad
+ */
+export type RequireAtLeastOne<T> = {
+  [K in keyof T]-?: Required<Pick<T, K>> &
+    Partial<Pick<T, Exclude<keyof T, K>>>;
+}[keyof T];
+
+/**
+ * @see https://docs.microsoft.com/en-us/javascript/api/@azure/keyvault-certificates/arrayoneormore?view=azure-node-latest
+ *
+ * @description
+ * adad
+ *
+ * @example
+ * adad
+ */
+export type ArrayOneOrMore<T> = { 0: T } & Array<T>;
+
+/**
+ * @description
+ * adad
+ *
+ * @example
+ * adad
+ */
+export type ConstructorArgs<T> = T extends new (...args: infer U) => any
+  ? U
+  : never;
