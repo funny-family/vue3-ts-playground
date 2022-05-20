@@ -1,7 +1,6 @@
-import { Transition, resolveDynamicComponent, Suspense } from 'vue';
+import { Transition } from 'vue';
 import { RouterView } from 'vue-router';
 import type { RenderFunction } from '@/app/shared/types/component/render';
-import { callTernary } from '@/app/shared/utils/call-ternary';
 import t from '../../styles/transitions/fade-in-down.transition.scss';
 
 export const render: RenderFunction<{}> = function () {
@@ -24,24 +23,7 @@ export const render: RenderFunction<{}> = function () {
                 // console.log('Component:', Component);
                 // console.log('route:', route);
 
-                const DynamicComponent = resolveDynamicComponent(Component);
-                const isDynamicComponentASymbolType =
-                  typeof DynamicComponent === 'symbol';
-
-                return (
-                  <Suspense
-                    v-slots={{
-                      default: () => {
-                        return callTernary({
-                          condition: isDynamicComponentASymbolType,
-                          // if we keep "resolveDynamicComponent(Component)" as it is we will get "Symbol()" at first and then the page component
-                          onTruthy: () => '',
-                          onFalsy: () => DynamicComponent
-                        });
-                      }
-                    }}
-                  />
-                );
+                return Component;
               }
             }}
           />
