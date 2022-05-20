@@ -1,7 +1,21 @@
+/**
+ * @typedef { import("hygen") } Hygen
+ */
 const {
   fromCableToCamelCase
 } = require('../../../utils/from-cable-to-camel-case');
 const { capitalize } = require('../../../utils/capitalize');
+
+// https://github.com/jondot/hygen/issues/35
+
+// https://www.npmtrends.com/hygen-vs-plop-vs-slush-vs-yeoman-generator
+
+// https://www.npmjs.com/package/plop
+
+// https://www.npmjs.com/package/yeoman-generator
+// https://yeoman.io/authoring/user-interactions.html
+
+// https://www.joshcanhelp.com/generate-eleventy-posts-with-hygen/
 
 module.exports = {
   prompt: ({ inquirer }) => {
