@@ -1,5 +1,6 @@
 import type { TextFieldUnwrappedBindings } from './text-field.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
+import type { TextFieldInstance } from './text-field.ref';
 import { styles } from './styles/text-field.styles';
 
 export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {

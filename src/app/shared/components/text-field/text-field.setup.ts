@@ -51,16 +51,21 @@ export const setup = (props: Props, context: Context) => {
     context.emit(emitName.updateModelValue, value);
   };
 
-  return {
-    props,
-    context,
-    onInput,
-    shallowObj,
+  const bindings = { props, context, onInput, shallowObj, deepObj };
+  const exposes = {
     deepObj
   };
+
+  context.expose(exposes);
+
+  return bindings;
 };
 
 export type TextFieldSetupFunction = typeof setup;
+
 export type TextFieldBindings = BindingsOfSetupFunction<TextFieldSetupFunction>;
+
 export type TextFieldUnwrappedBindings =
   UnwrappedBindingsOfSetupFunction<TextFieldSetupFunction>;
+
+export type TextFieldExposes = Pick<TextFieldUnwrappedBindings, 'deepObj'>;
