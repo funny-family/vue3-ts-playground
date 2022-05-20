@@ -1,3 +1,7 @@
+/**
+ * @typedef { import("eslint").Linter.Config } EsLintConfig
+ */
+
 const typescriptRules = {
   '@typescript-eslint/no-namespace': 'off',
   '@typescript-eslint/no-empty-interface': 'off',
@@ -5,6 +9,7 @@ const typescriptRules = {
   '@typescript-eslint/ban-ts-comment': 'off'
 };
 
+/** @type {EsLintConfig} */
 module.exports = {
   root: true,
   env: {
