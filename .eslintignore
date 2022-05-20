@@ -9,5 +9,4 @@ dist
 *.log
 *.lock
 .vscode*
-.hygen*
-utils*
+src/public/index.html
