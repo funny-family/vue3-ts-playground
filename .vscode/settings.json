@@ -13,6 +13,7 @@
     "Numberish",
     "pinia",
     "scripthost",
+    "unimported",
     "vuex"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
