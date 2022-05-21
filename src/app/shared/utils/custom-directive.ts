@@ -1,31 +1,21 @@
 import type { ObjectDirective } from 'vue';
 
-// type CustomDirectiveConstructor = {
-//   name: string;
-// };
-
-// interface CustomDirectiveInterface<T = any, V = any>
-//   extends ObjectDirective<T, V>,
-//     CustomDirectiveConstructor {}
-
-// export class CustomDirective<T = any, V = any>
-//   implements CustomDirectiveInterface<T, V>
-// {
-//   name: CustomDirectiveConstructor['name'];
-
-//   constructor(name: CustomDirectiveConstructor['name']) {
-//     this.name = name;
-//   }
-// }
-
 interface CustomDirectiveName {
   name: string;
 }
 
-interface CustomDirectiveUseFunction {
-  use: Function;
-}
+type DirectiveUseFunction<T extends unknown> = {
+  use: (directiveOption?: T) => any[];
+};
 
-export class CustomDirective implements CustomDirectiveName {
-  name = '';
-}
+// export class CustomDirective<DO extends unknown>
+//   implements CustomDirectiveName, DirectiveUseFunction<DO>, ObjectDirective
+// {
+//   get name() {
+//     throw new Error('"name" field is required!');
+
+//     return '';
+//   }
+
+//   use() {}
+// }
