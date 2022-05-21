@@ -100,7 +100,7 @@ type VFocusDirectiveObject = DirectiveHookOption &
   DirectiveDeepOption &
   DirectiveName &
   DirectiveRegisterFunction &
-  DirectiveUseFunction;
+  DirectiveUseFunction & { [key: string]: any };
 
 export const vFocusDirective: VFocusDirectiveObject = {
   name: 'focus',
@@ -152,8 +152,63 @@ export const vFocusDirective: VFocusDirectiveObject = {
     return undefined;
   },
 
+  get directiveObject() {
+    const obj: any = {};
+
+    const {
+      deep,
+      created,
+      beforeMount,
+      mounted,
+      beforeUpdate,
+      updated,
+      beforeUnmount,
+      unmounted,
+      getSSRProps
+    } = this;
+
+    if (deep !== undefined) {
+      obj['deep'] = deep;
+    }
+
+    if (created !== undefined) {
+      obj[created.name] = created;
+    }
+
+    if (beforeMount !== undefined) {
+      obj[beforeMount.name] = beforeMount;
+    }
+
+    if (mounted !== undefined) {
+      obj[mounted.name] = mounted;
+    }
+
+    if (beforeUpdate !== undefined) {
+      obj[beforeUpdate.name] = beforeUpdate;
+    }
+
+    if (updated !== undefined) {
+      obj[updated.name] = updated;
+    }
+
+    if (beforeUnmount !== undefined) {
+      obj[beforeUnmount.name] = beforeUnmount;
+    }
+
+    if (unmounted !== undefined) {
+      obj[unmounted.name] = unmounted;
+    }
+
+    if (getSSRProps !== undefined) {
+      obj[getSSRProps.name] = getSSRProps;
+    }
+
+    return obj;
+  },
+
   register() {
-    const { register, use, name, ...directiveHook } = this;
+    const { register, use, name, directiveObject, ...directiveHook } = this;
+    console.log('directiveObject:', directiveObject);
 
     return {
       [name]: directiveHook
@@ -161,7 +216,7 @@ export const vFocusDirective: VFocusDirectiveObject = {
   },
 
   use(directiveOption) {
-    const { register, use, name, ...directiveHook } = this;
+    const { register, use, name, directiveObject, ...directiveHook } = this;
 
     const directive = [
       directiveHook,
