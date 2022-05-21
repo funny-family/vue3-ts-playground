@@ -44,7 +44,7 @@ const extractComponentUidFromDataset = <T extends HTMLElement>(
 const querySelectForwardElByComponentUid = <T extends Element>(
   componentUid: number | null
 ): T | null => {
-  if (componentUid === null) {
+  if (componentUid == null) {
     return null;
   }
 
