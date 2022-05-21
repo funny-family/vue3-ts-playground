@@ -68,11 +68,9 @@ export const NotFound = defineComponent({
     const counter = ref(0);
 
     onMounted(() => {
-      console.log('"TextField" ref value $el:', textFieldRef.value);
+      console.log('"TextField" ref value:', textFieldRef.value?.deepObj);
       // console.log('input ref value:', inputRef.value);
     });
-
-    const textFieldFunctionalRef = useForwardRef();
 
     const trimModifier = 'trim';
 
@@ -88,13 +86,15 @@ export const NotFound = defineComponent({
       trimModifier,
       inputRef,
       s,
-      counter,
-      textFieldFunctionalRef
+      counter
     };
   },
 
   // @ts-ignore
   render(ctx, cache, props, setup, data, options) {
+    // const {  } = this;
+    this;
+
     const trimModifier = 'trim';
     const directiveFocus = resolveDirective('focus');
 
@@ -136,6 +136,13 @@ export const NotFound = defineComponent({
           <>
             <fieldset>
               <label>aduadaud</label>
+              <div>
+                {this.textFieldRef !== undefined && (
+                  <pre>
+                    {JSON.stringify(this.textFieldRef.deepObj, null, 2)}
+                  </pre>
+                )}
+              </div>
 
               {/* {_withDirectives(
                 (openBlock(),
@@ -200,8 +207,11 @@ export const NotFound = defineComponent({
                 class="TextField"
                 label="Text Field Label"
                 v-model={[this.textFieldValue, ['trim', 'capitalize']]}
+                // ref={(el: any) => {
+                //   console.log(1231313132, el);
+                // }}
+                // ref={this.textFieldFunctionRef as any}
                 ref={nameOf(() => this.textFieldRef)}
-                // ref={this.textFieldFunctionalRef}
               />,
               [vFocusDirective.use()]
             )}
@@ -309,7 +319,9 @@ export const NotFound = defineComponent({
           v-slots={{
             default: () => (
               <div>
-                <div>default</div>
+                <div>
+                  default <input type="number" />
+                </div>
               </div>
             ),
             header: ({ headerTitle, someShittyText }) => (
