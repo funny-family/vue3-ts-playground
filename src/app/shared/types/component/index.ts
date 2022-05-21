@@ -22,7 +22,7 @@ export type PublicInstanceOfComponent = ComponentPublicInstance;
  * $props: MakeDefaultsOptional extends true ? Partial<Defaults> & Omit<P & PublicProps, keyof Defaults> : P & PublicProps;
  */
 export type PropsOfComponentPublicInstance<T = Data> = {
-  $attrs: T;
+  $props: T;
 };
 
 /**
