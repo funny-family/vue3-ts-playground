@@ -15,5 +15,6 @@ export const enum RouteName {
   my = 'my',
   profile = 'profile',
   chats = 'chats',
-  notFound = 'notFound'
+  notFound = 'notFound',
+  testPage = 'testPage'
 }
