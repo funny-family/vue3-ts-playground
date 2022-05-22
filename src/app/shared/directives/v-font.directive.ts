@@ -1,19 +1,22 @@
 import type { ObjectDirective } from 'vue';
+import { createDirective } from '../utils/create-directive';
 
-export const vFontSizeDirective: ObjectDirective<HTMLElement, any> = {
-  beforeMount(el, binding) {
-    let size = 16;
+// normal, italic, oblique
 
-    if (binding.modifiers.small) {
-      size = 12;
-    } else if (binding.modifiers.big) {
-      size = 24;
+export const vFontDirective = createDirective('font', {
+  beforeMount(el: HTMLElement, binding) {
+    if (binding.modifiers['normal'] === true) {
+      el.style.fontStyle = 'normal';
+    } else if (binding.modifiers['italic'] === true) {
+      el.style.fontStyle = 'italic';
+    } else if (binding.modifiers['oblique'] === true) {
+      el.style.fontStyle = 'oblique';
     }
 
-    el.style.fontSize = `${size}px`;
+    el.style.fontSize = `${binding.value}px`;
   },
 
   updated(el, binding) {
     el.style.fontSize = `${binding.value}px`;
   }
-};
+});
