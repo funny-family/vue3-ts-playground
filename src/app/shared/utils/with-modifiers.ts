@@ -52,8 +52,8 @@ export const withModifiers = (
       ] as string[]
     ).includes(modifier);
 
-  let transformableModifiers: string[] = [];
-  let nonTransformableModifiers: string[] = [];
+  const transformableModifiers: string[] = [];
+  const nonTransformableModifiers: string[] = [];
 
   if (modifiers.length > 1) {
     for (let i = 0; i < modifiers.length; i++) {
@@ -68,7 +68,8 @@ export const withModifiers = (
     }
   } else {
     const firstModifierInList = modifiers[0];
-    const isFirstModifierTransformable = isModifierTransformable(firstModifierInList);
+    const isFirstModifierTransformable =
+      isModifierTransformable(firstModifierInList);
 
     if (isFirstModifierTransformable === true) {
       transformableModifiers.push(firstModifierInList);
