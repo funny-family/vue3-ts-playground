@@ -1,15 +1,19 @@
-import type { ObjectDirective } from 'vue';
 import { createDirective } from '../utils/create-directive';
 
-// normal, italic, oblique
+type VFontDirectiveModifier = 'normal' | 'italic' | 'oblique';
 
-export const vFontDirective = createDirective('font', {
-  beforeMount(el: HTMLElement, binding) {
-    if (binding.modifiers['normal'] === true) {
+export const vFontDirective = createDirective<
+  HTMLElement,
+  number,
+  void,
+  VFontDirectiveModifier
+>('font', {
+  beforeMount(el, binding) {
+    if (binding.modifiers.normal === true) {
       el.style.fontStyle = 'normal';
-    } else if (binding.modifiers['italic'] === true) {
+    } else if (binding.modifiers.italic === true) {
       el.style.fontStyle = 'italic';
-    } else if (binding.modifiers['oblique'] === true) {
+    } else if (binding.modifiers.oblique === true) {
       el.style.fontStyle = 'oblique';
     }
 
