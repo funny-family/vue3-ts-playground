@@ -11,17 +11,24 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function () {
       <section>
         {withDirectives(<h1>test page</h1>, [
           vFontDirective.use({
-            value: 20,
+            value: 40,
             modifiers: {
               italic: true
             }
           })
         ])}
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus,
-          dicta.
-        </p>
+        {withDirectives(
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Voluptatibus, dicta.
+          </p>,
+          [
+            vFontDirective.use({
+              value: 20
+            })
+          ]
+        )}
       </section>
 
       <hr />
