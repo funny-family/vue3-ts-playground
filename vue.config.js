@@ -12,6 +12,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 /** @type {ProjectOption} */
 module.exports = {
+  transpileDependencies: true,
+
   devServer: {
     port: 6412
   },
@@ -43,7 +45,7 @@ module.exports = {
            */
           /* ==================== class name (styles) ==================== */
         },
-        localsConvention: 'asIs',
+        localsConvention: 'asIs'
       }
     }
   },
