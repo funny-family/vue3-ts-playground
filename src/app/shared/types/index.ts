@@ -226,3 +226,27 @@ export type ArrayOneOrMore<T> = { 0: T } & Array<T>;
 export type ConstructorArgs<T> = T extends new (...args: infer U) => any
   ? U
   : never;
+
+/**
+ * @see https://stackoverflow.com/questions/59071058/how-to-pick-and-rename-certain-keys-using-typescript
+ *
+ * @description
+ * Rename one key in type.
+ *
+ * @example
+ * interface User {
+ *   _id: string;
+ *   name: string;
+ *   email: string;
+ *   password: string;
+ *   phone: number;
+ * }
+ *
+ *  type T21 = RenameOneKey<User, "_id", "id"> // same type as above
+ *  type T22 = RenameOneKey<User, "foo", "id"> // error, foo is no property
+ */
+export type RenameOneKey<T, K extends keyof T, R extends PropertyKey> = Omit<
+  T,
+  K
+> &
+  { [P in R]: T[K] };
