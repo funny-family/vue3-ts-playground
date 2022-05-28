@@ -1,11 +1,12 @@
 import type { NavigationGuardWithThis } from 'vue-router';
 
-export const pageTitle: NavigationGuardWithThis<undefined> = (
+export const pageTitle: NavigationGuardWithThis<undefined> = function (
   to,
   from,
   next
-) => {
-  if (to.meta.title !== undefined) document.title = to.meta.title;
+) {
+  const titleFromMeta = to.meta.title;
+  if (titleFromMeta !== undefined) document.title = titleFromMeta;
 
   next();
 };
