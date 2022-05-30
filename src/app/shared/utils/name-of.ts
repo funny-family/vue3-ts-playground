@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 // variable name regexp (https://mothereff.in/js-variables)
 // ^([a-zA-Z_$][a-zA-Z\\d_$]*)$
 
