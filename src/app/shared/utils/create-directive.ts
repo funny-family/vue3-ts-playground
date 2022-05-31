@@ -1,89 +1,29 @@
-import type {
-  VNode,
-  ObjectDirective,
-  Directive,
-  DirectiveArguments
-} from 'vue';
-import type { RequireAtLeastOne } from '@/app/shared/types';
+import type { Directive, DirectiveArguments } from 'vue';
+import type { RequireAtLeastOne, UnpackedArray } from '@/app/shared/types';
 import type {
   DirectiveModifier,
   DirectiveOption
 } from '@/app/shared/types/component/directive';
 
-// =================================================================
-// type D<V, A, M> = V extends void
-//   ? {
-//       arg: A;
-//       mod: M;
-//     }
-//   : A extends void
-//   ? {
-//       val: A;
-//       mod: M;
-//     }
-//   : M extends void
-//   ? {
-//       val: A;
-//       arg: A;
-//     }
-//   : {
-//     val: A;
-//     arg: A;
-//     mod: M;
-//   };
-
-// const d: D<void, '1' | '2' | '3', 'one' | 'two' | 'three'> = {
-
-// };
-// =================================================================
-
 type DirectiveRegisterFunction = () => Record<string, Directive>;
 
-// type DirectiveUseFunctionArgument<V = any, A = string, M = {}> = V extends void
-//   ? {
-//       arg: A;
-//       modifiers: M;
-//     }
-//   : A extends void
-//   ? {
-//       value: A;
-//       modifiers: M;
-//     }
-//   : M extends void
-//   ? {
-//       val: A;
-//       arg: A;
-//     }
-//   : {
-//       value: A;
-//       arg: A;
-//       modifiers: M;
-//     };
-
-// type R = DirectiveUseFunctionArgument<any, string, {}>;
-
-// type DirectiveUseFunction<V = any, A = string, M extends string = string> = (
-//   directiveArgument?: Partial<{
-//     value: V;
-//     arg: A;
-//     modifiers: DirectiveModifier<M>;
-//   }>
-// ) => DirectiveArguments;
-
-type DirectiveUseFunction<V = any, A = string, M extends any = string> = (
-  directiveArgument?: Partial<{
-    value: V;
-    arg: A;
-    // @ts-expect-error <-- I gave up here ;(
-    modifiers: M extends void ? void : DirectiveModifier<M>;
-  }>
-) => DirectiveArguments;
+type DirectiveUseFunction<
+  V = any,
+  A extends string = '',
+  M extends string = ''
+> = (
+  directiveArgument?: Partial<
+    (V extends undefined ? {} : { value: V }) &
+      (A extends '' ? {} : { arg: A }) &
+      (M extends '' ? {} : { modifiers: DirectiveModifier<M> })
+  >
+) => UnpackedArray<DirectiveArguments>;
 
 /**
  * @see https://vuejs.org/guide/reusability/custom-directives.html#introduction
  *
  * @description
- * adada
+ * Util function that allows to create directives.
  *
  * @example
  * type VFontDirectiveModifier = 'normal' | 'italic' | 'oblique';
@@ -91,7 +31,7 @@ type DirectiveUseFunction<V = any, A = string, M extends any = string> = (
  * export const vFontDirective = createDirective<
  *  HTMLElement,
  *  number,
- *  void,
+ *  '',
  *  VFontDirectiveModifier
  * >('font', {
  *   beforeMount(el, binding) {
@@ -129,10 +69,10 @@ type DirectiveUseFunction<V = any, A = string, M extends any = string> = (
  * ...
  */
 export const createDirective = <
-  DirectiveElement extends HTMLElement = HTMLElement,
-  DirectiveValue = any,
-  DirectiveArg = string,
-  DirectiveModifier extends any = string
+  DirectiveElement extends Element = HTMLElement,
+  DirectiveValue extends any = any,
+  DirectiveArg extends string = '',
+  DirectiveModifier extends string = ''
 >(
   name: Readonly<string>,
   directiveObject: RequireAtLeastOne<
@@ -140,7 +80,6 @@ export const createDirective = <
       DirectiveElement,
       DirectiveValue,
       DirectiveArg,
-      // @ts-expect-error <-- And here too ;(
       DirectiveModifier
     >
   >
@@ -160,7 +99,7 @@ export const createDirective = <
       directiveArgument?.value,
       directiveArgument?.arg,
       directiveArgument?.modifiers
-    ] as any[];
+    ] as any;
 
   return {
     register,
