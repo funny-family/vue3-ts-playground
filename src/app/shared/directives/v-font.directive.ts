@@ -1,11 +1,11 @@
-import { createDirective } from '../utils/create-directive';
+import { createDirective } from '@/app/shared/utils/create-directive';
 
 type VFontDirectiveModifier = 'normal' | 'italic' | 'oblique';
 
 export const vFontDirective = createDirective<
   HTMLElement,
   number,
-  void,
+  '',
   VFontDirectiveModifier
 >('font', {
   beforeMount(el, binding) {
