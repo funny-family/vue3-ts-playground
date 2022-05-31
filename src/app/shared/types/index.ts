@@ -250,3 +250,25 @@ export type RenameOneKey<T, K extends keyof T, R extends PropertyKey> = Omit<
   K
 > &
   { [P in R]: T[K] };
+
+type IsInArray<A extends readonly unknown[], X> = X extends A[number]
+  ? true
+  : false;
+
+/**
+ * @see https://stackoverflow.com/questions/57016728/is-there-a-way-to-define-type-for-array-with-unique-items-in-typescript
+ * @see https://www.typescriptlang.org/play?ssl=7&ssc=12&pln=1&pc=1#code/C4TwDgpgBAkgzjAdgQQE6oIYgDzKhAD2AkQBM4pUINSB7RAGxCgFdEBrRWgd0QG0AugBooADQB8UALxj8REuSjI+iFgFsARhFQCoAfijBULaAC4oAMwwM4EANwBYAFChIsOAFVEASwCOJ3DliMgoqGnomVg4uXkFJKWcoJSCFUOo6RmY+b0QLbTERADpinLzUKAAlCDhgAUSk-XckNEwcKpqRCRSQw2MIeobGlQgAN20RAHIAUUQAY1o2YipSKBHrEyhub2AACyhSFjAGb1mMYjhTCc66p0Gk83gvPwD24HEBqHMjE0cnZ1doAAVarAACM0ncT38EGwfAARMg4UI4QAhJFwgDCcIE4jsUAA9PjeiZ-uAgSCAEwQx4+aGwhHotHItE4vGEqDDMaoERwmbzRbaCArNYMDZbXb7Q7HU7nUxIqCo7FAA
+ */
+export type IsArrayUnique<A extends readonly unknown[]> = A extends readonly [
+  infer X,
+  ...infer Rest
+]
+  ? IsInArray<Rest, X> extends true
+    ? [never, 'Encountered value with duplicates:', X]
+    : IsArrayUnique<Rest>
+  : true;
+
+/**
+ * @see https://stackoverflow.com/questions/43537520/how-do-i-extract-a-type-from-an-array-in-typescript
+ */
+export type UnpackedArray<T> = T extends (infer U)[] ? U : T;
