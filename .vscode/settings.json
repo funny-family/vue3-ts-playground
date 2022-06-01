@@ -14,6 +14,7 @@
     "pinia",
     "scripthost",
     "unimported",
+    "vnode",
     "vuex"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
