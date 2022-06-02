@@ -2,6 +2,7 @@
 // https://www.fatalerrors.org/a/embrace-the-jsx-syntax-of-vue-3-series.html
 // https://programming.vip/docs/vue-3-props-emit-slot-render-jsx-and-createelement.html
 
+import './not-found.scss';
 import {
   defineComponent,
   onMounted,
@@ -32,6 +33,7 @@ import { renderOnce } from '@/app/shared/utils/render-once';
 import emojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
 import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
 import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
+import { vFontDirective } from '@/app/shared/directives/v-font.directive';
 import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composable';
 import { withDirectives } from '@/app/shared/utils/with-directives';
 
@@ -101,7 +103,8 @@ export const NotFound = defineComponent({
     console.log('"args" of "not-found" component:', arguments);
 
     return (
-      <div class="gif404">
+      <div className={styles.notFoundPage}>
+        {/* <div class="gif404"> */}
         <div>
           <img src={emojiBlinkLeftIcon} alt="EmojiBlinkLeftIcon." />
           <hr />
@@ -123,12 +126,16 @@ export const NotFound = defineComponent({
           )}
           style={{ border: '2px solid green' }}
         >
-          <input
-            // @ts-ignore
-            // v-focus
-            placeholder="some shit info"
-            type="text"
-          />
+          {withDirectives(
+            <input
+              // @ts-ignore
+              // v-focus
+              placeholder="some shit info"
+              type="text"
+            />,
+            // [vFocusDirective.use()]
+            []
+          )}
           <button type="submit">submit from</button>
         </form>
 
@@ -143,20 +150,6 @@ export const NotFound = defineComponent({
                   </pre>
                 )}
               </div>
-
-              {/* {_withDirectives(
-                (openBlock(),
-                (
-                  <input
-                    class={1}
-                    about="aduadaud"
-                    type="text"
-                    v-model={[this.textFieldValue, ['trim']]}
-                    ref="inputRef"
-                  />
-                )),
-                [[focus]]
-              )} */}
 
               {/* {withDirectives(
                 <input
@@ -191,19 +184,11 @@ export const NotFound = defineComponent({
             {/* https://github.com/michitaro/vue-menu/issues/20 */}
             {/* https://github.com/vuejs/vue-next/blob/2937530beff5c6bb57286c2556307859e37aa809/packages/compiler-core/src/ast.ts#L426 */}
             {/* https://v3.vuejs.org/api/global-api.html#withdirectives */}
-            {/* {withDirectives(
-              <TextField
-                class="TextField-1231231313"
-                label="Text Field Label"
-                v-model={[this.textFieldValue, ['trim', 'capitalize']]}
-                ref={nameOf(() => this.textFieldRef)}
-                // ref={this.textFieldFunctionalRef}
-              />,
-              [[focus]]
-            )} */}
 
             {withDirectives(
               <TextField
+                // className="adadada"
+                // v-show={false}
                 class="TextField"
                 label="Text Field Label"
                 v-model={[this.textFieldValue, ['trim', 'capitalize']]}
@@ -214,6 +199,7 @@ export const NotFound = defineComponent({
                 ref={nameOf(() => this.textFieldRef)}
               />,
               [vFocusDirective.use()]
+              // []
             )}
 
             {/* <TextField
@@ -253,7 +239,14 @@ export const NotFound = defineComponent({
               default: (args) => {
                 console.log('"RouterLink" args:', args);
 
-                return <h2>to home!</h2>;
+                return withDirectives(<h2>to home!</h2>, [
+                  vFontDirective.use({
+                    value: 60,
+                    modifiers: {
+                      oblique: true
+                    }
+                  })
+                ]);
               }
             }}
           />
@@ -403,7 +396,8 @@ export const NotFound = defineComponent({
 });
 
 NotFound.directives = {
-  ...vFocusDirective.register()
+  ...vFocusDirective.register(),
+  ...vFontDirective.register()
 };
 
 export default NotFound;
