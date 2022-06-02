@@ -4,7 +4,7 @@ import { findComponentForwardEl } from '@/app/shared/utils/forward-el';
 export const vFocusDirective = createDirective<HTMLElement, undefined>(
   'focus',
   {
-    mounted(el, binding) {
+    mounted(el) {
       const element = findComponentForwardEl(el) || el;
 
       element.focus();
