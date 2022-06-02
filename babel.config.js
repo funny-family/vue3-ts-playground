@@ -15,6 +15,24 @@ module.exports = {
         enableObjectSlots: false
       }
     ],
+
+    // [
+    //   'babel-plugin-rename-jsx-attribute',
+    //   {
+    //     className: 'class'
+    //   }
+    // ]
+
+    // [
+    //   'react-css-modules',
+    //   {
+    //     attributeNames: {
+    //       styleName: null,
+    //       className: 'class'
+    //     }
+    //   }
+    // ]
+
     // [
     //   'react-css-modules',
     //   {
