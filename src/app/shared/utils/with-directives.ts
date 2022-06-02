@@ -28,4 +28,5 @@ import type { DirectiveArguments, VNode } from 'vue';
 export const withDirectives = <T extends VNode>(
   vnode: T,
   directives: DirectiveArguments
-) => _withDirectives((openBlock(), vnode), directives);
+  // ) => _withDirectives((openBlock(), vnode), directives);
+) => _withDirectives(vnode, directives);
