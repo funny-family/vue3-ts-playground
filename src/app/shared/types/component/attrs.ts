@@ -4,6 +4,8 @@ import type { VModel } from '@/app/shared/types/directives';
 
 export type CSSClassAttribute = { class?: string };
 
+export type CSSClassNameAttribute = { className?: string };
+
 type HTMLAttributesWithoutCSSClass<T = HTMLAttributes> = Omit<T, 'class'>;
 
 export type HTMLAttributesWithClassAttributeAsString<T = HTMLAttributes> =
