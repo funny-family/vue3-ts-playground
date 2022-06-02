@@ -21,7 +21,7 @@ type EventModifier = `${Modifier.Event}`;
  * @see https://vuejs.org/api/render-function.html#withmodifiers
  *
  * @description
- * Adds modifier to event function.
+ * For adding built-in v-on modifiers to an event handler function.
  *
  * @example
  * <button
@@ -30,7 +30,7 @@ type EventModifier = `${Modifier.Event}`;
  *   {...withModifiers(
  *     {
  *       onClick: () => {
- *         alert('Yeah, you clicked me! Only once, no more!');
+ *         alert('Yeah, you clicked me! But no more!');
  *       }
  *     },
  *     ['once']
@@ -42,6 +42,7 @@ type EventModifier = `${Modifier.Event}`;
 export const withModifiers = (
   eventObject: UnionOfProperties<EventObject>,
   modifiers: NonEmptyArrayOf<EventModifier>
+  // modifiers: IsArrayUnique<EventModifier[]>
 ): EventObjetWithModifiers => {
   const isModifierTransformable = (modifier: string): boolean =>
     (
@@ -55,25 +56,15 @@ export const withModifiers = (
   const transformableModifiers: string[] = [];
   const nonTransformableModifiers: string[] = [];
 
-  if (modifiers.length > 1) {
-    for (let i = 0; i < modifiers.length; i++) {
-      const modifier = modifiers[i];
-      const isCurrentModifierTransformable = isModifierTransformable(modifier);
+  for (let i = 0; i < modifiers.length; i++) {
+    const modifier = modifiers[i];
+    const isCurrentModifierTransformable = isModifierTransformable(modifier);
 
-      if (isCurrentModifierTransformable === true) {
-        transformableModifiers.push(modifier);
-      }
-
-      nonTransformableModifiers.push(modifier);
+    if (isCurrentModifierTransformable === true) {
+      transformableModifiers.push(modifier);
     }
-  } else {
-    const firstModifierInList = modifiers[0];
-    const isFirstModifierTransformable =
-      isModifierTransformable(firstModifierInList);
 
-    if (isFirstModifierTransformable === true) {
-      transformableModifiers.push(firstModifierInList);
-    }
+    nonTransformableModifiers.push(modifier);
   }
 
   const inputEventName = Object.keys(eventObject)[0];
