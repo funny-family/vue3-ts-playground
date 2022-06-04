@@ -14,7 +14,7 @@ module.exports = {
         optimize: true,
         enableObjectSlots: false
       }
-    ],
+    ]
 
     // [
     //   'babel-plugin-rename-jsx-attribute',
