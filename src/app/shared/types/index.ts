@@ -132,7 +132,7 @@ export type FunctionWithZeroArguments<T = void> = () => T;
  *   ...
  * };
  */
-export type EventHandler<E> = (event: E) => void;
+export type EventHandler<E extends Event> = (event: E) => void;
 
 /**
  * @see https://stackoverflow.com/questions/56006111/is-it-possible-to-define-a-non-empty-array-type-in-typescript
@@ -141,9 +141,9 @@ export type EventHandler<E> = (event: E) => void;
  * Define an array containing at least one element.
  *
  * @example
- * const okay: NonEmptyArray<number> = [1, 2];
- * const alsoOkay: NonEmptyArray<number> = [1];
- * const err: NonEmptyArray<number> = []; // error!
+ * const okay: NonEmptyArrayO<number> = [1, 2];
+ * const alsoOkay: NonEmptyArrayO<number> = [1];
+ * const err: NonEmptyArrayO<number> = []; // error!
  */
 export type NonEmptyArrayOf<T> = [T, ...T[]];
 
@@ -189,7 +189,7 @@ export type Booleanish = boolean | 'true' | 'false';
 
 export type Numberish = number | string;
 
-export type AnyFunction = (...args: any) => any;
+export type AnyFunction<R = unknown> = (...args: any[]) => R;
 
 /**
  * @see https://docs.microsoft.com/en-us/javascript/api/@azure/keyvault-certificates/requireatleastone?view=azure-node-latest
