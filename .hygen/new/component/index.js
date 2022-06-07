@@ -1,5 +1,6 @@
 /**
  * @typedef { import("hygen") } Hygen
+ * @typedef { import("inquirer").Question } InquirerQuestion
  */
 const {
   fromCableToCamelCase
@@ -17,8 +18,11 @@ const { capitalize } = require('../../../utils/capitalize');
 
 // https://www.joshcanhelp.com/generate-eleventy-posts-with-hygen/
 
+// https://www.digitalocean.com/community/tutorials/nodejs-interactive-command-line-prompts
+
 module.exports = {
   prompt: ({ inquirer }) => {
+    /** @type {InquirerQuestion[]} */
     const questions = [
       {
         type: 'input',
@@ -28,7 +32,19 @@ module.exports = {
       {
         type: 'multiselect',
         name: 'additionalOptions',
-        choices: ['props', 'emits', 'binding support'],
+        // choices: ['props', 'emits', 'binding support'],
+        choices: [
+          {
+            key: 'haveProps',
+            value: 'props',
+            name: 'Have props?'
+          },
+          {
+            key: 'haveProps',
+            value: 'props',
+            name: 'Have props?'
+          },
+        ],
         message: 'Select additional options for the component.'
       },
       {
