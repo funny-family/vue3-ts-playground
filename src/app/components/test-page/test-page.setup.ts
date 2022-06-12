@@ -5,7 +5,7 @@ import type {
   BindingsOfSetupFunction,
   UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
-import { withModifiers } from 'vue';
+import { withModifiers, normalizeClass } from 'vue';
 
 type Props = PropsOfSetupFunction;
 type Context = ContextOfSetupFunction;
