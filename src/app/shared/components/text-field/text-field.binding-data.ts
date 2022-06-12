@@ -37,7 +37,7 @@ export namespace VModel {
 
   export type Directive = _VModel.Directive<
     Type,
-    string,
+    '',
     ModelModifier.ModifierList
   >;
 }

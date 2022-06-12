@@ -1,13 +1,16 @@
 import type { TextFieldUnwrappedBindings } from './text-field.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
 import { styles } from './styles/text-field.styles';
-import { mergeStrings } from '@/app/shared/utils/merge-strings';
+/**
+ * @see https://segmentfault.com/a/1190000041616822
+ */
+import { normalizeClass } from 'vue';
 
 export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {
   const { props, context, onInput, $, shallowObj, deepObj } = this;
   const { class: classAttr, style: styleAttr, ...restAttrs } = context.attrs;
   const uid = $.uid;
-  const className = mergeStrings(classAttr, styles.textField);
+  const className = normalizeClass([classAttr, styles.textField]);
   const style = styleAttr;
   const value = props.modelValue;
 
