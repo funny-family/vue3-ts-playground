@@ -83,7 +83,8 @@ export const withModifiers = (
   const outputEventFunction = callTernary({
     condition: isNonTransformableModifierListEmpty,
     onTruthy: () => inputEventFunction,
-    onFalsy: () => _withModifiers(inputEventFunction, nonTransformableModifiers)
+    onFalsy: () =>
+      _withModifiers(inputEventFunction as any, nonTransformableModifiers)
   });
 
   const eventObjetWithModifiers: EventObjetWithModifiers = {
