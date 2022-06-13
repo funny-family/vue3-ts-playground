@@ -39,8 +39,8 @@ declare module 'vue' {
  */
 export declare function withModifiers<T extends AnyFunction>(
   fn: T,
-  modifiers: NonEmpty<string[]>
-  // modifiers: string[]
+  // modifiers: NonEmpty<string[]>
+  modifiers: string[]
 ): T;
 
 interface AttributeDictionary {
