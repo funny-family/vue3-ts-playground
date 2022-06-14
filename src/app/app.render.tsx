@@ -6,7 +6,7 @@ import { Router } from './components/router/router.component';
 // import '../assets/styles/transitions/fade-in-down.transition.scss';
 
 export const render: RenderFunction<AppBindings> = function () {
-  const { isOriginal, obj } = this;
+  const { isOriginal } = this;
 
   // console.log(obj);
 

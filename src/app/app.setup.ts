@@ -15,12 +15,6 @@ type Context = ContextOfSetupFunction;
 type Props = PropsOfSetupFunction;
 
 export const setup = (props: Props, context: Context) => {
-  const obj = shallowRef({
-    one: 1,
-    two: 2,
-    three: 3
-  });
-
   const tabId = generateGuid();
 
   const channel = new BroadcastChannel('tab');
@@ -58,7 +52,6 @@ export const setup = (props: Props, context: Context) => {
     props,
     context,
     isOriginal,
-    obj
   };
 };
 
