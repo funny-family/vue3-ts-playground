@@ -2,11 +2,10 @@
 // css modules https://www.jianshu.com/p/be1778a76763
 // Template direct field access https://github.com/vuejs/vue-next/issues/1227
 // https://juejin.cn/post/6885953990345883661
-import { defineComponent } from 'vue';
+import { defineComponent, normalizeClass } from 'vue';
 import { props, Gif404Props } from './gif-404.props';
 import { setup, Gif404Bindings } from './gif-404.setup';
 import { styles } from './styles/gif-404.styles';
-import { mergeClassNames } from '@/app/shared/utils/merge-class-names';
 import { RouterLink } from 'vue-router';
 import type { VSlots } from '@/app/shared/types/directives';
 import type { Gif404Slots } from './gif-404.slots';
@@ -34,7 +33,7 @@ export const Gif404 = defineComponent<
             <img src={require('@/app/images/pngs/logo.png')} alt="Vue.js." />
           </a>
           <RouterLink to="/">adadad</RouterLink>
-          <h3 class={mergeClassNames(styles.gif404__text, styles.hidden)}>
+          <h3 class={normalizeClass([styles.gif404__text, styles.hidden])}>
             <b>{this.props.text}</b>
           </h3>
           <button onClick={() => (this.isImageVisible = !this.isImageVisible)}>
