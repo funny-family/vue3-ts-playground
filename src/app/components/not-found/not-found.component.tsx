@@ -36,6 +36,7 @@ import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
 import { vFontDirective } from '@/app/shared/directives/v-font.directive';
 import { useForwardRef } from '@/app/shared/composables/use-forward-ref.composable';
 import { withDirectives } from '@/app/shared/utils/with-directives';
+import { withRenderOnce } from '@/app/shared/utils/with-render-once';
 
 /**
  * Writing Vue.js Render Functions in JSX
@@ -177,6 +178,7 @@ export const NotFound = defineComponent({
           </>
 
           <>
+            {/* https://sfc.vuejs.org/#__DEV__eyJBcHAudnVlIjoiPHNjcmlwdCBzZXR1cD5cbmltcG9ydCB7IHJlZiB9IGZyb20gJ3Z1ZSdcblxuY29uc3QgbXNnID0gcmVmKCdIZWxsbyBXb3JsZCEnKVxuPC9zY3JpcHQ+XG5cbjx0ZW1wbGF0ZT5cbiAgPGgxPnt7IG1zZyB9fTwvaDE+XG4gIDxpbnB1dCB2LW1vZGVsPVwibXNnXCI+XG48L3RlbXBsYXRlPiIsImltcG9ydC1tYXAuanNvbiI6IntcbiAgXCJpbXBvcnRzXCI6IHtcbiAgICBcInZ1ZVwiOiBcImh0dHBzOi8vc2ZjLnZ1ZWpzLm9yZy92dWUucnVudGltZS5lc20tYnJvd3Nlci5qc1wiLFxuICAgIFwidnVlL3NlcnZlci1yZW5kZXJlclwiOiBcImh0dHBzOi8vc2ZjLnZ1ZWpzLm9yZy9zZXJ2ZXItcmVuZGVyZXIuZXNtLWJyb3dzZXIuanNcIlxuICB9XG59In0= */}
             {/* https://vue-next-jsx-explorer.netlify.app/#const%20App%20%3D%20()%20%3D%3E%20%3Cdiv%3E%0A%3Cspan%3EHello%20World%3C%2Fspan%3E%0A%3Cdiv%20onClickSelf%3D%7B()%20%3D%3E%20alert(1111)%7D%3E1231231%3C%2Fdiv%3E%0A%3C%2Fdiv%3E */}
             {/* https://vue-next-template-explorer.netlify.app/#%7B%22src%22%3A%22%3Cdiv%20class%3D%5C%22counter%5C%22%3E%5Cn%20%20%3Cspan%3E%7B%7B%20count%20%7D%7D%3C%2Fspan%3E%5Cn%20%20%3Cbutton%20%40click.stop%3D%5C%22increment%5C%22%3E%2B%3C%2Fbutton%3E%5Cn%3C%2Fdiv%3E%5Cn%22%2C%22options%22%3A%7B%22mode%22%3A%22module%22%2C%22filename%22%3A%22Foo.vue%22%2C%22prefixIdentifiers%22%3Afalse%2C%22hoistStatic%22%3Afalse%2C%22cacheHandlers%22%3Afalse%2C%22scopeId%22%3Anull%2C%22inline%22%3Afalse%2C%22ssrCssVars%22%3A%22%7B%20color%20%7D%22%2C%22compatConfig%22%3A%7B%22MODE%22%3A3%7D%2C%22whitespace%22%3A%22condense%22%2C%22bindingMetadata%22%3A%7B%22TestComponent%22%3A%22setup-const%22%2C%22setupRef%22%3A%22setup-ref%22%2C%22setupConst%22%3A%22setup-const%22%2C%22setupLet%22%3A%22setup-let%22%2C%22setupMaybeRef%22%3A%22setup-maybe-ref%22%2C%22setupProp%22%3A%22props%22%2C%22vMySetupDir%22%3A%22setup-const%22%7D%7D%7D */}
             {/* https://v3.vuejs.org/guide/events.html#event-modifiers */}
@@ -333,13 +335,23 @@ export const NotFound = defineComponent({
 
         <hr />
 
-        {cache[1] ||
+        {/* ========================================================= */}
+        {/* {cache[1] ||
           (setBlockTracking(-1),
           (cache[1] = (
             <Govno.Gif404 text="123131313" class="3434343343" title="11" />
           )),
           setBlockTracking(1),
-          cache[1])}
+          cache[1])} */}
+
+        {withRenderOnce(
+          () => (
+            <Govno.Gif404 text="123131313" class="3434343343" title="11" />
+          ),
+          cache,
+          1
+        )}
+        {/* ========================================================= */}
 
         <button
           type="button"
@@ -371,7 +383,7 @@ export const NotFound = defineComponent({
           2
         )}
 
-        {/* {renderOnce(
+        {withRenderOnce(
           () => (
             <div>
               <div>
@@ -388,8 +400,8 @@ export const NotFound = defineComponent({
             </div>
           ),
           cache,
-          2
-        )} */}
+          3
+        )}
       </div>
     );
   }
