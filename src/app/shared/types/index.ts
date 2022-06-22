@@ -272,3 +272,8 @@ export type IsArrayUnique<A extends readonly unknown[]> = A extends readonly [
  * @see https://stackoverflow.com/questions/43537520/how-do-i-extract-a-type-from-an-array-in-typescript
  */
 export type UnpackedArray<T> = T extends (infer U)[] ? U : T;
+
+/**
+ * @see https://stackoverflow.com/questions/48011353/how-to-unwrap-the-type-of-a-promise/49889856
+ */
+export type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
