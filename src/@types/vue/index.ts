@@ -75,3 +75,9 @@ export declare function normalizeClass(value: AttributeValue): string;
 export declare function normalizeStyle(
   value: AttributeValue
 ): NormalizedStyle | string | undefined;
+
+/*
+  "Vue3 source code reading: general tool function (4)"
+
+  https://juejin.cn/post/7095300384305971231
+*/
