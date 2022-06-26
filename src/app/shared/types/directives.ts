@@ -20,15 +20,17 @@ export namespace VSlots {
 }
 
 export namespace VModel {
-  type Value = string | boolean;
-  type Argument = string;
   type BaseModifier = `${Modifier.VModel.Base}`;
   type CombinedModifier<T> = BaseModifier | T;
 
   /**
    * @see https://v3.vuejs.org/api/directives.html#v-model
    */
-  export type Directive<V = Value, A = Argument, AdditionalModifier = void> = {
+  export type Directive<
+    V = string,
+    A extends string = '',
+    AdditionalModifier extends string = ''
+  > = {
     'v-model'?:
       | V
       // ================================================
@@ -37,13 +39,13 @@ export namespace VModel {
       // ================================================
       | [
           V,
-          AdditionalModifier extends void
+          AdditionalModifier extends ''
             ? BaseModifier[]
             : CombinedModifier<AdditionalModifier>[]
         ]
       | [
           V,
-          AdditionalModifier extends void
+          AdditionalModifier extends ''
             ? BaseModifier[]
             : CombinedModifier<AdditionalModifier>[]
         ][]
@@ -51,7 +53,7 @@ export namespace VModel {
       | [
           V,
           A,
-          AdditionalModifier extends void
+          AdditionalModifier extends ''
             ? BaseModifier[]
             : CombinedModifier<AdditionalModifier>[]
         ]
@@ -59,9 +61,70 @@ export namespace VModel {
       | [
           V,
           A,
-          AdditionalModifier extends void
+          AdditionalModifier extends ''
             ? BaseModifier[]
             : CombinedModifier<AdditionalModifier>[]
         ][];
+  };
+
+  // /**
+  //  * @see https://v3.vuejs.org/api/directives.html#v-model
+  //  */
+  // export type Directive<
+  //   V = string,
+  //   A extends string = '',
+  //   AM extends string = ''
+  // > = {
+  //   'v-model'?:
+  //     | V
+  //     | [V, A]
+  //     | Array<[V, A]>
+  //     | [V, BaseModifier[]]
+  //     | [V, Array<AM & BaseModifier>]
+  //     | [V, A, BaseModifier[]]
+  //     | Array<[V, A, BaseModifier[]]>
+  //     | Array<[V, A, Array<AM & BaseModifier>]>;
+  // };
+
+  // type Dir<V = string, A extends string = '', AM extends string = ''> = {
+  //   'v-model'?:
+  //     | V
+  //     | (A extends ''
+  //         ? [V, BaseModifier[]] | [V, BaseModifier[]][]
+  //         : AM extends ''
+  //         ? [V, A, BaseModifier[]] | [V, A, BaseModifier[]][]
+  //         : [V, A, (BaseModifier & AM)[]] | [V, A, (BaseModifier & AM)[]][]);
+  // };
+
+  // type Dir<V = string, A extends string = '', AM extends string = ''> = {
+  //   'v-model'?:
+  //     | V
+  //     | (A extends ''
+  //         ? AM extends ''
+  //           ? [V, BaseModifier[]]
+  //           : [V, Array<AM & BaseModifier>]
+  //         : AM extends ''
+  //         ? [V, A, BaseModifier[]] | Array<[V, A, BaseModifier[]]>
+  //         :
+  //             | [V, A, Array<AM & BaseModifier>]
+  //             | Array<[V, A, Array<AM & BaseModifier>]>);
+  // };
+
+  type Dir<V = string, A extends string = '', AM extends string = ''> = {
+    'v-model'?:
+      | V
+      | [V, A]
+      | Array<[V, A]>
+      | [V, BaseModifier[]]
+      | [V, Array<AM & BaseModifier>]
+      | [V, A, BaseModifier[]]
+      | Array<[V, A, BaseModifier[]]>
+      | Array<[V, A, Array<AM & BaseModifier>]>;
+  };
+
+  type M = Dir<string, 'test'>;
+
+  const m: M = {
+    // 'v-model': ['', '']
   };
 }
