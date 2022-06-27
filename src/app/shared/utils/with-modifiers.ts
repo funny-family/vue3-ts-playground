@@ -1,5 +1,9 @@
 import type { Events } from 'vue';
-import type { NonEmptyArrayOf, UnionOfProperties } from '@/app/shared/types';
+import type {
+  AnyFunction,
+  NonEmptyArrayOf,
+  UnionOfProperties
+} from '@/app/shared/types';
 import { withModifiers as _withModifiers } from 'vue';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { Modifier } from '@/app/shared/utils/modifiers';
@@ -92,4 +96,16 @@ export const withModifiers = (
   };
 
   return eventObjetWithModifiers;
+};
+
+export const withModifiers1 = <T extends AnyFunction>(
+  eventFunction: T,
+  modifiers: string[]
+): T => {
+  console.group();
+  console.log('eventFunction:', eventFunction);
+  console.log('modifiers:', modifiers);
+  console.groupEnd();
+
+  return eventFunction;
 };
