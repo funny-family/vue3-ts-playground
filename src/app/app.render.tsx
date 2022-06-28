@@ -8,13 +8,10 @@ import { Router } from './components/router/router.component';
 export const render: RenderFunction<AppBindings> = function () {
   const { isOriginal } = this;
 
-  // console.log(obj);
-
   // if (sessionStorage.getItem('tab-id') !== null) {
   //   return <div>adad</div>;
   // }
 
-  // @ts-ignore
   if (isOriginal === false) {
     return (
       <div>
