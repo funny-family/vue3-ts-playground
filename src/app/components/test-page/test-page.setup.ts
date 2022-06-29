@@ -1,3 +1,4 @@
+import { withModifiers } from 'vue';
 import type { EventHandler } from '@/app/shared/types';
 import type {
   ContextOfSetupFunction,
@@ -5,7 +6,6 @@ import type {
   BindingsOfSetupFunction,
   UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
-import { withModifiers, normalizeClass } from 'vue';
 
 type Props = PropsOfSetupFunction;
 type Context = ContextOfSetupFunction;
@@ -18,6 +18,9 @@ export const setup = (props: Props, context: Context) => {
 
   const onButtonClick: EventHandler<MouseEvent> = withModifiers(
     (event) => {
+      // // @ts-ignore
+      // onButtonClick.__proto__.modifiers = [];
+
       console.log(event.type);
       console.log(this);
     },

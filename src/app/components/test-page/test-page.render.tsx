@@ -1,10 +1,23 @@
+import { withDirectives } from 'vue';
 import type { TestPageUnwrappedBindings } from './test-page.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
-import { withDirectives } from '@/app/shared/utils/with-directives';
 import { vFontDirective } from './test-page.directives';
+import { withHandlerCache } from '@/app/shared/utils/with-handler-cache';
 
-export const render: RenderFunction<TestPageUnwrappedBindings> = function () {
+export const render: RenderFunction<TestPageUnwrappedBindings> = function (
+  ctx,
+  cache
+) {
   const { props, context, onButtonClick, onFormSubmit } = this;
+
+  // console.log('"onButtonClick" function as sting:', onButtonClick.toString());
+  console.log('"onButtonClick":', { onButtonClick });
+  console.log('"onButtonClick" toString:', onButtonClick.toString());
+  // @ts-ignore
+  // console.log('"onButtonClick" propto:', Object.getPrototypeOf(onButtonClick)());
+
+  // eslint-disable-next-line
+  console.log('arguments of "test-page" component render:', arguments);
 
   return (
     <div>
@@ -26,6 +39,11 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function () {
           [
             vFontDirective.use({
               value: 20
+            }),
+            vFontDirective.use({
+              modifiers: {
+                oblique: true
+              }
             })
           ]
         )}
@@ -36,7 +54,26 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function () {
       <section>
         {/* @ts-ignore */}
         {/* <button type="button" onClickOnce={onButtonClick}> */}
-        <button type="button" onClick={onButtonClick}>
+        <button
+          type="button"
+          // // work!
+          // onClick={cache[0] || (cache[0] = (e: any) => onButtonClick(e))}
+
+          // // work!
+          // onClick={
+          //   cache[0] ||
+          //   // @ts-ignore
+          //   (cache[0] = ($event, ...args) => onButtonClick($event, ...args))
+          // }
+
+          // // do not work!
+          // onClick={withHandlerCache(onButtonClick, cache, 0)}
+
+          // // work!
+          onClick={withHandlerCache(onButtonClick, cache, 0)}
+
+          // onClick={onButtonClick}
+        >
           click me!
         </button>
       </section>
@@ -47,6 +84,19 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function () {
         <input type="text" placeholder="Type here!" />
         <button type="submit">submit</button>
       </form>
+
+      {/* @ts-ignore */}
+      {/* <button
+        {...{
+          on: {
+            click: () => {
+              console.log('clicked')!;
+            }
+          }
+        }}
+      >
+        12313123
+      </button> */}
     </div>
   );
 };
