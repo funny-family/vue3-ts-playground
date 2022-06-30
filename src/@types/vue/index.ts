@@ -1,4 +1,4 @@
-import type { AnyFunction, NonEmpty } from '@/app/shared/types';
+import type { AnyFunction } from '@/app/shared/types';
 import type { CSSClassNameAttribute } from '@/app/shared/types/component/attrs';
 import type { VShow, VModel } from '@/app/shared/types/directives';
 import type {
@@ -39,7 +39,6 @@ declare module 'vue' {
  */
 export declare function withModifiers<T extends AnyFunction>(
   fn: T,
-  // modifiers: NonEmpty<string[]>
   modifiers: string[]
 ): T;
 
