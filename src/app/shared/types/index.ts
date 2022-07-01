@@ -175,6 +175,7 @@ type InArray<T, X> = T extends readonly [X, ...infer _Rest]
 
 /**
  * @see https://stackoverflow.com/questions/57016728/is-there-a-way-to-define-type-for-array-with-unique-items-in-typescript
+ * @see https://ja.nsommer.dk/articles/type-checked-unique-arrays.html
  *
  * @description
  * Define type for array with unique items.
@@ -277,3 +278,16 @@ export type UnpackedArray<T> = T extends (infer U)[] ? U : T;
  * @see https://stackoverflow.com/questions/48011353/how-to-unwrap-the-type-of-a-promise/49889856
  */
 export type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
+
+/**
+ * @see https://stackoverflow.com/questions/40510611/typescript-interface-require-one-of-two-properties-to-exist
+ * @see https://www.typescriptlang.org/play?#code/C4TwDgpgBAShCOBXAlgJwgQWAGQgQwGdgB5AOwgB4AVAGigGkIQCoIAPYCUgExYGsmAewBmUKlAC8UASBFiAfJICwAKCjqoABWQBjPtToBRNjoA2ibpRlzaDJgXnzVGqADIoAb2cuNAbXpQyKR2zAC6ALQA-ABcsAgo6NwU2noGDI5uWniowMh4psm6+rbGZhaUjMx09I5OahoAvv72oaqqQZyowng60ACyXIgAkpwAtp7eucCmELFEqEEA5gDc3jqCo2CC5KTAMVCkiKMARhCoq-VmRfuHJ2cX6rrbc8ALpCuqDW0qoJBQAMKmIrEVD-DZbHbASRxJBoTA4fBEMiUAaHEYQUZ0ADkVz0WKgAB8oDjwdsuMAsXVVOtSEQoAB3ZDAAAWYM2ZN2sUBwNBpMh0K89XUUxmsQARJwiGKaN51Ot2ZDYgBWABMMqFgRp4qepDFn2+NLpjJZ3L0XKBehBbIh5IFsqgItmUAlECl6pcuL4yoALO6NDrtTS9Sovipqds6WdUIJUAB1JnMgByEATZ3NPOtHKhUkFLkd4slwGl9oDzp1wdD4dpUNIgkMqGjcYTACFBCz05beQrbTn7fnnYXixrPT6-XK+eTYirfSWtWWg-qwypDVCozH4yzWyzY8yuMiABKEWPR95UcBO018K0T3Z2jX9l1u+0jqBKmfDm-AcUEZmCRCmbgoFOA4jlOVAoF3dAhxcUsxXLRdvl+aA4FhdAyFMEBkTSSoWHYTgeH4IRRHEKRrGIxQJHtFJiiMExzEsCgyLEap7Ece13A8KB-ECYIcIiGJ7RcFCEggJJqOwtiNRcdxNGyXJ8goOB1lQJJSnoip7GqeQ6EQHgIGEIJRMklwmj4xDzygdDMPIS9r27W8pGEuErKw1FhjGbFPXxIkSXsikqWXCMazrBt1wTFzyFiCKIFsrsbQciZ7yZUUB1dIsxygF8lQAZnfGC5zghcQwNILWFCptNzbZkotIDDkVizN+V7JLpidR90ufC0vVfXKMvleKvx6jLYPg4ql1UAB6CaxGZZAWA6M5ul6BlkFMUwgOgRACFEh1BAdBY9Es2rrJirqsEa20Oj2-JTEERl3igPBgkEY4ACsIB0KFjWZICqvUdpdkWnpoEvNz0XGXMHWSp15iWB5Mq62JbjA+HS1h94LkrQLqwgwgtx+5q82hgs0ugjQsry8nPynSnHgK0asamqBEz2tdwNOHQ8C26B2F6AgWDAaNIByZBXUe9AoG2DCoG4Oabrunb6V3YJZfQT7pcIAhkEWUglke563o+qEgU6fIoCrOkxjADs+DBsZoWZPGqu+JmWbKxsZddMAmWgK3Hs+xAbpAXGADc9eOP6Oa57axAAZUl47pFrekWBZPAoT9ubHoBLq7Yxc3sctg6+CGXZBAwNa7qWfGarqmyursgboSt1QgA
+ */
+export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> &
+      Partial<Record<Exclude<Keys, K>, undefined>>;
+  }[Keys];
