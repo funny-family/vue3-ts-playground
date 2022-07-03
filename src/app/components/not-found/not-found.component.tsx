@@ -24,7 +24,7 @@ import { Gif404 } from '../../shared/components/gif-404/gif-404.component';
 import { TextField } from '@/app/shared/components/text-field/text-field.component';
 import type { TextFieldRef } from '@/app/shared/components/text-field/text-field.ref';
 import { Modifier } from '@/app/shared/utils/modifiers';
-import { withModifiers } from '@/app/shared/utils/with-modifiers';
+// import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import { nameOf } from '@/app/shared/utils/name-of';
 import { callTernary } from '@/app/shared/utils/call-ternary';
 import { generateGuid } from '@/app/shared/utils/guid';
@@ -115,16 +115,16 @@ export const NotFound = defineComponent({
         </div>
 
         <form
-          {...withModifiers(
-            {
-              onSubmit: (e) => {
-                console.log(e);
+          // {...withModifiers(
+          //   {
+          //     onSubmit: (e) => {
+          //       console.log(e);
 
-                this.s();
-              }
-            },
-            [Modifier.Event.Prevent, Modifier.Event.Once]
-          )}
+          //       this.s();
+          //     }
+          //   },
+          //   [Modifier.Event.Prevent, Modifier.Event.Once]
+          // )}
           style={{ border: '2px solid green' }}
         >
           {withDirectives(
