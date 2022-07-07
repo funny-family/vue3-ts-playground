@@ -6,6 +6,7 @@
     "Booleanish",
     "clsx",
     "codegen",
+    "composables",
     "enumify",
     "favicons",
     "hygen",
