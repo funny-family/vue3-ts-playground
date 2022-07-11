@@ -29,7 +29,6 @@ import { nameOf } from '@/app/shared/utils/name-of';
 import { callTernary } from '@/app/shared/utils/call-ternary';
 import { generateGuid } from '@/app/shared/utils/guid';
 import { Govno } from '@/app/shared/components/gif-404';
-import { renderOnce } from '@/app/shared/utils/render-once';
 import emojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg';
 import EmojiBlinkLeftIcon from './images/emoji-blink-left.icon.svg?inline';
 import { vFocusDirective } from '@/app/shared/directives/v-focus.directive';
