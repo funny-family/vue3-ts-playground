@@ -1,4 +1,5 @@
-import { withModifiers } from 'vue';
+// import { withModifiers } from 'vue';
+import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import type { EventHandler } from '@/app/shared/types';
 import type {
   ContextOfSetupFunction,
@@ -21,15 +22,17 @@ export const setup = (props: Props, context: Context) => {
       // // @ts-ignore
       // onButtonClick.__proto__.modifiers = [];
 
-      console.log(event.type);
-      console.log(this);
+      // console.log(event.type);
+      // console.log(this);
     },
-    ['once']
+    ['once', 'self']
   );
+
+  // console.log('"onButtonClick" string:', onButtonClick.toString());
 
   const onFormSubmit: EventHandler<Event> = withModifiers(
     (event) => {
-      console.log(event);
+      // console.log(event);
     },
     ['prevent']
   );
