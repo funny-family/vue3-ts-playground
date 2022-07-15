@@ -96,31 +96,31 @@ export namespace VModel {
   //         : [V, A, (BaseModifier & AM)[]] | [V, A, (BaseModifier & AM)[]][]);
   // };
 
-  // type Dir<V = string, A extends string = '', AM extends string = ''> = {
+  type Dir<V = any, A extends string = '', AM extends string = ''> = {
+    // 'v-model'?:
+    //   | V
+    //   | (A extends ''
+    //       ? AM extends ''
+    //         ? [V, BaseModifier[]]
+    //         : [V, Array<AM & BaseModifier>]
+    //       : AM extends ''
+    //       ? [V, A, BaseModifier[]] | Array<[V, A, BaseModifier[]]>
+    //       :
+    //           | [V, A, Array<AM & BaseModifier>]
+    //           | Array<[V, A, Array<AM & BaseModifier>]>);
+  };
+
+  // type Dir<V = any, A extends string = '', AM extends string = ''> = {
   //   'v-model'?:
   //     | V
-  //     | (A extends ''
-  //         ? AM extends ''
-  //           ? [V, BaseModifier[]]
-  //           : [V, Array<AM & BaseModifier>]
-  //         : AM extends ''
-  //         ? [V, A, BaseModifier[]] | Array<[V, A, BaseModifier[]]>
-  //         :
-  //             | [V, A, Array<AM & BaseModifier>]
-  //             | Array<[V, A, Array<AM & BaseModifier>]>);
+  //     | [V, A]
+  //     | Array<[V, A]>
+  //     | [V, BaseModifier[]]
+  //     | [V, Array<AM & BaseModifier>]
+  //     | [V, A, BaseModifier[]]
+  //     | Array<[V, A, BaseModifier[]]>
+  //     | Array<[V, A, Array<AM & BaseModifier>]>;
   // };
-
-  type Dir<V = string, A extends string = '', AM extends string = ''> = {
-    'v-model'?:
-      | V
-      | [V, A]
-      | Array<[V, A]>
-      | [V, BaseModifier[]]
-      | [V, Array<AM & BaseModifier>]
-      | [V, A, BaseModifier[]]
-      | Array<[V, A, BaseModifier[]]>
-      | Array<[V, A, Array<AM & BaseModifier>]>;
-  };
 
   type M = Dir<string, 'test'>;
 
