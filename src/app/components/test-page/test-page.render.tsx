@@ -3,6 +3,13 @@ import type { TestPageUnwrappedBindings } from './test-page.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
 import { vFontDirective } from './test-page.directives';
 import { withHandlerCache } from '@/app/shared/utils/with-handler-cache';
+import { withEventAttributeNameModify } from '@/app/shared/utils/with-modifiers';
+
+const withBlaBla = (vnode: any) => {
+  console.log('vnode:', vnode);
+
+  return vnode;
+};
 
 export const render: RenderFunction<TestPageUnwrappedBindings> = function (
   ctx,
@@ -10,14 +17,14 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function (
 ) {
   const { props, context, onButtonClick, onFormSubmit } = this;
 
-  // console.log('"onButtonClick" function as sting:', onButtonClick.toString());
-  console.log('"onButtonClick":', { onButtonClick });
-  console.log('"onButtonClick" toString:', onButtonClick.toString());
-  // @ts-ignore
-  // console.log('"onButtonClick" propto:', Object.getPrototypeOf(onButtonClick)());
+  // // console.log('"onButtonClick" function as sting:', onButtonClick.toString());
+  // console.log('"onButtonClick":', { onButtonClick });
+  // console.log('"onButtonClick" toString:', onButtonClick.toString());
+  // // @ts-ignore
+  // // console.log('"onButtonClick" propto:', Object.getPrototypeOf(onButtonClick)());
 
-  // eslint-disable-next-line
-  console.log('arguments of "test-page" component render:', arguments);
+  // // eslint-disable-next-line
+  // console.log('arguments of "test-page" component render:', arguments);
 
   return (
     <div>
@@ -70,9 +77,14 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function (
           // onClick={withHandlerCache(onButtonClick, cache, 0)}
 
           // // work!
-          onClick={withHandlerCache(onButtonClick, cache, 0)}
+          // onClick={withHandlerCache(onButtonClick, cache, 0)}
 
           // onClick={onButtonClick}
+
+          // {...withEventAttributeNameModify({ onClick: onButtonClick })}
+          {...withEventAttributeNameModify({
+            onClick: withHandlerCache(onButtonClick, cache, 0)
+          })}
         >
           click me!
         </button>
@@ -80,7 +92,8 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function (
 
       <hr />
 
-      <form onSubmit={onFormSubmit}>
+      {/* <form onSubmit={onFormSubmit}> */}
+      <form {...withEventAttributeNameModify({ onSubmit: onFormSubmit })}>
         <input type="text" placeholder="Type here!" />
         <button type="submit">submit</button>
       </form>
