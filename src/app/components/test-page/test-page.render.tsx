@@ -5,12 +5,6 @@ import { vFontDirective } from './test-page.directives';
 import { withHandlerCache } from '@/app/shared/utils/with-handler-cache';
 import { withEventAttributeNameModify } from '@/app/shared/utils/with-modifiers';
 
-const withBlaBla = (vnode: any) => {
-  console.log('vnode:', vnode);
-
-  return vnode;
-};
-
 export const render: RenderFunction<TestPageUnwrappedBindings> = function (
   ctx,
   cache
