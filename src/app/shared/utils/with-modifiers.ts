@@ -1,6 +1,7 @@
 import type { Events } from 'vue';
 import type {
   AnyFunction,
+  EventHandler,
   NonEmptyArrayOf,
   RequireOnlyOne,
   UnionOfProperties
@@ -148,19 +149,18 @@ export const withModifiers1 = (
 
 // const functionModifierMap = new Map<string, string[]>();
 
-Object.defineProperty(Object.prototype, '___Get___Id', {
-  value() {
-    console.log('ok');
-  },
-  enumerable: false
-});
-
-// let mods: any[] = [];
-
-export const withModifiers = <T extends AnyFunction>(
-  fn: T,
+// export const withModifiers = <T extends Event | Function>(
+//   fn: T extends Event ? EventHandler<T> : T,
+//   modifiers: string[]
+// ): T extends Event ? EventHandler<T> : T => {
+// =================================================================
+export const withModifiers = <E extends Event>(
+  fn: EventHandler<E>,
   modifiers: string[]
-): T => {
+): EventHandler<E> => {
+  // =================================================================
+  // ): [EventHandler<E>, string[]] => {
+
   // console.group();
   // console.log('"withModifiers" args:', {
   //   fn,
@@ -174,41 +174,39 @@ export const withModifiers = <T extends AnyFunction>(
   // const value = modifiers;
   // functionModifierMap.set(key, value);
 
-  const functionWithModifiers = _withModifiers(fn, modifiers);
-  const functionWithModifiersAsString = functionWithModifiers.toString();
-  // mods = modifiers;
+  // const f = <F extends Function>(fn: F) => {
+  //   Object.defineProperty(fn, 'name', { value: 'fh4756gau' });
 
-  // // @ts-ignore
-  // const functionId = functionWithModifiers[n]();
+  //   return fn;
+  // };
 
-  console.group(1);
-  console.log({ functionWithModifiers });
-  // // @ts-ignore
-  // console.log('functionId:', functionId);
-  // console.log('functionWithModifiersAsString:', functionWithModifiersAsString);
+  const functionWithModifiers = _withModifiers(fn as any, modifiers);
 
-  console.groupEnd();
+  Object.defineProperty(functionWithModifiers, 'name', { writable: true });
+  // @ts-ignore
+  functionWithModifiers.name = 'yytbsyu7364f';
+  // @ts-ignore
+  functionWithModifiers.displayName = 'jfui4h5874';
 
-  // Object.defineProperty(functionWithModifiers, 'modifiers', {
-  //   value: modifiers
-  // });
+  // console.group(1);
+  // console.log({ functionWithModifiers });
+  // // // @ts-ignore
+  // // console.log('functionId:', functionId);
+  // // console.log('functionWithModifiersAsString:', functionWithModifiersAsString);
+  // console.groupEnd();
 
-  // const getModifiers = () => modifiers;
-
-  // Object.defineProperty(functionWithModifiers, 'getModifiers', {
-  //   get: getModifiers
-  // });
-
+  // return [functionWithModifiers, modifiers];
   return functionWithModifiers;
 };
 
 export const withEventAttributeNameModify = (
   eventObject: RequireOnlyOne<EventObject>
 ) => {
-  const eventName = Object.keys(eventObject)[0];
-  const eventFunction = Object.values(eventObject)[0] as Function;
+  console.log(111, eventObject);
 
-  const eventFunctionAsString = eventFunction.toString();
+  const eventName = Object.keys(eventObject)[0];
+  const eventFunction = Object.values(eventObject)[0];
+
   // // @ts-ignore
   // const eventFunction = eventObject[eventName] as Function;
 
@@ -232,23 +230,14 @@ export const withEventAttributeNameModify = (
   // // @ts-ignore
   // const functionId = functionWithModifiers[n]();
 
-  const proxyFn = new Proxy(eventFunction, {
-    apply(target, thisArg, argArray) {
-      console.log(123212131, target, thisArg, argArray);
-    }
-  });
-
   console.group(2);
-  console.log('eventFunctionAsString:', eventFunctionAsString);
+  console.log('eventName:', eventName);
+  console.log('eventFunction:', eventFunction);
   console.log({ eventFunction });
   // console.log('mods:', mods);
   // // @ts-ignore
   // console.log('functionId:', functionId);
-  console.log('proxyFn:', proxyFn);
-
   console.groupEnd();
-
-  // mods = [];
 
   return eventObject;
 };
