@@ -46,12 +46,6 @@ if (environmentVariable === 'development') {
   }
 }
 
-// app.directive('focus', {
-//   mounted(el) {
-//     el.focus();
-//   }
-// });
-
 app.use(store);
 app.use(router);
 app.mount('#app');
