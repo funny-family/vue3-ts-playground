@@ -12,7 +12,7 @@ type Props = PropsOfSetupFunction;
 type Context = ContextOfSetupFunction;
 
 export const setup = (props: Props, context: Context) => {
-  const onButtonClick: EventHandler<MouseEvent> = withModifiers(
+  const onButtonClick = withModifiers<MouseEvent>(
     (event) => {
       // // @ts-ignore
       // onButtonClick.__proto__.modifiers = [];
@@ -23,7 +23,7 @@ export const setup = (props: Props, context: Context) => {
     ['once', 'self']
   );
 
-  const onFormSubmit: EventHandler<Event> = withModifiers(
+  const onFormSubmit = withModifiers<Event>(
     (event) => {
       // console.log(event);
     },
