@@ -24,7 +24,7 @@ const extractComponentUidFromDataset = <T extends HTMLElement>(
 ): number | null => {
   const datasetComponentRootElId = el.dataset['componentRootElId'];
 
-  if (datasetComponentRootElId === undefined) {
+  if (datasetComponentRootElId == null) {
     return null;
   }
 
