@@ -16,7 +16,7 @@ const s = process.env.NODE_ENV as EnvironmentVariable | undefined;
 
 const ev = extractFromEnv(s);
 
-if (environmentVariable === 'development') {
+if (environmentVariable === '1') {
   app.config.performance = true;
 
   // {
@@ -33,6 +33,7 @@ if (environmentVariable === 'development') {
     const warn = console.warn.bind(console);
     console.warn = (...args: any[]) => {
       const consoleArgs = [...args];
+
       if (
         Array.isArray(consoleArgs) &&
         typeof consoleArgs[0] === 'string' &&
