@@ -14,8 +14,14 @@ export const withHandlerCache = <E extends Event>(
   cache: any[],
   index: number
 ): EventHandler<E> =>
+  // {
+  //   if (cache[index] != null) {
+  //     return cache[index];
+  //   }
+
+  //   return (cache[index] = (event: E, ...args: any[]) => handler(event, ...args));
+  // };
   cache[index] ||
   (cache[index] = (event: E, ...args: any[]) => handler(event, ...args));
-
 
 // todo: rename function "withHandlerCache" -> "withCachedHandler"
