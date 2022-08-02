@@ -88,6 +88,11 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function (
 
       {/* <form onSubmit={onFormSubmit}> */}
       <form {...withEventAttributeNameModify({ onSubmit: onFormSubmit })}>
+        {/* <form
+        {...withEventAttributeNameModify({
+          onSubmit: withHandlerCache(onFormSubmit, cache, 1)
+        })}
+      > */}
         <input type="text" placeholder="Type here!" />
         <button type="submit">submit</button>
       </form>
