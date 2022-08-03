@@ -1,3 +1,4 @@
+import { generateGuid } from '@/app/shared/utils/guid';
 import type { Events } from 'vue';
 import type {
   AnyFunction,
@@ -147,6 +148,14 @@ export const withModifiers1 = (
 //   return createHash('sha256').update(key).digest('hex');
 // };
 
+const argKey = (x: any) => x.toString() + ':' + typeof x;
+
+const generateKey = (...args: any) => {
+  const key = args.map(argKey).join('|');
+
+  return createHash('sha256').update(key).digest('hex');
+};
+
 // const functionModifierMap = new Map<string, string[]>();
 
 // export const withModifiers = <T extends Event | Function>(
@@ -154,10 +163,10 @@ export const withModifiers1 = (
 //   modifiers: string[]
 // ): T extends Event ? EventHandler<T> : T => {
 // =================================================================
-export const withModifiers = <E extends Event>(
+export const withModifiers = function <E extends Event>(
   fn: EventHandler<E>,
   modifiers: string[]
-): EventHandler<E> => {
+): EventHandler<E> {
   // =================================================================
   // ): [EventHandler<E>, string[]] => {
 
@@ -182,11 +191,36 @@ export const withModifiers = <E extends Event>(
 
   const functionWithModifiers = _withModifiers(fn as any, modifiers);
 
+  // functionWithModifiers.toString = function () {
+  //   console.log(11, this);
+
+  //   return this();
+  // };
+
+  const key = generateKey(fn as any, modifiers);
+  console.log('key:', key);
+
+  Object.defineProperty(fn, 'name', { writable: true });
   Object.defineProperty(functionWithModifiers, 'name', { writable: true });
-  // @ts-ignore
-  functionWithModifiers.name = 'yytbsyu7364f';
-  // @ts-ignore
-  functionWithModifiers.displayName = 'jfui4h5874';
+  console.log((Math.random() + 1).toString(36).substring(7), Date.now());
+
+  // // @ts-ignore
+  // functionWithModifiers.name = 'jfui4h5874';
+  // // @ts-ignore
+  // fn.name = 'jfui4h5874';
+  // // @ts-ignore
+  // functionWithModifiers.displayName = 'jfui4h5874';
+  if (functionWithModifiers.__proto__.displayName == null) {
+    functionWithModifiers.__proto__.displayName = generateGuid();
+  }
+  // functionWithModifiers.__proto__.name = 'jfui4h5874';
+  // console.log(777, functionWithModifiers.__proto__.name);
+
+  // // @ts-ignore
+  // this.modifiers = modifiers;
+
+  // // @ts-ignore
+  // console.log('withModifiers "this"', this);
 
   // console.group(1);
   // console.log({ functionWithModifiers });
@@ -199,13 +233,22 @@ export const withModifiers = <E extends Event>(
   return functionWithModifiers;
 };
 
-export const withEventAttributeNameModify = (
+// export const withEventAttributeNameModify = function (
+//   eventObject: RequireOnlyOne<EventObject>
+// ) {
+export function withEventAttributeNameModify(
   eventObject: RequireOnlyOne<EventObject>
-) => {
+) {
   console.log(111, eventObject);
 
   const eventName = Object.keys(eventObject)[0];
   const eventFunction = Object.values(eventObject)[0];
+
+  // @ts-ignore
+  console.log(234243, eventName, eventObject[eventName]);
+
+  // // @ts-ignore
+  // console.log('withEventAttributeNameModify "this"', this.modifiers);
 
   // // @ts-ignore
   // const eventFunction = eventObject[eventName] as Function;
@@ -233,6 +276,7 @@ export const withEventAttributeNameModify = (
   console.group(2);
   console.log('eventName:', eventName);
   console.log('eventFunction:', eventFunction);
+  console.log('eventFunction "displayName":', eventFunction.displayName);
   console.log({ eventFunction });
   // console.log('mods:', mods);
   // // @ts-ignore
@@ -240,4 +284,4 @@ export const withEventAttributeNameModify = (
   console.groupEnd();
 
   return eventObject;
-};
+}
