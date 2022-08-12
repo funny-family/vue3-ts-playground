@@ -1,6 +1,6 @@
 interface TernaryObject<T, F> {
   condition: boolean;
-  onTruthy : () => T;
+  onTruthy: () => T;
   onFalsy: () => F;
 }
 
