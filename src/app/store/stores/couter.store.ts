@@ -1,8 +1,8 @@
 import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
+import { defineReadOnlyStore } from '@/app/store';
 
 export const counterStoreId = 'counter' as const;
-export const useCounterStore = defineStore(counterStoreId, () => {
+export const useCounterStore = defineReadOnlyStore(counterStoreId, () => {
   const counter = ref(0);
   const doubleCounter = computed(() => counter.value * 2);
 
