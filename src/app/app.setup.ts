@@ -8,7 +8,15 @@ import type {
   PropsOfSetupFunction
 } from '@/app/shared/types/component/setup';
 import { generateGuid } from '@/app/shared/utils/guid';
-import { onBeforeMount, onMounted, onUnmounted, shallowRef, ref } from 'vue';
+import {
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  shallowRef,
+  ref,
+  getCurrentInstance,
+  getCurrentScope
+} from 'vue';
 import type { UnwrapNestedRefs } from 'vue';
 
 type Context = ContextOfSetupFunction;
@@ -40,6 +48,11 @@ export const setup = (props: Props, context: Context) => {
   };
 
   onBeforeMount(() => {
+    console.group('"App"');
+    // console.log('CurrentInstance:', getCurrentInstance());
+    // console.log('CurrentScope:', getCurrentScope());
+    console.groupEnd();
+
     channel.addEventListener('message', onMessage);
   });
 
@@ -51,7 +64,7 @@ export const setup = (props: Props, context: Context) => {
   return {
     props,
     context,
-    isOriginal,
+    isOriginal
   };
 };
 
