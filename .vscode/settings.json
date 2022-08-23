@@ -14,7 +14,9 @@
     "nocheck",
     "Numberish",
     "pinia",
+    "proxify",
     "scripthost",
+    "Transformative",
     "unimported",
     "vnode",
     "vuex"
