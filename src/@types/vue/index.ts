@@ -77,6 +77,8 @@ export declare function normalizeStyle(
 
 /*
   "Vue3 source code reading: general tool function (4)"
-
   https://juejin.cn/post/7095300384305971231
+
+  全面解析vue3源码函数工具库
+  https://juejin.cn/post/7117191006423875597
 */
