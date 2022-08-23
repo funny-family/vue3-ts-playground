@@ -11,7 +11,9 @@ const incstr = require('incstr');
 const generateUniqueId = () => {
   const uniqIds = {};
 
-  const alphabetOfSmallLetters = [...Array(26)].map((x, i) => String.fromCharCode(i + 97));
+  const alphabetOfSmallLetters = [...Array(26)].map((x, i) =>
+    String.fromCharCode(i + 97)
+  );
   const alphabetOfBigLetters = [...Array(26)]
     .map((e, i) => i + 65)
     .map((x) => String.fromCharCode(x));
@@ -36,7 +38,7 @@ const generateUniqueId = () => {
 const generateLocalNameId = generateUniqueId();
 const generateComponentNameId = generateUniqueId();
 
-exports.generateScopeName = (localName, resourcePath) => {
+const generateScopeName = (localName, resourcePath) => {
   // Получим название папки, в которой лежит наш index.css
   const componentName = resourcePath.split('/').slice(-2, -1)[0];
 
@@ -45,3 +47,5 @@ exports.generateScopeName = (localName, resourcePath) => {
 
   return `${componentId}_${localId}`;
 };
+
+exports.generateScopeName = generateScopeName;
