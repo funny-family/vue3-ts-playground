@@ -1,4 +1,5 @@
 import { generateGuid } from '@/app/shared/utils/guid';
+import { toRaw } from 'vue';
 import type { Events } from 'vue';
 import type {
   AnyFunction,
@@ -60,7 +61,7 @@ const isModifierTransformable = (modifier: string): boolean =>
  * </button>
  */
 export const withModifiers1 = (
-  eventObject: UnionOfProperties<EventObject>,
+  eventObject: RequireOnlyOne<EventObject>,
   modifiers: NonEmptyArrayOf<EventModifier>
   // modifiers: IsArrayUnique<EventModifier[]>
 ): EventObjetWithModifiers => {
@@ -179,22 +180,24 @@ export const withModifiers = function <E extends Event>(
   Object.defineProperty(functionWithModifiers, 'name', { writable: true });
   console.log((Math.random() + 1).toString(36).substring(7), Date.now());
   const i = (Math.random() + 1).toString(36).substring(7);
-  functionWithModifiers.__proto__.displayName = i;
+  // functionWithModifiers.__proto__.displayName = i;
 
   const f = new Proxy(functionWithModifiers, {
     get(target, property, receiver) {
       // console.log('"f" proxyyyyyy! ', { target, property, receiver });
 
       // if (property === 'arguments') {
-      if (property === 'modifiers') {
+      if (property === '___modifiers') {
         return modifiers;
       }
     }
   });
 
+  console.log('f:', f.___modifiers);
+
   // return [functionWithModifiers, modifiers];
-  return f;
-  // return functionWithModifiers;
+  // return f;
+  return functionWithModifiers;
 };
 
 // export const withEventAttributeNameModify = function (
