@@ -94,18 +94,17 @@ export const withEventModifiers = (
     const modifier = modifiers[i];
 
     const isCurrentModifierTransformEvent = isModifierTransformEvent(modifier);
-    if (isCurrentModifierTransformEvent) {
-      transformativeModifiersList.push(modifier);
-    }
-
     const isEventModifier = eventModifiers.includes(
       modifier as typeof eventModifiers[number]
     );
-    if (isEventModifier) {
-      eventModifierList.push(modifier);
-    }
 
-    keyModifierList.push(modifier);
+    if (isCurrentModifierTransformEvent) {
+      transformativeModifiersList.push(modifier);
+    } else if (isEventModifier) {
+      eventModifierList.push(modifier);
+    } else {
+      keyModifierList.push(modifier);
+    }
   }
 
   const inputEventName = Object.keys(eventObject)[0];
@@ -119,10 +118,45 @@ export const withEventModifiers = (
     onTruthy: () => '',
     onFalsy: () => transformativeModifiersList.map(capitalize).join('')
   });
+
   const outputEventName = `${inputEventName}${tm1}`;
   // const outputEventFunction = callTernary({
-  //   condition
-  // })
+  //   condition: isArrayEmpty(keyModifierList),
+  //   onTruthy: () => withModifiers(inputEventFunction as any, eventModifierList),
+  //   onFalsy: () => () => {
+  //     //
+  //   }
+  // });
 
-  return {};
+  // eslint-disable-next-line
+  let outputEventFunction = () => {};
+  // // eslint-disable-next-line
+  // let eventWithModifiers = () => {};
+  // // eslint-disable-next-line
+  // let eventWithKeys = () => {};
+
+  // if (!isArrayEmpty(eventModifierList) && !isArrayEmpty(keyModifierList)) {
+  //   (outputEventFunction as any) = withKeys(
+  //     withModifiers(inputEventFunction as any, eventModifierList),
+  //     keyModifierList
+  //   );
+  // }
+
+  const outputEventObject = {
+    [outputEventName]: outputEventFunction
+  };
+
+  console.group('"withEventModifiers"');
+  console.log('eventObject:', eventObject);
+  console.log('modifiers:', modifiers);
+  console.log('transformativeModifiersList:', transformativeModifiersList);
+  console.log('eventModifierList:', eventModifierList);
+  console.log('keyModifierList:', keyModifierList);
+  console.log('outputEventName:', outputEventName);
+
+  // console.log('eventWithModifiers:', eventWithModifiers);
+  // console.log('eventWithKeys:', eventWithKeys);
+  console.groupEnd();
+
+  return eventObject;
 };
