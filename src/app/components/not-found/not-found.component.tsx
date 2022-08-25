@@ -190,6 +190,7 @@ export const NotFound = defineComponent({
               <TextField
                 // className="adadada"
                 // v-show={false}
+                type="password"
                 class="TextField"
                 label="Text Field Label"
                 v-model={[this.textFieldValue, ['trim', 'capitalize']]}
@@ -197,6 +198,9 @@ export const NotFound = defineComponent({
                 //   console.log(1231313132, el);
                 // }}
                 // ref={this.textFieldFunctionRef as any}
+                onInput={() => {
+                  console.log('TextField onInput');
+                }}
                 ref={nameOf(() => this.textFieldRef)}
               />,
               [vFocusDirective.use()]
