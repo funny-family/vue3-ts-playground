@@ -7,13 +7,17 @@ import type {
   BindingsOfSetupFunction,
   UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
+import { getCurrentInstance, onMounted } from 'vue';
 
 type Props = PropsOfSetupFunction;
 type Context = ContextOfSetupFunction;
 
 export const setup = (props: Props, context: Context) => {
-  const onButtonClick = withModifiers<MouseEvent>(
+  const cache: any[] = [];
+
+  const onButtonClick: EventHandler<MouseEvent> = withModifiers(
     (event) => {
+      console.log('"this" of "onButtonClick":', this);
       // // @ts-ignore
       // onButtonClick.__proto__.modifiers = [];
 
@@ -25,12 +29,17 @@ export const setup = (props: Props, context: Context) => {
 
   const onFormSubmit = withModifiers<Event>(
     (event) => {
+      console.log('"this" of "onFormSubmit":', this);
       // console.log(event);
     },
     ['prevent']
   );
 
-  const bindings = { props, context, onButtonClick, onFormSubmit };
+  onMounted(() => {
+    // console.log('"TestPage" CurrentInstance:', getCurrentInstance());
+  });
+
+  const bindings = { props, context, cache, onButtonClick, onFormSubmit };
   const exposes = {};
 
   context.expose(exposes);
