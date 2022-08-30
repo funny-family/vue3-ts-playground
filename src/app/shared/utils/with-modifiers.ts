@@ -236,7 +236,6 @@ export function withEventAttributeNameModify(
   console.log(`eventFunction "${eventName}":`, { eventFunction });
   // console.log('eventFunction "modifiers":', eventFunction.modifiers);
   console.log('eventFunction "displayName":', eventFunction.displayName);
-  console.log('eventFunction.__proto__":', { ...eventFunction.__proto__ });
   console.groupEnd();
 
   return eventObject;
