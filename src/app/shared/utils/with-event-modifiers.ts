@@ -113,12 +113,9 @@ export const withEventModifiers = (
   const isTransformativeModifierListEmpty = isArrayEmpty(
     transformativeModifiersList
   );
-  const tm1 = callTernary({
-    condition: isTransformativeModifierListEmpty,
-    onTruthy: () => '',
-    onFalsy: () => transformativeModifiersList.map(capitalize).join('')
-  });
-
+  const tm1 = isTransformativeModifierListEmpty
+    ? ''
+    : transformativeModifiersList.map(capitalize).join('');
   const outputEventName = `${inputEventName}${tm1}`;
   // const outputEventFunction = callTernary({
   //   condition: isArrayEmpty(keyModifierList),
