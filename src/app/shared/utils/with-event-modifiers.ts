@@ -126,7 +126,7 @@ export const withEventModifiers = (
   // });
 
   // eslint-disable-next-line
-  let outputEventFunction = () => {};
+  let outputEventFunction = () => {}; 
   // // eslint-disable-next-line
   // let eventWithModifiers = () => {};
   // // eslint-disable-next-line
