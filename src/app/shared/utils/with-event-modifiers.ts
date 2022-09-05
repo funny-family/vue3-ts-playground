@@ -126,18 +126,12 @@ export const withEventModifiers = (
   // });
 
   // eslint-disable-next-line
-  let outputEventFunction = () => {}; 
+  let outputEventFunction = () => {};
   // // eslint-disable-next-line
   // let eventWithModifiers = () => {};
   // // eslint-disable-next-line
   // let eventWithKeys = () => {};
 
-  // if (!isArrayEmpty(eventModifierList) && !isArrayEmpty(keyModifierList)) {
-  //   (outputEventFunction as any) = withKeys(
-  //     withModifiers(inputEventFunction as any, eventModifierList),
-  //     keyModifierList
-  //   );
-  // }
 
   const outputEventObject = {
     [outputEventName]: outputEventFunction
