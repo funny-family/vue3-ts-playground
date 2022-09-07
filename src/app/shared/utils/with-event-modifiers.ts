@@ -117,13 +117,6 @@ export const withEventModifiers = (
     ? ''
     : transformativeModifiersList.map(capitalize).join('');
   const outputEventName = `${inputEventName}${tm1}`;
-  // const outputEventFunction = callTernary({
-  //   condition: isArrayEmpty(keyModifierList),
-  //   onTruthy: () => withModifiers(inputEventFunction as any, eventModifierList),
-  //   onFalsy: () => () => {
-  //     //
-  //   }
-  // });
 
   // eslint-disable-next-line
   let outputEventFunction = () => {};
