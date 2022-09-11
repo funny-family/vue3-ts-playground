@@ -137,9 +137,6 @@ export const withEventModifiers = (
   console.log('eventModifierList:', eventModifierList);
   console.log('keyModifierList:', keyModifierList);
   console.log('outputEventName:', outputEventName);
-
-  // console.log('eventWithModifiers:', eventWithModifiers);
-  // console.log('eventWithKeys:', eventWithKeys);
   console.groupEnd();
 
   return eventObject;
