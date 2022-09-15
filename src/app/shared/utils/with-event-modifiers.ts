@@ -120,11 +120,6 @@ export const withEventModifiers = (
 
   // eslint-disable-next-line
   let outputEventFunction = () => {};
-  // // eslint-disable-next-line
-  // let eventWithModifiers = () => {};
-  // // eslint-disable-next-line
-  // let eventWithKeys = () => {};
-
 
   const outputEventObject = {
     [outputEventName]: outputEventFunction
