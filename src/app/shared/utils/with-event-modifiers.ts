@@ -1,138 +1,110 @@
-import { isArrayEmpty } from './is-array-empty';
-import { callTernary } from './call-ternary';
-import { capitalize, Events } from 'vue';
-import { withModifiers, withKeys } from 'vue';
-import type { RequireOnlyOne } from '@/app/shared/types';
+import { withModifiers, withKeys, capitalize } from 'vue';
+import { makeMap } from '@vue/shared';
 
-type EventObject = {
-  [key in keyof Events]: ((event: Events[key]) => void) | undefined;
-};
+const isEventOptionModifier = makeMap(`passive,once,capture`);
+const isNonKeyModifier = makeMap(
+  // event propagation management
+  `stop,prevent,self,` +
+    // system modifiers + exact
+    `ctrl,shift,alt,meta,exact,` +
+    // mouse
+    `middle`
+);
+// left & right could be mouse or key modifiers based on event type
+const maybeKeyModifier = makeMap('left,right');
+const isKeyboardEvent = makeMap(`onkeyup,onkeydown,onkeypress`, true);
 
-const eventModifier = {
-  stop: 'stop',
-  prevent: 'prevent',
-  self: 'self'
+export const resolveEventModifiers = ({
+  eventName,
+  eventModifiers
+}: {
+  eventName: string;
+  eventModifiers: string[];
+}) => {
+  const keyModifiers: string[] = [];
+  const nonKeyModifiers: string[] = [];
+  const eventOptionModifiers: string[] = [];
 
-  // ctrl : 'ctrl',
-  // shift : 'shift',
-  // alt : 'alt',
-  // meta : 'meta',
+  for (let i = 0; i < eventModifiers.length; i++) {
+    const eventModifier = eventModifiers[i];
 
-  // left : 'left',
-  // middle : 'middle',
-  // right : 'right',
-
-  // exact : 'exact'
-} as const;
-
-const transformativeEventModifier = {
-  capture: 'capture',
-  once: 'once',
-  passive: 'passive'
-} as const;
-
-const isModifierTransformEvent = (modifier: string): boolean =>
-  (
-    [
-      transformativeEventModifier.capture,
-      transformativeEventModifier.once,
-      transformativeEventModifier.passive
-    ] as string[]
-  ).includes(modifier);
-
-const keyAlias = {
-  enter: 'enter',
-  tab: 'tab',
-  delete: 'delete', // (captures both "Delete" and "Backspace" keys)
-  esc: 'esc',
-  space: 'space',
-  up: 'up',
-  down: 'down',
-  left: 'left',
-  right: 'right'
-} as const;
-
-const systemModifier = {
-  ctrl: 'ctrl',
-  alt: 'alt',
-  shift: 'shift',
-  meta: 'meta',
-
-  exact: 'exact'
-} as const;
-
-const mouseButtonModifier = {
-  left: 'left',
-  right: 'right',
-  middle: 'middle'
-} as const;
-
-const nonTransformativeEventModifier = {
-  ...eventModifier,
-  ...systemModifier,
-  ...mouseButtonModifier,
-  ...keyAlias
-};
-
-const eventModifiers = Object.values({
-  ...eventModifier,
-  ...systemModifier,
-  ...mouseButtonModifier
-});
-
-const keyModifiers = Object.values({ ...keyAlias });
-
-export const withEventModifiers = (
-  eventObject: RequireOnlyOne<EventObject>,
-  modifiers: string[]
-) => {
-  const transformativeModifiersList: string[] = [];
-  const eventModifierList: string[] = [];
-  const keyModifierList: string[] = [];
-
-  for (let i = 0; i < modifiers.length; i++) {
-    const modifier = modifiers[i];
-
-    const isCurrentModifierTransformEvent = isModifierTransformEvent(modifier);
-    const isEventModifier = eventModifiers.includes(
-      modifier as typeof eventModifiers[number]
-    );
-
-    if (isCurrentModifierTransformEvent) {
-      transformativeModifiersList.push(modifier);
-    } else if (isEventModifier) {
-      eventModifierList.push(modifier);
+    if (isEventOptionModifier(eventModifier)) {
+      // eventOptionModifiers: modifiers for addEventListener() options,
+      // e.g. .passive & .capture
+      eventOptionModifiers.push(eventModifier);
     } else {
-      keyModifierList.push(modifier);
+      // runtimeModifiers: modifiers that needs runtime guards
+      if (maybeKeyModifier(eventModifier)) {
+        if (isKeyboardEvent(eventName)) {
+          keyModifiers.push(eventModifier);
+        } else {
+          nonKeyModifiers.push(eventModifier);
+        }
+      } else {
+        if (isNonKeyModifier(eventModifier)) {
+          nonKeyModifiers.push(eventModifier);
+        } else {
+          keyModifiers.push(eventModifier);
+        }
+      }
     }
   }
 
-  const inputEventName = Object.keys(eventObject)[0];
-  const inputEventFunction = Object.values(eventObject)[0] as Function;
+  return {
+    keyModifiers,
+    nonKeyModifiers,
+    eventOptionModifiers
+  };
+};
 
-  const isTransformativeModifierListEmpty = isArrayEmpty(
-    transformativeModifiersList
-  );
-  const tm1 = isTransformativeModifierListEmpty
-    ? ''
-    : transformativeModifiersList.map(capitalize).join('');
-  const outputEventName = `${inputEventName}${tm1}`;
+export const withEventModifiers = (
+  eventObject: object,
+  modifiers: string[]
+) => {
+  const eventName: string = Object.keys(eventObject)[0];
+  const eventFunction: Function = Object.values(eventObject)[0];
 
-  // eslint-disable-next-line
-  let outputEventFunction = () => {};
+  const { eventOptionModifiers, keyModifiers, nonKeyModifiers } =
+    resolveEventModifiers({
+      eventName,
+      eventModifiers: modifiers
+    });
+
+  let outputEventName = eventName;
+  let outputEventFunction = eventFunction;
+
+  // normalize click.right and click.middle since they don't actually fire
+  if (nonKeyModifiers.includes('right')) {
+    outputEventName = 'onContextmenu';
+  }
+
+  if (nonKeyModifiers.includes('middle')) {
+    outputEventName = 'onMouseup';
+  }
+
+  if (nonKeyModifiers.length > 0) {
+    outputEventFunction = withModifiers(
+      outputEventFunction as any,
+      nonKeyModifiers
+    );
+  }
+
+  if (
+    keyModifiers.length > 0 &&
+    // if event name is dynamic, always wrap with keys guard
+    isKeyboardEvent(eventName)
+  ) {
+    outputEventFunction = withKeys(outputEventFunction, keyModifiers);
+  }
+
+  if (eventOptionModifiers.length > 0) {
+    const modifierPostfix = eventOptionModifiers.map(capitalize).join('');
+    outputEventName = `${outputEventName}${modifierPostfix}`;
+  }
 
   const outputEventObject = {
     [outputEventName]: outputEventFunction
   };
 
-  console.group('"withEventModifiers"');
-  console.log('eventObject:', eventObject);
-  console.log('modifiers:', modifiers);
-  console.log('transformativeModifiersList:', transformativeModifiersList);
-  console.log('eventModifierList:', eventModifierList);
-  console.log('keyModifierList:', keyModifierList);
-  console.log('outputEventName:', outputEventName);
-  console.groupEnd();
-
-  return eventObject;
+  return outputEventObject;
 };
