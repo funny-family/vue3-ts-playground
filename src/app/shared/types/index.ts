@@ -291,3 +291,26 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
     [K in Keys]-?: Required<Pick<T, K>> &
       Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
+
+/**
+ * @description
+ * adad
+ *
+ * @example
+ * adad
+ */
+export type StartsWith<
+  T = string,
+  U extends string = string
+> = T extends `${U}${any}` ? true : false;
+
+/**
+ * @description
+ * adad
+ *
+ * @example
+ * adad
+ */
+export type OmitByType<T, U> = {
+  [p in keyof T as T[p] extends U ? never : p]: T[p];
+};
