@@ -12,7 +12,8 @@ module.exports = {
       {
         transformOn: false,
         optimize: true,
-        enableObjectSlots: false
+        enableObjectSlots: false,
+        mergeProps: true
       }
     ]
 
