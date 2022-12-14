@@ -103,7 +103,7 @@ export const NotFound = defineComponent({
     console.log('"args" of "not-found" component:', arguments);
 
     return (
-      <div className={styles.notFoundPage}>
+      <div>
         {/* <div class="gif404"> */}
         <div>
           <img src={emojiBlinkLeftIcon} alt="EmojiBlinkLeftIcon." />
@@ -192,16 +192,25 @@ export const NotFound = defineComponent({
                 // v-show={false}
                 type="password"
                 class="TextField"
+                style={{ padding: '10px' }}
                 label="Text Field Label"
+                aria-hidden={false}
                 v-model={[this.textFieldValue, ['trim', 'capitalize']]}
                 // ref={(el: any) => {
                 //   console.log(1231313132, el);
                 // }}
                 // ref={this.textFieldFunctionRef as any}
-                onInput={() => {
-                  console.log('TextField onInput');
-                }}
+                // onInput={() => {
+                //   console.log('TextField onInput');
+                // }}
+                color="white"
                 ref={nameOf(() => this.textFieldRef)}
+                data-true={true}
+                data-string="''"
+                data-number={1}
+                onClick={() => {
+                  //
+                }}
               />,
               [vFocusDirective.use()]
               // []
