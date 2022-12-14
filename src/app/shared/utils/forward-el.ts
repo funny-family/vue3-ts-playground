@@ -1,5 +1,34 @@
 import type { Numberish } from '@/app/shared/types';
 
+export const reservedDataAttributeName = {
+  dataComponentRootElId: 'data-component-root-el-id',
+  dataComponentForwardElId: 'data-component-forward-el-id',
+  dataIsComponent: 'data-is-component'
+} as const;
+
+/**
+ * @description
+ * adadad
+ *
+ * @example
+ * adadad
+ */
+export const createComponentMarkWithDataAttrs = (uid: number) => {
+  const rootElDataAttrs = {
+    [reservedDataAttributeName.dataIsComponent]: true,
+    [reservedDataAttributeName.dataComponentRootElId]: uid
+  } as const;
+
+  const forwardElDataAttrs = {
+    [reservedDataAttributeName.dataComponentForwardElId]: uid
+  } as const;
+
+  return {
+    rootElDataAttrs,
+    forwardElDataAttrs
+  };
+};
+
 export const nameOfComponentRootElDataset = 'data-component-root-el-id';
 export const nameOfComponentForwardElDataset = 'data-component-forward-el-id';
 
