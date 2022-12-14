@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 
   app.mixin(renderCacheEmptinessCheck);
 
-  proxifyConsoleWarn();
+  // proxifyConsoleWarn();
 }
 
 app.use(store);
