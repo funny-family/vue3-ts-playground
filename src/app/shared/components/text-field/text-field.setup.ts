@@ -12,6 +12,7 @@ import type { EventHandler } from '@/app/shared/types';
 import { emitName } from './text-field.emits';
 import { capitalize } from '@/app/shared/utils/capitalize';
 import { isStringContainsUppercaseCharacters } from '@/app/shared/utils/is-string-contains-uppercase-characters';
+import { useAttrs } from '@/app/shared/composables/use-attrs.composable';
 
 type Props = PropsOfSetupFunction<TextFieldProps>;
 type Context = ContextOfSetupFunction<
@@ -33,6 +34,9 @@ export const setup = (props: Props, context: Context) => {
       }
     }
   });
+
+  const attr = useAttrs(context.attrs);
+  console.log(12313, attr);
 
   const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;

@@ -5,6 +5,7 @@ import type { RenderFunction } from '@/app/shared/types/component/render';
  */
 import { normalizeClass } from 'vue';
 import { styles } from './styles/text-field.styles';
+import { createComponentMarkWithDataAttrs } from '@/app/shared/utils/forward-el';
 
 export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {
   const { props, context, onInput, $, shallowObj, deepObj } = this;
@@ -14,19 +15,22 @@ export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {
   const value = props.modelValue;
   const uid = $.uid;
 
+  const { rootElDataAttrs, forwardElDataAttrs } =
+    createComponentMarkWithDataAttrs(uid);
+
   return (
-    <div class={className} style={style} data-component-root-el-id={uid}>
+    <div {...rootElDataAttrs} class={className} style={style}>
       {props.label != null && (
         <label class={styles.textField__label}>{props.label}</label>
       )}
 
       <input
+        {...forwardElDataAttrs}
         {...forwardElementAttrs}
         class={styles.textField__input}
         type={type}
         value={value}
         onInput={onInput}
-        data-component-forward-el-id={uid}
       />
     </div>
   );
