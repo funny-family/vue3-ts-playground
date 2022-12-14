@@ -1,5 +1,5 @@
 import type { AnyFunction } from '@/app/shared/types';
-import type { CSSClassNameAttribute } from '@/app/shared/types/component/attrs';
+import type { DataAttribute } from '@/app/shared/types/component/attrs';
 import type { VShow, VModel } from '@/app/shared/types/directives';
 import type {
   DatasetComponentRootElId,
@@ -17,7 +17,7 @@ declare module 'vue' {
     extends VShow.Directive,
       DatasetComponentRootElId,
       DatasetComponentForwardElId,
-      CSSClassNameAttribute {}
+      DataAttribute {}
 
   export interface InputHTMLAttributes extends VModel.Directive {}
   export interface TextareaHTMLAttributes extends VModel.Directive {}
