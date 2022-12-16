@@ -1,0 +1,13 @@
+diff --git a/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts b/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts
+index 893b150..3945663 100644
+--- a/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts
++++ b/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts
+@@ -1174,7 +1174,7 @@ export interface SVGAttributes extends AriaAttributes, EventHandlers<Events> {
+   zoomAndPan?: string
+ }
+ 
+-interface IntrinsicElementAttributes {
++export interface IntrinsicElementAttributes {
+   a: AnchorHTMLAttributes
+   abbr: HTMLAttributes
+   address: HTMLAttributes

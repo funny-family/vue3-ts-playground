@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "serve": "serve -s ./dist -d -l 7645",
     "preview": "concurrently \"yarn build\" \"yarn serve\"",
     "unimported": "npx unimported --clear-cache",
+    "patch-package": "patch-package",
+    "postinstall": "concurrently \"patch-package\"",
+    "app:dev": "vue-cli-service serve",
+    "app:build": "vue-cli-service build",
+    "app:lint": "vue-cli-service lint",
+    "app:serve": "serve -s ./dist -d -l 7645",
     "storybook:run": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
     "codegen:component": "hygen new component",
@@ -17,7 +19,8 @@
     "codegen:transition": "echo \"create transition\"",
     "codegen:route": "echo \"create route\"",
     "codegen:guard": "echo \"create guard\"",
-    "codegen:util": "echo \"create util\""
+    "codegen:util": "echo \"create util\"",
+    "browserslist:update": "npx update-browserslist-db@latest"
   },
   "dependencies": {
     "clsx": "^1.1.1",
@@ -53,6 +56,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "hygen": "^6.1.0",
     "incstr": "^1.2.3",
+    "patch-package": "^6.5.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.2.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
