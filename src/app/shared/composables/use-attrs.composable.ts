@@ -1,4 +1,8 @@
-import type { HTMLAttributes } from 'vue';
+import type {
+  HTMLAttributes,
+  AreaHTMLAttributes,
+  InputHTMLAttributes
+} from 'vue';
 import type {
   OmitByType,
   RequireOnlyOne,
@@ -30,6 +34,7 @@ const isDataAttribute = <T extends string>(key: T) =>
   /^(data-)[a-z]+/.test(key);
 
 const htmlAttributes = [
+  'innerHTML',
   'class',
   'style',
   'accesskey',
@@ -80,59 +85,7 @@ const htmlAttributes = [
 const isHtmlAttribute = <T extends string>(key: T) =>
   (htmlAttributes as unknown as string[]).includes(key);
 
-// const reservedPropsList = ['key', 'ref', 'ref_for', 'ref_key'] as const;
-// /**
-//  * @description
-//  * adadad
-//  *
-//  * @example
-//  * adada
-//  */
-// const isReservedProp = <T extends string>(key: T) =>
-//   (reservedPropsList as unknown as string[]).includes(key);
-
-type FilterKeysThatStartsWithOn<T> = {
-  [P in keyof T]: StartsWith<P, 'on'> extends true ? T[P] : never;
-};
-type OnlyStartsWithOn<T> = OmitByType<FilterKeysThatStartsWithOn<T>, never>;
-
-type FilterKeysThatStartsWithAria<T> = {
-  [P in keyof T]: StartsWith<P, 'aria-'> extends true ? T[P] : never;
-};
-type OnlyStartsWithAria<T> = OmitByType<FilterKeysThatStartsWithAria<T>, never>;
-
-type H = typeof htmlAttributes[number];
-type FilterKeysThatHtml<T> = {
-  [P in keyof T]: StartsWith<P, H> extends true ? T[P] : never;
-};
-type OnlyHtmlAttrs<T> = OmitByType<FilterKeysThatHtml<T>, never>;
-
-type FilterKeysThatStartsWithData<T> = {
-  [P in keyof T]: StartsWith<P, 'data-'> extends true ? T[P] : never;
-};
-type OnlyStartsWithData<T> = OmitByType<FilterKeysThatStartsWithData<T>, never>;
-
-type ConstructedAttrs<T> = {
-  aria: OnlyStartsWithAria<T>;
-  data: OnlyStartsWithData<T> & Record<string, any>;
-  event: OnlyStartsWithOn<T>;
-  html: OnlyHtmlAttrs<T>;
-  rest: Record<string, any>;
-};
-
-type K = FilterKeysThatStartsWithOn<HTMLAttributes>;
-
-const k: K = {};
-
-// const attrsMapRecord = {
-//   aria: 'aria',
-//   data: 'data',
-//   event: 'event',
-//   html: 'html',
-//   rest: 'rest'
-// } as const;
-
-const obk = {
+const attr = {
   aria: {},
   data: {},
   event: {},
@@ -140,52 +93,112 @@ const obk = {
   el: {}
 };
 
-const resolveAttrs = <T extends HTMLAttributes>(attrs: T) => {
-  const attrsRecord: Record<string, any> = obk;
+type FilterHTMLAttributes<T extends HTMLAttributes> = {
+  [P in keyof T]: StartsWith<P, typeof htmlAttributes[number]> extends true
+    ? T[P]
+    : never;
+};
+type OnlyHTMLAttributes<T extends HTMLAttributes> = OmitByType<
+  FilterHTMLAttributes<T>,
+  undefined
+>;
+
+type FilterEventAttributes<T extends HTMLAttributes> = {
+  [P in keyof T]: StartsWith<P, 'on'> extends true ? T[P] : never;
+};
+type OnlyEventAttributes<T extends HTMLAttributes> = OmitByType<
+  FilterEventAttributes<T>,
+  undefined
+>;
+
+type FilterAriaAttributes<T extends HTMLAttributes> = {
+  [P in keyof T]: StartsWith<P, 'aria-'> extends true ? T[P] : never;
+};
+type OnlyAriaAttributes<T extends HTMLAttributes> = OmitByType<
+  FilterAriaAttributes<T>,
+  undefined
+>;
+
+type FilterDataAttributes<T extends HTMLAttributes> = {
+  [P in keyof T]: StartsWith<P, 'data-'> extends true ? T[P] : never;
+};
+type OnlyDataAttributes<T extends HTMLAttributes> = OmitByType<
+  FilterDataAttributes<T>,
+  undefined
+>;
+
+type OmitableElKeys<T extends HTMLAttributes> =
+  | keyof OnlyHTMLAttributes<T>
+  | keyof OnlyEventAttributes<T>
+  | keyof OnlyAriaAttributes<T>
+  | keyof OnlyDataAttributes<T>;
+type OnlyElAttributes<T extends HTMLAttributes> = Omit<T, OmitableElKeys<T>>;
+
+type FilerDirective<T extends Object> = {
+  [P in keyof T]: StartsWith<P, 'v-'> extends true ? never : T[P];
+};
+type WithoutDirective<T extends Object> = OmitByType<
+  FilerDirective<T>,
+  undefined
+>;
+
+const el: WithoutDirective<OnlyElAttributes<InputHTMLAttributes>> = {};
+
+type ResolvedAttrs<T extends HTMLAttributes> = {
+  html: OnlyHTMLAttributes<T>;
+  event: OnlyEventAttributes<T>;
+  aria: OnlyAriaAttributes<T>;
+  data: OnlyDataAttributes<T>;
+  el: WithoutDirective<OnlyElAttributes<T>>;
+};
+
+const resolveAttrs = <T extends HTMLAttributes>(attrs: T): ResolvedAttrs<T> => {
+  const attrsRecord = attr as ResolvedAttrs<T>;
 
   for (const key in attrs) {
-    if (isAriaAttribute(key)) {
-      attrsRecord.aria[key] = attrs[key];
-    }
-    // prettier-ignore
-    else if (
-      isDataAttribute(key)
-    ) {
-      attrsRecord.data[key] = attrs[key];
-    }
-    // prettier-ignore
-    else if (
-      isHtmlAttribute(key)
-    ) {
-      attrsRecord.html[key] = attrs[key];
-    }
-    // prettier-ignore
-    else if (isOn(key)) {
-      attrsRecord.event[key] = attrs[key];
-    }
-    // prettier-ignores
-    else {
-      attrsRecord.el[key] = attrs[key];
+    switch (true) {
+      case isAriaAttribute(key): {
+        // @ts-expect-error
+        attrsRecord.aria[key] = attrs[key];
+
+        break;
+      }
+
+      case isDataAttribute(key): {
+        // @ts-expect-error
+        attrsRecord.data[key] = attrs[key];
+
+        break;
+      }
+
+      case isHtmlAttribute(key): {
+        // @ts-expect-error
+        attrsRecord.html[key] = attrs[key];
+
+        break;
+      }
+
+      case isOn(key): {
+        // @ts-expect-error
+        attrsRecord.event[key] = attrs[key];
+
+        break;
+      }
+
+      default: {
+        // @ts-expect-error
+        attrsRecord.el[key] = attrs[key];
+
+        break;
+      }
     }
   }
 
   return attrsRecord;
 };
 
-export const useAttrs = <T extends HTMLAttributes>(
-  attrs: T
-): Readonly<ConstructedAttrs<T>> => {
-  const computedAttrs = computed(() => obk as any);
-
-  // const computedAttrs = reactive<ConstructedAttrs>({
-  //   aria: {},
-  //   data: {},
-  //   event: {},
-  //   html: {},
-  //   rest: {}
-  // });
-
-  type D = OnlyStartsWithOn<typeof attrs>;
+export const useAttrs = <T extends HTMLAttributes>(attrs: T) => {
+  const computedAttrs = computed<ResolvedAttrs<T>>(() => attr as any);
 
   const { aria, data, event, html, el } = resolveAttrs(attrs);
 
@@ -194,8 +207,6 @@ export const useAttrs = <T extends HTMLAttributes>(
   computedAttrs.value.event = event;
   computedAttrs.value.html = html;
   computedAttrs.value.el = el;
-
-  console.log('computedAttrs:', computedAttrs);
 
   return computedAttrs.value;
 };
