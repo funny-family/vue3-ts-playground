@@ -11,6 +11,8 @@ import type {
 import { computed, toRefs, shallowRef, reactive } from 'vue';
 import { isOn } from '@vue/shared';
 
+// https://stackoverflow.com/questions/43909566/get-keys-of-a-typescript-interface-as-array-of-strings
+
 // https://blog.wax-o.com/2015/05/an-alternative-to-if-else-and-switch-in-javascript/
 
 /**
@@ -33,7 +35,93 @@ const isAriaAttribute = <T extends string>(key: T) =>
 const isDataAttribute = <T extends string>(key: T) =>
   /^(data-)[a-z]+/.test(key);
 
-const htmlAttributes = [
+// https://github.com/microsoft/TypeScript/issues/13298
+
+// ========================================================
+// type TupleHead<Tuple extends readonly unknown[]> = Tuple extends [
+//   infer HeadElement,
+//   ...(readonly unknown[])
+// ]
+//   ? HeadElement
+//   : never;
+
+// type TupleTail<Tuple extends readonly unknown[]> = Tuple extends [
+//   unknown,
+//   ...infer TailElements
+// ]
+//   ? TailElements
+//   : never;
+
+type TuplePrepend<Tuple extends readonly unknown[], NewElement> = [
+  NewElement,
+  ...Tuple
+];
+
+type Consumer<Value> = (value: Value) => void;
+
+type IntersectionFromUnion<Union> = (
+  Union extends unknown ? Consumer<Union> : never
+) extends Consumer<infer ResultIntersection>
+  ? ResultIntersection
+  : never;
+
+type OverloadedConsumerFromUnion<Union> = IntersectionFromUnion<
+  Union extends unknown ? Consumer<Union> : never
+>;
+
+type UnionLast<Union> = OverloadedConsumerFromUnion<Union> extends (
+  a: infer A
+) => void
+  ? A
+  : never;
+
+type UnionExcludingLast<Union> = Exclude<Union, UnionLast<Union>>;
+
+type TupleFromUnionRec<
+  RemainingUnion,
+  CurrentTuple extends readonly unknown[]
+> = [RemainingUnion] extends [never]
+  ? CurrentTuple
+  : TupleFromUnionRec<
+      UnionExcludingLast<RemainingUnion>,
+      TuplePrepend<CurrentTuple, UnionLast<RemainingUnion>>
+    >;
+
+export type TupleFromUnion<Union> = TupleFromUnionRec<Union, []>;
+// // ========================================================
+
+// // ========================================================
+// // https://stackoverflow.com/questions/55127004/how-to-transform-union-type-to-tuple-type
+// // oh boy don't do this
+// type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+//   k: infer I
+// ) => void
+//   ? I
+//   : never;
+// type LastOf<T> = UnionToIntersection<
+//   T extends any ? () => T : never
+// > extends () => infer R
+//   ? R
+//   : never;
+
+// // TS4.0+
+// type Push<T extends any[], V> = [...T, V];
+
+// // TS4.1+
+// type TuplifyUnion<
+//   T,
+//   L = LastOf<T>,
+//   N = [T] extends [never] ? true : false
+// > = true extends N ? [] : Push<TuplifyUnion<Exclude<T, L>>, L>;
+// // ========================================================
+
+// https://stackoverflow.com/questions/51804810/how-to-remove-fields-from-a-typescript-interface-via-extension
+
+type HTMLAttributeKey = keyof E;
+
+type HTMLAttributesTyple = TupleFromUnion<HTMLAttributeKey>;
+
+const htmlAttributes: HTMLAttributesTyple = [
   'innerHTML',
   'class',
   'style',
@@ -74,7 +162,7 @@ const htmlAttributes = [
   'unselectable',
   'inputmode',
   'is'
-] as const;
+];
 /**
  * @description
  * adadad
@@ -94,9 +182,7 @@ const attr = {
 };
 
 type FilterHTMLAttributes<T extends HTMLAttributes> = {
-  [P in keyof T]: StartsWith<P, typeof htmlAttributes[number]> extends true
-    ? T[P]
-    : never;
+  [P in keyof T]: StartsWith<P, HTMLAttributeKey> extends true ? T[P] : never;
 };
 type OnlyHTMLAttributes<T extends HTMLAttributes> = OmitByType<
   FilterHTMLAttributes<T>,
@@ -142,7 +228,14 @@ type WithoutDirective<T extends Object> = OmitByType<
   undefined
 >;
 
-const el: WithoutDirective<OnlyElAttributes<InputHTMLAttributes>> = {};
+type E = WithoutDirective<
+  Omit<
+    HTMLAttributes,
+    | keyof OnlyEventAttributes<HTMLAttributes>
+    | keyof OnlyAriaAttributes<HTMLAttributes>
+    | keyof OnlyDataAttributes<HTMLAttributes>
+  >
+>;
 
 type ResolvedAttrs<T extends HTMLAttributes> = {
   html: OnlyHTMLAttributes<T>;
@@ -158,36 +251,31 @@ const resolveAttrs = <T extends HTMLAttributes>(attrs: T): ResolvedAttrs<T> => {
   for (const key in attrs) {
     switch (true) {
       case isAriaAttribute(key): {
-        // @ts-expect-error
-        attrsRecord.aria[key] = attrs[key];
+        (attrsRecord.aria as Record<string, any>)[key] = attrs[key];
 
         break;
       }
 
       case isDataAttribute(key): {
-        // @ts-expect-error
-        attrsRecord.data[key] = attrs[key];
+        (attrsRecord.data as Record<string, any>)[key] = attrs[key];
 
         break;
       }
 
       case isHtmlAttribute(key): {
-        // @ts-expect-error
-        attrsRecord.html[key] = attrs[key];
+        (attrsRecord.html as Record<string, any>)[key] = attrs[key];
 
         break;
       }
 
       case isOn(key): {
-        // @ts-expect-error
-        attrsRecord.event[key] = attrs[key];
+        (attrsRecord.event as Record<string, any>)[key] = attrs[key];
 
         break;
       }
 
       default: {
-        // @ts-expect-error
-        attrsRecord.el[key] = attrs[key];
+        (attrsRecord.el as Record<string, any>)[key] = attrs[key];
 
         break;
       }
