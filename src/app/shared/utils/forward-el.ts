@@ -29,15 +29,12 @@ export const createComponentMarkWithDataAttrs = (uid: number) => {
   };
 };
 
-export const nameOfComponentRootElDataset = 'data-component-root-el-id';
-export const nameOfComponentForwardElDataset = 'data-component-forward-el-id';
-
 export type DatasetComponentRootElId = {
-  [nameOfComponentRootElDataset]?: Numberish;
+  [reservedDataAttributeName.dataComponentRootElId]?: Numberish;
 };
 
 export type DatasetComponentForwardElId = {
-  [nameOfComponentForwardElDataset]?: Numberish;
+  [reservedDataAttributeName.dataComponentRootElId]?: Numberish;
 };
 
 /**
@@ -78,7 +75,7 @@ const querySelectForwardElByComponentUid = <T extends Element>(
   }
 
   const selector =
-    `[${nameOfComponentRootElDataset}="${componentUid}"] [${nameOfComponentForwardElDataset}="${componentUid}"]` as const;
+    `[${reservedDataAttributeName.dataComponentRootElId}="${componentUid}"] [${reservedDataAttributeName.dataComponentRootElId}="${componentUid}"]` as const;
   const element = document.querySelector(selector);
 
   return element as T;
