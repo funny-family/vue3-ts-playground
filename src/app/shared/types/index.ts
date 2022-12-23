@@ -293,6 +293,8 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
   }[Keys];
 
 /**
+ * @see https://github.com/type-challenges/type-challenges/blob/main/questions/02688-medium-startswith/README.md
+ *
  * @description
  * adad
  *
@@ -305,6 +307,8 @@ export type StartsWith<
 > = T extends `${U}${any}` ? true : false;
 
 /**
+ * @see https://github.com/type-challenges/type-challenges/blob/main/questions/02852-medium-omitbytype/README.md
+ *
  * @description
  * adad
  *
@@ -313,4 +317,13 @@ export type StartsWith<
  */
 export type OmitByType<T, U> = {
   [p in keyof T as T[p] extends U ? never : p]: T[p];
+};
+
+/**
+ * @see https://github.com/type-challenges/type-challenges/blob/main/questions/00009-medium-deep-readonly/README.md
+ */
+export type DeepReadonly<X> = {
+  +readonly [Key in keyof X]: X[Key] extends Record<PropertyKey, unknown>
+    ? DeepReadonly<X[Key]>
+    : X[Key];
 };
