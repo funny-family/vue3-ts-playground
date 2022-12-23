@@ -1,8 +1,9 @@
 import { computed, ref } from 'vue';
-import { defineReadOnlyStore } from '@/app/store';
+import { defineStore } from 'pinia';
+import type { ReadonlyStoreSetup } from './types';
 
-export const counterStoreId = 'counter' as const;
-export const useCounterStore = defineReadOnlyStore(counterStoreId, () => {
+export const id = 'counter' as const;
+const storeSetup = () => {
   const counter = ref(0);
   const doubleCounter = computed(() => counter.value * 2);
 
@@ -15,4 +16,9 @@ export const useCounterStore = defineReadOnlyStore(counterStoreId, () => {
     doubleCounter,
     increment
   };
-});
+};
+
+export const useCounterStore = defineStore(
+  id,
+  storeSetup as ReadonlyStoreSetup<typeof storeSetup>
+);
