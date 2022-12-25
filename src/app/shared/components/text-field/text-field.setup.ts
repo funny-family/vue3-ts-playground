@@ -1,4 +1,5 @@
 import { ref, shallowRef } from 'vue';
+import type { InputHTMLAttributes, HTMLAttributes } from 'vue';
 import type { TextFieldProps } from './text-field.props';
 import type { TextFieldAttrs } from './text-field.attrs';
 import type { TextFieldEmits } from './text-field.emits';
@@ -35,8 +36,7 @@ export const setup = (props: Props, context: Context) => {
     }
   });
 
-  const attr = useAttrs(context.attrs);
-  console.log(12313, attr);
+  const attr = useAttrs<TextFieldAttrs>(context.attrs);
 
   const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;
