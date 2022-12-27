@@ -8,3 +8,28 @@ export type TextFieldAttrs = Omit<
   ExtractedKeys<VModel.Directive & CSSClassAttribute>
 > &
   CSSClassAttribute;
+
+export type OmittedTextFieldAttrs = Omit<
+  TextFieldAttrs,
+  // checkbox
+  | 'checked'
+  // | 'defaultChecked'
+  | 'list'
+  // file
+  | 'accept'
+  | 'capture'
+  // image
+  | 'width'
+  | 'height'
+  | 'alt'
+  | 'src'
+  // date/number
+  | 'max'
+  | 'min'
+  | 'step'
+  // global
+  | 'innerHTML'
+  | 'draggable'
+  | 'contenteditable'
+  | 'radiogroup'
+>;

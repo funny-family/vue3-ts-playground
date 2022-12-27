@@ -12,13 +12,15 @@ import type { Gif404Slots } from './gif-404.slots';
 import type { Gif404Attrs } from './gif-404.attrs';
 
 export const Gif404 = defineComponent<
-  Gif404Props & Gif404Attrs & VSlots.Directive<Gif404Slots.JSXElement>,
+  Gif404Props & Gif404Attrs & VSlots.Directive<Gif404Slots.Element>,
   Gif404Bindings
 >({
   get name(): string {
     return Object.keys({ Gif404 })[0];
   },
   render() {
+    const $slots = this.$slots as Gif404Slots.Element;
+
     return (
       <>
         <div

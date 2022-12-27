@@ -21,4 +21,6 @@ export namespace Gif404Slots {
   export type VNodeList = Readonly<Schema<VNode[]>>;
 
   export type JSXElement = Readonly<Schema<JSX.Element>>;
+
+  export type Element = Readonly<Schema<VNode>>;
 }

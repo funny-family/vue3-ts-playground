@@ -4,8 +4,11 @@ import type { Data, AnyFunction } from '@/app/shared/types';
 import type { EmitFunction } from '@/app/shared/types/component/emits';
 
 // Extended "SetupContext" type.
-export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
-  extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
+export interface SetupCtx<
+  E extends EmitsOptions,
+  A extends Data,
+  S extends Slots
+> extends Omit<SetupContext<E>, 'attrs' | 'slots' | 'emit'> {
   attrs: A;
   slots: S;
   emit: EmitFunction<E>;
@@ -14,9 +17,9 @@ export interface SetupCtx<E = EmitsOptions, A = Data, S = Slots>
 export type PropsOfSetupFunction<T = {}> = Readonly<T>;
 
 export type ContextOfSetupFunction<
-  E = EmitsOptions,
-  A = Data,
-  S = Slots
+  E extends EmitsOptions,
+  A extends Data,
+  S extends Slots
 > = SetupCtx<E> & {
   attrs: A;
   slots: S;

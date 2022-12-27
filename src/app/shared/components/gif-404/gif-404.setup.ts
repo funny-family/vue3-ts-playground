@@ -15,7 +15,7 @@ export const setup = (p: Readonly<{}>, ctx: SetupContext<EmitsOptions>) => {
   const context = ctx as unknown as SetupCtx<
     EmitsOptions,
     Gif404Attrs,
-    Gif404Slots.VNodeList
+    Gif404Slots.Element
   >;
 
   const title = 'Not found page!';

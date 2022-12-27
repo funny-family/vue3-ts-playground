@@ -18,7 +18,8 @@ import { useAttrs } from '@/app/shared/composables/use-attrs.composable';
 type Props = PropsOfSetupFunction<TextFieldProps>;
 type Context = ContextOfSetupFunction<
   TextFieldEmits.AsFunctionArguments,
-  TextFieldAttrs
+  TextFieldAttrs,
+  {}
 >;
 
 export const setup = (props: Props, context: Context) => {
@@ -36,7 +37,31 @@ export const setup = (props: Props, context: Context) => {
     }
   });
 
-  const attr = useAttrs<TextFieldAttrs>(context.attrs);
+  const groupedAttrs = useAttrs(context.attrs, {
+    ignoreList: [
+      // checkbox
+      'checked',
+      // 'defaultChecked',
+      'list',
+      // file
+      'accept',
+      'capture',
+      // image
+      'width',
+      'height',
+      'alt',
+      'src',
+      // date/number
+      'max',
+      'min',
+      'step',
+      // global
+      'innerHTML',
+      'draggable',
+      'contenteditable',
+      'radiogroup'
+    ]
+  });
 
   const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;
@@ -55,7 +80,14 @@ export const setup = (props: Props, context: Context) => {
     context.emit(emitName.updateModelValue, value);
   };
 
-  const bindings = { props, context, onInput, shallowObj, deepObj };
+  const bindings = {
+    props,
+    context,
+    onInput,
+    groupedAttrs,
+    shallowObj,
+    deepObj
+  };
   const exposes = {
     deepObj
   };
