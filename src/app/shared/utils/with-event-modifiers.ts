@@ -1,24 +1,34 @@
-import type { Events } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { withModifiers, withKeys, capitalize } from 'vue';
 import { makeMap } from '@vue/shared';
-import type {
-  OmitByType,
-  RequireOnlyOne,
-  StartsWith
-} from '@/app/shared/types';
-
-const isEventOptionModifier = makeMap('passive,once,capture');
-const isNonKeyModifier = makeMap(
-  // event propagation management
-  'stop,prevent,self,' +
-    // system modifiers + exact
-    'ctrl,shift,alt,meta,exact,' +
-    // mouse
-    'middle'
+import {
+  isEventOptionModifier,
+  maybeKeyModifier,
+  isKeyboardEvent,
+  isNonKeyModifier
+} from '@vue/compiler-dom';
+import type { RequireOnlyOne, NonEmptyArrayOf } from '@/app/shared/types';
+console.log(
+  isEventOptionModifier,
+  maybeKeyModifier,
+  isKeyboardEvent,
+  isNonKeyModifier
 );
-// left & right could be mouse or key modifiers based on event type
-const maybeKeyModifier = makeMap('left,right');
-const isKeyboardEvent = makeMap('onkeyup,onkeydown,onkeypress', true);
+
+// =================================== copied from "@vue/compiler-dom" ===================================
+// const isEventOptionModifier = makeMap('passive,once,capture');
+// const isNonKeyModifier = makeMap(
+//   // event propagation management
+//   'stop,prevent,self,' +
+//     // system modifiers + exact
+//     'ctrl,shift,alt,meta,exact,' +
+//     // mouse
+//     'middle'
+// );
+// // left & right could be mouse or key modifiers based on event type
+// const maybeKeyModifier = makeMap('left,right');
+// const isKeyboardEvent = makeMap('onkeyup,onkeydown,onkeypress', true);
+// =================================== copied from "@vue/compiler-dom" ===================================
 
 export const resolveEventModifiers = ({
   eventName,
@@ -63,28 +73,19 @@ export const resolveEventModifiers = ({
   };
 };
 
-type EventsToObject<E = Events> = {
-  [key in keyof E]?: (event: E[key]) => void;
-};
+type FilterStartsWith<
+  Set,
+  Needle extends string
+> = Set extends `${Needle}${infer _X}` ? Set : never;
 
-type FilterKeysThatStartsWithOn<T> = {
-  [P in keyof T]: StartsWith<P, 'on'> extends true ? T[P] : never;
-};
+type OnlyEventAttributes<T extends HTMLAttributes> = Pick<
+  T,
+  FilterStartsWith<keyof T, 'on'>
+>;
 
-type OnlyEvents<E> = OmitByType<FilterKeysThatStartsWithOn<E>, never>;
-
-type EventObjects<E = Events> = EventsToObject<OnlyEvents<E>>;
-
-type EventObject<E = Events> = RequireOnlyOne<EventObjects<E>>;
-
-const e: EventObject<Events> = {
-  onAbort: (event) => {
-    //
-  }
-  // onAnimationend: (event) => {
-  //   //
-  // }
-};
+type EventObject<T extends HTMLAttributes> = RequireOnlyOne<
+  OnlyEventAttributes<T>
+>;
 
 const modifierGuardsRecord = {
   stop: 'stop',
@@ -100,10 +101,9 @@ const modifierGuardsRecord = {
   exact: 'exact'
 } as const;
 
-export const withEventModifiers = <Props = Events>(
-  // eventObject: EventObject<Props>,
-  eventObject: EventObjects<Props>,
-  modifiers: string[]
+export const withEventModifiers = <T extends HTMLAttributes>(
+  eventObject: EventObject<T>,
+  modifiers: NonEmptyArrayOf<string>
 ) => {
   const eventName = Object.keys(eventObject)[0] as string;
   const eventFunction = Object.values(eventObject)[0] as Function;
@@ -152,15 +152,3 @@ export const withEventModifiers = <Props = Events>(
 
   return outputEventObject;
 };
-
-withEventModifiers(
-  {
-    onAbort: (event) => {
-      //
-    }
-    // onAnimationend: (event) => {
-    //   //
-    // }
-  },
-  []
-);
