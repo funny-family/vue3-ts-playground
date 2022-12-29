@@ -1,0 +1,42 @@
+diff --git a/node_modules/@vue/compiler-dom/dist/compiler-dom.d.ts b/node_modules/@vue/compiler-dom/dist/compiler-dom.d.ts
+index c0d162d..8f8ce4c 100644
+--- a/node_modules/@vue/compiler-dom/dist/compiler-dom.d.ts
++++ b/node_modules/@vue/compiler-dom/dist/compiler-dom.d.ts
+@@ -60,6 +60,11 @@ export declare const V_ON_WITH_MODIFIERS: unique symbol;
+ 
+ export declare const V_SHOW: unique symbol;
+ 
++export declare const isEventOptionModifier: (key: string) => boolean;
++export declare const maybeKeyModifier: (key: string) => boolean;
++export declare const isKeyboardEvent: (key: string) => boolean;
++export declare const isNonKeyModifier: (key: string) => boolean;
++
+ 
+ export * from "@vue/compiler-core";
+ 
+diff --git a/node_modules/@vue/compiler-dom/dist/compiler-dom.esm-bundler.js b/node_modules/@vue/compiler-dom/dist/compiler-dom.esm-bundler.js
+index 0537ae8..b6ef491 100644
+--- a/node_modules/@vue/compiler-dom/dist/compiler-dom.esm-bundler.js
++++ b/node_modules/@vue/compiler-dom/dist/compiler-dom.esm-bundler.js
+@@ -270,8 +270,8 @@ const transformModel = (dir, node, context) => {
+     return baseResult;
+ };
+ 
+-const isEventOptionModifier = /*#__PURE__*/ makeMap(`passive,once,capture`);
+-const isNonKeyModifier = /*#__PURE__*/ makeMap(
++export const isEventOptionModifier = /*#__PURE__*/ makeMap(`passive,once,capture`);
++export const isNonKeyModifier = /*#__PURE__*/ makeMap(
+ // event propagation management
+ `stop,prevent,self,` +
+     // system modifiers + exact
+@@ -279,8 +279,8 @@ const isNonKeyModifier = /*#__PURE__*/ makeMap(
+     // mouse
+     `middle`);
+ // left & right could be mouse or key modifiers based on event type
+-const maybeKeyModifier = /*#__PURE__*/ makeMap('left,right');
+-const isKeyboardEvent = /*#__PURE__*/ makeMap(`onkeyup,onkeydown,onkeypress`, true);
++export const maybeKeyModifier = /*#__PURE__*/ makeMap('left,right');
++export const isKeyboardEvent = /*#__PURE__*/ makeMap(`onkeyup,onkeydown,onkeypress`, true);
+ const resolveModifiers = (key, modifiers, context, loc) => {
+     const keyModifiers = [];
+     const nonKeyModifiers = [];
