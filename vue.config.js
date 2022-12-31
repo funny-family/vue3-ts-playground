@@ -96,7 +96,7 @@ module.exports = {
           // return '[contenthash].[ext]';
           // return 'dirname/[contenthash].[ext]';
           // return '[path][name].[ext]?[contenthash]';
-          return 'img/[name].[contenthash].[ext]';
+          return 'img/[name].[contenthash:8].[ext]';
         }
       });
     /* ==================== external svg ==================== */
