@@ -1,5 +1,5 @@
 import type {
-  HTMLAttributes,
+  HTMLAttributes as _HTMLAttributes,
   AreaHTMLAttributes,
   InputHTMLAttributes
 } from 'vue';
@@ -10,6 +10,13 @@ import type {
 } from '@/app/shared/types';
 import { computed, toRefs, shallowRef, reactive } from 'vue';
 import { isOn } from '@vue/shared';
+
+// https://www.youtube.com/watch?v=YE_3WwX-Dl8
+
+type HTMLAttributes = Pick<
+  _HTMLAttributes,
+  FilterNotStartingWith<keyof _HTMLAttributes, 'v-'>
+>;
 
 // =========================================================================================
 // https://catchts.com/union-array
@@ -111,7 +118,7 @@ type HTMLAttributesTyple = UnionToArray<keyof OnlyHTMLAttributes>;
 // Union to Tuple
 // https://github.com/type-challenges/type-challenges/blob/main/questions/00730-hard-union-to-tuple/README.md
 
-const htmlAttributes: HTMLAttributesTyple = [
+const htmlAttributes: (keyof OnlyHTMLAttributes)[] = [
   'innerHTML',
   'class',
   'style',
@@ -171,58 +178,73 @@ const attr = {
   el: {}
 };
 
-type ResolvedAttrs<T extends HTMLAttributes> = {
-  html: Partial<OnlyHTMLAttributes>;
-  event: Partial<OnlyEventAttributes<T>>;
-  aria: Partial<OnlyAriaAttributes<T>>;
-  data: Partial<OnlyDataAttributes<T>>;
-  el: Partial<OnlyElAttributes<T>>;
+type ResolvedAttrs<
+  T extends HTMLAttributes,
+  K extends FilterNotStartingWith<keyof T, 'v-'>
+> = {
+  html: Omit<OnlyHTMLAttributes, K>;
+  event: Omit<OnlyEventAttributes<T>, K>;
+  aria: Omit<OnlyAriaAttributes<T>, K>;
+  data: Omit<OnlyDataAttributes<T>, K>;
+  el: Omit<OnlyElAttributes<T>, K>;
 };
 
-const resolveAttrs = <T extends HTMLAttributes>(attrs: T): ResolvedAttrs<T> => {
-  const attrsRecord = attr as ResolvedAttrs<T>;
-
+const resolveAttrs = <
+  T extends HTMLAttributes,
+  K extends FilterNotStartingWith<keyof T, 'v-'>
+>(
+  attrs: T,
+  // { ignoreList = [] }: { ignoreList: K[] }
+  options: { ignoreList?: K[] } = {}
+) => {
+  const resolvedAttrs = attr as ResolvedAttrs<T, K>;
   for (const key in attrs) {
-    switch (true) {
-      case isAriaAttribute(key): {
-        (attrsRecord.aria as any)[key] = attrs[key];
+    if (options.ignoreList != null && options.ignoreList.includes(key as any)) {
+      continue;
+    }
 
-        break;
-      }
-
-      case isDataAttribute(key): {
-        (attrsRecord.data as any)[key] = attrs[key];
-
-        break;
-      }
-
-      case isHtmlAttribute(key): {
-        (attrsRecord.html as any)[key] = attrs[key];
-
-        break;
-      }
-
-      case isOn(key): {
-        (attrsRecord.event as any)[key] = attrs[key];
-
-        break;
-      }
-
-      default: {
-        (attrsRecord.el as any)[key] = attrs[key];
-
-        break;
-      }
+    if (
+      isAriaAttribute(key)
+    ) {
+      (resolvedAttrs.aria as any)[key] = attrs[key];
+    }
+    // prettier-ignore
+    else if (
+      isDataAttribute(key)
+    ) {
+      (resolvedAttrs.data as any)[key] = attrs[key];
+    }
+    // prettier-ignore
+    else if (
+      isHtmlAttribute(key)
+    ) {
+      (resolvedAttrs.html as any)[key] = attrs[key];
+    }
+    // prettier-ignore
+    else if (
+      isOn(key)
+    ) {
+      (resolvedAttrs.event as any)[key] = attrs[key];
+    }
+    // prettier-ignore
+    else {
+      (resolvedAttrs.el as any)[key] = attrs[key];
     }
   }
 
-  return attrsRecord;
+  return resolvedAttrs;
 };
 
-export const useAttrs = <T extends HTMLAttributes>(attrs: T) => {
-  const computedAttrs = computed<ResolvedAttrs<T>>(() => attr as any);
+export const useAttrs = <
+  T extends HTMLAttributes,
+  K extends FilterNotStartingWith<keyof T, 'v-'>
+>(
+  attrs: T,
+  options: { ignoreList?: K[] } = {}
+): ResolvedAttrs<T, K> => {
+  const computedAttrs = computed<ResolvedAttrs<T, K>>(() => attr as any);
 
-  const { aria, data, event, html, el } = resolveAttrs(attrs);
+  const { aria, data, event, html, el } = resolveAttrs(attrs, options);
 
   computedAttrs.value.aria = aria;
   computedAttrs.value.data = data;
@@ -232,3 +254,20 @@ export const useAttrs = <T extends HTMLAttributes>(attrs: T) => {
 
   return computedAttrs.value;
 };
+
+// type ResolvedAttrs1<T extends HTMLAttributes, K extends string> = {
+//   html: Omit<Partial<OnlyHTMLAttributes>, K>;
+//   event: Omit<Partial<OnlyEventAttributes<T>>, K>;
+//   aria: Omit<Partial<OnlyAriaAttributes<T>>, K>;
+//   data: Omit<Partial<OnlyDataAttributes<T>>, K>;
+//   el: Omit<Partial<OnlyElAttributes<T>>, K>;
+// };
+
+// const f = <T extends HTMLAttributes, K extends string>(
+//   attrs: T,
+//   { ignoreList }: { ignoreList: K[] }
+// ) => {
+//   const resolvedAttrs = attr as ResolvedAttrs1<T, K>;
+
+//   return resolvedAttrs;
+// };
