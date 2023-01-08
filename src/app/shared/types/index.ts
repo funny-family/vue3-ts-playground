@@ -327,3 +327,45 @@ export type DeepReadonly<X> = {
     ? DeepReadonly<X[Key]>
     : X[Key];
 };
+
+/**
+ * @see https://stackoverflow.com/questions/53501721/typescript-exclude-property-key-when-starts-with-target-string
+ *
+ * @description
+ * Exclude Property key when starts with target string
+ *
+ * @example
+ * type Origin = {
+ *    a: string;
+ *    b: string;
+ *    _c: string;
+ *    _d: string;
+ * };
+ *
+ * type Result = FilterStartsWith<Origin, '_'>; // { _c: string; _d: string; }
+ */
+export type FilterStartsWith<
+  Set,
+  Needle extends string
+> = Set extends `${Needle}${infer _X}` ? Set : never;
+
+/**
+ * @see https://stackoverflow.com/questions/53501721/typescript-exclude-property-key-when-starts-with-target-string
+ *
+ * @description
+ * Exclude Property key when starts with target string
+ *
+ * @example
+ * type Origin = {
+ *    a: string;
+ *    b: string;
+ *    _c: string;
+ *    _d: string;
+ * };
+ *
+ * type Result = FilterNotStartingWith<Origin, '_'>; // { a: string; b: string; }
+ */
+export type FilterNotStartingWith<
+  Set,
+  Needle extends string
+> = Set extends `${Needle}${infer _X}` ? never : Set;
