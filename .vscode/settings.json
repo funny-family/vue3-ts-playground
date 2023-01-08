@@ -21,6 +21,7 @@
     "favicons",
     "flowto",
     "haspopup",
+    "HTMLSVG",
     "hygen",
     "incstr",
     "inlist",
@@ -32,14 +33,17 @@
     "itemtype",
     "keyshortcuts",
     "labelledby",
+    "mpath",
     "multiselectable",
     "nocheck",
+    "noindex",
     "Numberish",
     "Omitable",
     "pinia",
     "posinset",
     "proxify",
     "radiogroup",
+    "referrerpolicy",
     "roledescription",
     "rowcount",
     "rowindex",
@@ -58,7 +62,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "files.exclude": {
-    "node_modules/": true
+    "node_modules/": false
   },
   "eslint.validate": [
     "javascript",
