@@ -1,10 +1,7 @@
 import type { AnyFunction } from '@/app/shared/types';
 import type { DataAttribute } from '@/app/shared/types/component/attrs';
 import type { VShow, VModel } from '@/app/shared/types/directives';
-import type {
-  DatasetComponentRootElId,
-  DatasetComponentForwardElId
-} from '@/app/shared/utils/forward-el';
+import type { ReservedDataAttributes } from '@/app/shared/utils/forward-el';
 import type { NormalizedStyle } from '@vue/shared';
 
 export * from '../../../node_modules/vue/dist/vue';
@@ -15,9 +12,7 @@ export { Suspense } from './suspense';
 declare module 'vue' {
   export interface HTMLAttributes
     extends VShow.Directive,
-      DatasetComponentRootElId,
-      DatasetComponentForwardElId,
-      DataAttribute {}
+      ReservedDataAttributes {}
 
   export interface InputHTMLAttributes extends VModel.Directive {}
   export interface TextareaHTMLAttributes extends VModel.Directive {}
