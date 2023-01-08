@@ -182,11 +182,11 @@ type ResolvedAttrs<
   T extends HTMLAttributes,
   K extends FilterNotStartingWith<keyof T, 'v-'>
 > = {
-  html: Omit<OnlyHTMLAttributes, K>;
-  event: Omit<OnlyEventAttributes<T>, K>;
-  aria: Omit<OnlyAriaAttributes<T>, K>;
-  data: Omit<OnlyDataAttributes<T>, K>;
-  el: Omit<OnlyElAttributes<T>, K>;
+  html: Omit<OnlyHTMLAttributes, K | never>;
+  event: Omit<OnlyEventAttributes<T>, K | never>;
+  aria: Omit<OnlyAriaAttributes<T>, K | never>;
+  data: Omit<OnlyDataAttributes<T>, K | never>;
+  el: Omit<OnlyElAttributes<T>, K | never>;
 };
 
 const resolveAttrs = <
