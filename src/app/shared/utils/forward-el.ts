@@ -1,4 +1,4 @@
-import type { Numberish } from '@/app/shared/types';
+import type { Numberish, Booleanish } from '@/app/shared/types';
 
 export const reservedDataAttributeName = {
   dataComponentRootElId: 'data-component-root-el-id',
@@ -13,7 +13,7 @@ export const reservedDataAttributeName = {
  * @example
  * adadad
  */
-export const createComponentMarkWithDataAttrs = (uid: number) => {
+export const createComponentDataAttrMarks = (uid: number) => {
   const rootElDataAttrs = {
     [reservedDataAttributeName.dataIsComponent]: true,
     [reservedDataAttributeName.dataComponentRootElId]: uid
@@ -26,15 +26,13 @@ export const createComponentMarkWithDataAttrs = (uid: number) => {
   return {
     rootElDataAttrs,
     forwardElDataAttrs
-  };
+  } as const;
 };
 
-export type DatasetComponentRootElId = {
+export type ReservedDataAttributes = {
   [reservedDataAttributeName.dataComponentRootElId]?: Numberish;
-};
-
-export type DatasetComponentForwardElId = {
-  [reservedDataAttributeName.dataComponentRootElId]?: Numberish;
+  [reservedDataAttributeName.dataComponentForwardElId]?: Numberish;
+  [reservedDataAttributeName.dataIsComponent]?: Booleanish;
 };
 
 /**
