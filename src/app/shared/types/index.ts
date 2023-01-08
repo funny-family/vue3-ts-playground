@@ -1,4 +1,5 @@
 import type { Prop } from 'vue';
+import type { Booleanish as _Booleanish, Numberish as _Numberish } from '@vue/runtime-dom';
 
 export type Data<T = unknown> = Record<string, T>;
 
@@ -180,9 +181,9 @@ export type UniqueArray<T> = T extends readonly [infer X, ...infer Rest]
     : readonly [X, ...UniqueArray<Rest>]
   : T;
 
-export type Booleanish = boolean | 'true' | 'false';
+export type Booleanish = _Booleanish;
 
-export type Numberish = number | string;
+export type Numberish = _Numberish;
 
 export type AnyFunction<R = unknown> = (...args: any[]) => R;
 
