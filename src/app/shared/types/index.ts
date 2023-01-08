@@ -82,12 +82,6 @@ export type RecordOfBoolean<T extends string> = Record<T, boolean>;
  *   bestFriend?: string,
  * };
  *
- * type OptionalPropertyOf<T extends object> = Exclude<{
- *   [K in keyof T]: T extends Record<K, T[K]>
- *     ? never
- *     : K
- * }[keyof T], undefined>;
- *
  * type UserOptionalProperties = OptionalPropertyOf<User> // type UserOptionalProperties = "displayName" | "bestFriend"
  */
 export type OptionalPropertyOf<T extends object> = Exclude<
