@@ -17,8 +17,9 @@ import { useAttrs } from '@/app/shared/composables/use-attrs.composable';
 
 type Props = PropsOfSetupFunction<TextFieldProps>;
 type Context = ContextOfSetupFunction<
-  TextFieldEmits.AsFunctionArguments,
-  TextFieldAttrs
+  TextFieldAttrs,
+  {},
+  TextFieldEmits.AsFunctionArguments
 >;
 
 export const setup = (props: Props, context: Context) => {
@@ -36,7 +37,8 @@ export const setup = (props: Props, context: Context) => {
     }
   });
 
-  const attr = useAttrs<TextFieldAttrs>(context.attrs);
+  const groupedAttrs = useAttrs(context.attrs);
+  console.log('groupedAttrs of "TextField:"', groupedAttrs);
 
   const onInput: EventHandler<Event> = (event) => {
     let value = (event.target as HTMLInputElement).value;
@@ -55,7 +57,14 @@ export const setup = (props: Props, context: Context) => {
     context.emit(emitName.updateModelValue, value);
   };
 
-  const bindings = { props, context, onInput, shallowObj, deepObj };
+  const bindings = {
+    props,
+    context,
+    onInput,
+    groupedAttrs,
+    shallowObj,
+    deepObj
+  };
   const exposes = {
     deepObj
   };

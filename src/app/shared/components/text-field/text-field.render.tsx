@@ -5,28 +5,40 @@ import type { RenderFunction } from '@/app/shared/types/component/render';
  */
 import { normalizeClass } from 'vue';
 import { styles } from './styles/text-field.styles';
-import { createComponentMarkWithDataAttrs } from '@/app/shared/utils/forward-el';
+import { createComponentDataAttrMarks } from '@/app/shared/utils/forward-el';
 
 export const render: RenderFunction<TextFieldUnwrappedBindings> = function () {
-  const { props, context, onInput, $, shallowObj, deepObj } = this;
-  const { class: classAttr, style, ...forwardElementAttrs } = context.attrs;
-  const className = normalizeClass([classAttr, styles.textField]);
-  const type = forwardElementAttrs.type || 'text';
+  const { props, context, onInput, groupedAttrs, $, shallowObj, deepObj } =
+    this;
+
+  // const { class: classAttr, style, ...forwardElementAttrs } = context.attrs;
+  const className = normalizeClass([
+    groupedAttrs.html?.class,
+    styles.textField
+  ]);
+  const type = groupedAttrs.el?.type || 'text';
   const value = props.modelValue;
   const uid = $.uid;
 
   const { rootElDataAttrs, forwardElDataAttrs } =
-    createComponentMarkWithDataAttrs(uid);
+    createComponentDataAttrMarks(uid);
 
   return (
-    <div {...rootElDataAttrs} class={className} style={style}>
+    <div
+      {...rootElDataAttrs}
+      {...groupedAttrs.html}
+      {...groupedAttrs.aria}
+      {...groupedAttrs.data}
+      class={className}
+    >
       {props.label != null && (
         <label class={styles.textField__label}>{props.label}</label>
       )}
 
       <input
         {...forwardElDataAttrs}
-        {...forwardElementAttrs}
+        {...groupedAttrs.el}
+        {...groupedAttrs.event}
         class={styles.textField__input}
         type={type}
         value={value}
