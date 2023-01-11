@@ -189,7 +189,7 @@ export const NotFound = defineComponent({
             {withDirectives(
               <TextField
                 // className="adadada"
-                // v-show={false}
+                v-show={false}
                 type="password"
                 class="TextField"
                 style={{ padding: '10px' }}
@@ -211,6 +211,9 @@ export const NotFound = defineComponent({
                 onClick={() => {
                   //
                 }}
+                // onBhdasbahd={() => {
+                //   //
+                // }}
               />,
               [vFocusDirective.use()]
               // []
