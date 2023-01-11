@@ -8,9 +8,10 @@ import type {
   UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
 import { getCurrentInstance, onMounted } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 type Props = PropsOfSetupFunction;
-type Context = ContextOfSetupFunction;
+type Context = ContextOfSetupFunction<HTMLAttributes, {}, {}>;
 
 export const setup = (props: Props, context: Context) => {
   const cache: any[] = [];

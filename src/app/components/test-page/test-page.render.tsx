@@ -1,5 +1,6 @@
 // import './t';
-import { withDirectives, withModifiers, HTMLAttributes } from 'vue';
+import { withDirectives, withModifiers } from 'vue';
+import type { HTMLAttributes, FormHTMLAttributes } from 'vue';
 import type { TestPageUnwrappedBindings } from './test-page.setup';
 import type { RenderFunction } from '@/app/shared/types/component/render';
 import { vFontDirective } from './test-page.directives';
@@ -89,11 +90,12 @@ export const render: RenderFunction<TestPageUnwrappedBindings> = function (
       })}> */}
       {/* <form {...withEventAttributeNameModify({ onSubmit: onFormSubmit })}> */}
       <form
-        {...withEventModifiers({ onSubmit: onFormSubmit }, [
-          'once',
-          'prevent',
-          '.'
-        ])}
+        {...withEventModifiers(
+          {
+            onSubmit: onFormSubmit
+          },
+          ['once', 'prevent', '.']
+        )}
       >
         <input type="text" placeholder="Type here!" />
         <button type="submit">submit</button>
