@@ -17,9 +17,9 @@ import {
   getCurrentInstance,
   getCurrentScope
 } from 'vue';
-import type { UnwrapNestedRefs } from 'vue';
+import type { UnwrapNestedRefs, HTMLAttributes } from 'vue';
 
-type Context = ContextOfSetupFunction;
+type Context = ContextOfSetupFunction<HTMLAttributes, {}, {}>;
 type Props = PropsOfSetupFunction;
 
 export const setup = (props: Props, context: Context) => {
