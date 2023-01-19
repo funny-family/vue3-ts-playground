@@ -5,7 +5,7 @@ type A<Type = IntrinsicElementAttributes> = {
 };
 
 // HTMLAttributes
-const htmlAttributes = [
+export const htmlAttributes = [
   'innerHTML',
   'class',
   'style',
@@ -48,7 +48,7 @@ const htmlAttributes = [
   'is'
 ] as const;
 
-export const a = {
+export const attributeKey = {
   // a: AnchorHTMLAttributes
   a: [
     'download',
