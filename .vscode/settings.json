@@ -64,11 +64,18 @@
   "files.exclude": {
     "node_modules/": false
   },
+  "eslint.format.enable": true,
+  "eslint.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.nodePath": "./node_modules",
+  "eslint.options": {
+    "extensions": [".html", ".js", ".ts", ".jsx", ".tsx"]
+  },
   "eslint.validate": [
     "javascript",
-    "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "html"
+    "html",
+    "javascriptreact",
+    "typescriptreact"
   ]
 }
