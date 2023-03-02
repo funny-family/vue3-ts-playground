@@ -37,7 +37,9 @@ export const setup = (props: Props, context: Context) => {
     }
   });
 
-  const groupedAttrs = useAttrs(context.attrs);
+  const groupedAttrs = useAttrs(context.attrs, {
+    ignoreList: ['innerHTML', 'radiogroup']
+  });
   console.log('groupedAttrs of "TextField:"', groupedAttrs);
 
   const onInput: EventHandler<Event> = (event) => {
