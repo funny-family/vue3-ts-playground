@@ -48,19 +48,19 @@ export const Gif404 = defineComponent<
           <hr />
 
           <div style={{ color: 'black', border: '2px solid pink' }}>
-            {this.context.slots.default !== undefined && (
+            {this.context.slots.default != null && (
               <div title="content inside default slot!">
                 {this.context.slots.default()}
               </div>
             )}
 
-            {this.context.slots.footer !== undefined && (
+            {this.context.slots.footer != null && (
               <div title="content inside default slot!">
                 {this.context.slots.footer({ t1: 't1', t2: 't2' })}
               </div>
             )}
 
-            {this.context.slots.header !== undefined && (
+            {this.context.slots.header != null && (
               <div title="content inside header slot!">
                 {this.context.slots.header({
                   headerTitle: 'headerTitle',
