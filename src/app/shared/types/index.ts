@@ -1,5 +1,8 @@
-import type { Prop } from 'vue';
-import type { Booleanish as _Booleanish, Numberish as _Numberish } from '@vue/runtime-dom';
+import type { Prop, VNode } from 'vue';
+import type {
+  Booleanish as _Booleanish,
+  Numberish as _Numberish
+} from '@vue/runtime-dom';
 
 export type Data<T = unknown> = Record<string, T>;
 
@@ -364,3 +367,11 @@ export type FilterNotStartingWith<
   Set,
   Needle extends string
 > = Set extends `${Needle}${infer _X}` ? never : Set;
+
+export type JSXElement =
+  | JSX.Element
+  | string
+  | number
+  | Symbol
+  | JSXElement[]
+  | VNode[];
