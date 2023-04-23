@@ -6,11 +6,11 @@ export type PropOption<
   TypeValue extends any,
   RequiredValue extends boolean,
   DefaultValue extends TypeValue,
-  ValidatorFunction = (value: unknown) => boolean
+  ValidatorFunction = (value: TypeValue) => boolean
 > = {
-  type: PropType<TypeValue> | true | null;
-  required: RequiredValue;
-  default: DefaultValue | DefaultFactory<DefaultValue> | undefined | object;
+  type?: PropType<TypeValue> | true | null;
+  required?: RequiredValue;
+  default?: DefaultValue | DefaultFactory<DefaultValue> | undefined | object;
   validator?: ValidatorFunction;
 };
 
