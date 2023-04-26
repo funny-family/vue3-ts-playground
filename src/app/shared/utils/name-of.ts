@@ -22,7 +22,7 @@
   () => Test
 */
 
-type NameOfFunction = (callback: () => any) => string;
+type NameOfFunction = (callback: Function) => string;
 
 /**
  * @see https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
