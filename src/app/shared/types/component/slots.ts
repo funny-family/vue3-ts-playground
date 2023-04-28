@@ -1,7 +1,12 @@
-export type CustomSlot<A, T> = A extends object
-  ? ((args: A) => T) | undefined
-  : (() => T) | undefined;
+import type { VNode } from 'vue';
 
-export type DefaultSlot<T, A = undefined> = {
-  default: CustomSlot<A, T>;
+// https://github.com/microsoft/TypeScript/issues/23182 -> "[TArgs] extends [never]"
+export type CustomSlot<TArgs = never, TReturn = VNode[]> = [TArgs] extends [
+  never
+]
+  ? () => TReturn
+  : (args: TArgs) => TReturn;
+
+export type DefaultSlot<TArgs, TReturn> = {
+  default: CustomSlot<TArgs, TReturn>;
 };
