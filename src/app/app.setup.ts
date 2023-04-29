@@ -4,8 +4,8 @@
 // https://mrcrmn.dev/articles/lightweight-components-with-vue3-and-jsx/
 
 import type {
-  ContextOfSetupFunction,
-  PropsOfSetupFunction
+  SetupPropsArg,
+  SetupContextArg
 } from '@/app/shared/types/component/setup';
 import { generateGuid } from '@/app/shared/utils/guid';
 import {
@@ -19,8 +19,8 @@ import {
 } from 'vue';
 import type { UnwrapNestedRefs, HTMLAttributes } from 'vue';
 
-type Context = ContextOfSetupFunction<HTMLAttributes, {}, {}>;
-type Props = PropsOfSetupFunction;
+type Props = SetupPropsArg<{}>;
+type Context = SetupContextArg<HTMLAttributes, {}, {}>;
 
 export const setup = (props: Props, context: Context) => {
   const tabId = generateGuid();
