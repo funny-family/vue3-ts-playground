@@ -1,9 +1,9 @@
 import type { VNodeTypes, ComponentPublicInstance } from 'vue';
-import type { Data } from '@/app/shared/types';
+import type { Data, JSXElement } from '@/app/shared/types';
 
 type D = Data<undefined>;
 
-type RenderFunctionReturnValue = VNodeTypes | JSX.Element;
+type RenderFunctionReturnValue = VNodeTypes | JSXElement;
 
 export type RenderFunction<
   This,
