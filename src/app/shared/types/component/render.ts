@@ -11,14 +11,14 @@ export type RenderFunction<
   $Setup = This, // 3
   $Data = {}, // 4
   $Options = This // 5
-  // custom values
-  //
 > = (
   this: This & ComponentPublicInstance,
-  $context: $Context & ComponentPublicInstance, // 0
-  $cache: $Cache, // 1
+  ctx: $Context & ComponentPublicInstance, // 0
+  cache: $Cache, // 1
   $props: $Props, // 2
   $setup: $Setup, // 3
   $data: $Data, // 4
   $options: $Options & ComponentPublicInstance // 5
 ) => RenderFunctionReturnValue;
+
+type PublicInstanceOfComponent = {};
