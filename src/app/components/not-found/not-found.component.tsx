@@ -65,7 +65,7 @@ export const NotFound = defineComponent({
     const textFieldRef = ref<TextFieldRef>();
     const inputRef = ref();
 
-    console.log('context:', context);
+    // console.log('context:', context);
 
     const counter = ref(0);
 
@@ -100,7 +100,7 @@ export const NotFound = defineComponent({
     const trimModifier = 'trim';
     const directiveFocus = resolveDirective('focus');
 
-    console.log('"args" of "not-found" component:', arguments);
+    // console.log('"args" of "not-found" component:', arguments);
 
     return (
       <div>
@@ -188,21 +188,17 @@ export const NotFound = defineComponent({
 
             {withDirectives(
               <TextField
-                // className="adadada"
-                v-show={false}
-                type="password"
+                // @ts-ignore
+                contenteditable={true}
+                v-show={true}
                 class="TextField"
                 style={{ padding: '10px' }}
-                label="Text Field Label"
                 aria-hidden={false}
                 v-model={[this.textFieldValue, ['trim', 'capitalize']]}
                 // ref={(el: any) => {
                 //   console.log(1231313132, el);
                 // }}
                 // ref={this.textFieldFunctionRef as any}
-                // onInput={() => {
-                //   console.log('TextField onInput');
-                // }}
                 color="white"
                 ref={nameOf(() => this.textFieldRef)}
                 data-true={true}
@@ -211,9 +207,21 @@ export const NotFound = defineComponent({
                 onClick={() => {
                   //
                 }}
-                // onBhdasbahd={() => {
-                //   //
-                // }}
+                v-slots={{
+                  label: () => 'This is "TextField" label'
+                  // text: () => 1
+                }}
+                label={{
+                  'aria-label': 'label',
+                  class: 'TextField__Label'
+                }}
+                input={{
+                  'aria-label': 'input',
+                  class: 'TextField__Input',
+                  onInput: () => {
+                    console.log('TextField onInput');
+                  }
+                }}
               />,
               [vFocusDirective.use()]
               // []
@@ -254,7 +262,7 @@ export const NotFound = defineComponent({
             to="/"
             v-slots={{
               default: (args) => {
-                console.log('"RouterLink" args:', args);
+                // console.log('"RouterLink" args:', args);
 
                 return withDirectives(<h2>to home!</h2>, [
                   vFontDirective.use({
@@ -327,13 +335,7 @@ export const NotFound = defineComponent({
           class="121212112"
           text="This is title!"
           v-slots={{
-            default: () => (
-              <div>
-                <div>
-                  default <input type="number" />
-                </div>
-              </div>
-            ),
+            default: () => 'hfsjhfskfhs72t3aud',
             header: ({ headerTitle, someShittyText }) => (
               <div>
                 <div>
@@ -344,7 +346,7 @@ export const NotFound = defineComponent({
                 </div>
               </div>
             ),
-            footer: (t) => <>123131</>
+            footer: (t) => [4444, 2, t]
           }}
         />
 
