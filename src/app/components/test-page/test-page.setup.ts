@@ -2,16 +2,16 @@
 import { withModifiers } from '@/app/shared/utils/with-modifiers';
 import type { EventHandler } from '@/app/shared/types';
 import type {
-  ContextOfSetupFunction,
-  PropsOfSetupFunction,
   BindingsOfSetupFunction,
+  SetupContextArg,
+  SetupPropsArg,
   UnwrappedBindingsOfSetupFunction
 } from '@/app/shared/types/component/setup';
 import { getCurrentInstance, onMounted } from 'vue';
 import type { HTMLAttributes } from 'vue';
 
-type Props = PropsOfSetupFunction;
-type Context = ContextOfSetupFunction<HTMLAttributes, {}, {}>;
+type Props = SetupPropsArg<{}>;
+type Context = SetupContextArg<HTMLAttributes, {}, {}>;
 
 export const setup = (props: Props, context: Context) => {
   const cache: any[] = [];
