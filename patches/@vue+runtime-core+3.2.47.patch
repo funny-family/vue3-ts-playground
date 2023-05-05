@@ -1,0 +1,20 @@
+diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.d.ts b/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
+index f0f922d..47c1ebb 100644
+--- a/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
++++ b/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
+@@ -834,13 +834,13 @@ export { EffectScope }
+ 
+ export { effectScope }
+ 
+-declare type EmitFn<Options = ObjectEmitsOptions, Event extends keyof Options = keyof Options> = Options extends Array<infer V> ? (event: V, ...args: any[]) => void : {} extends Options ? (event: string, ...args: any[]) => void : UnionToIntersection<{
++export declare type EmitFn<Options = ObjectEmitsOptions, Event extends keyof Options = keyof Options> = Options extends Array<infer V> ? (event: V, ...args: any[]) => void : {} extends Options ? (event: string, ...args: any[]) => void : UnionToIntersection<{
+     [key in Event]: Options[key] extends (...args: infer Args) => any ? (event: key, ...args: Args) => void : (event: key, ...args: any[]) => void;
+ }[Event]>;
+ 
+ export declare type EmitsOptions = ObjectEmitsOptions | string[];
+ 
+-declare type EmitsToProps<T extends EmitsOptions> = T extends string[] ? {
++export declare type EmitsToProps<T extends EmitsOptions> = T extends string[] ? {
+     [K in string & `on${Capitalize<T[number]>}`]?: (...args: any[]) => any;
+ } : T extends ObjectEmitsOptions ? {
+     [K in string & `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}` ? T[Uncapitalize<C>] extends null ? (...args: any[]) => any : (...args: T[Uncapitalize<C>] extends (...args: infer P) => any ? P : never) => any : never;
