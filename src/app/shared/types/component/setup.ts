@@ -12,7 +12,7 @@ import type { EmitFunction } from '@/app/shared/types/component/emits';
 export type SetupPropsArg<T extends Record<string, unknown>> = Readonly<T>;
 
 export type SetupContextArg<
-  TAttrs extends Data<any>,
+  TAttrs extends Record<string, any>,
   TSlots extends Slots,
   TEmits extends ObjectEmitsOptions
 > = Omit<SetupContext<TEmits>, 'attrs' | 'slots' | 'emit'> & {
