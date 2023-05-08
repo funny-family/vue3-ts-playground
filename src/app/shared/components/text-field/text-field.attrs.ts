@@ -1,10 +1,16 @@
-import type { InputHTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import type { CSSClassAttribute } from '@/app/shared/types/component/attrs';
-import type { ExtractedKeys } from '@/app/shared/types';
-import type { VModel } from '@/app/shared/types/directives';
+import type { FilterNotStartingWith } from '@/app/shared/types';
 
-export type TextFieldAttrs = Omit<
-  InputHTMLAttributes,
-  ExtractedKeys<VModel.Directive & CSSClassAttribute>
+export type TextFieldAttrs = Pick<
+  HTMLAttributes,
+  FilterNotStartingWith<
+    keyof HTMLAttributes,
+    | 'v-'
+    | 'class'
+    /* ----------------- omitted attrs ----------------- */
+    | 'contenteditable'
+    /* ----------------- omitted attrs ----------------- */
+  >
 > &
   CSSClassAttribute;
