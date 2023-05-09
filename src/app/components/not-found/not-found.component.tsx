@@ -190,7 +190,7 @@ export const NotFound = defineComponent({
               <TextField
                 // @ts-ignore
                 contenteditable={true}
-                v-show={true}
+                // v-show={true}
                 class="TextField"
                 style={{ padding: '10px' }}
                 aria-hidden={false}
