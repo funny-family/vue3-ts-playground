@@ -1,4 +1,4 @@
-import type { VNode } from 'vue';
+import type { VNode, VNodeTypes, Slots } from 'vue';
 import type {
   CustomSlot,
   DefaultSlot
@@ -6,7 +6,7 @@ import type {
 
 export namespace Gif404Slots {
   export interface Schema<ReturnSlotType>
-    extends Partial<DefaultSlot<ReturnSlotType>> {
+    extends Partial<DefaultSlot<never, ReturnSlotType>> {
     // export interface Schema<ReturnSlotType> extends DefaultSlot<ReturnSlotType> {
 
     // default: (() => ReturnSlotType) | undefined;
@@ -15,10 +15,13 @@ export namespace Gif404Slots {
       { headerTitle: string; someShittyText: string },
       ReturnSlotType
     >;
-    footer: CustomSlot<{ t1: string; t2: string }, ReturnSlotType>;
+    footer: CustomSlot<string, ReturnSlotType>;
   }
 
-  export type VNodeList = Readonly<Schema<VNode[]>>;
+  // export type VNodeList = Readonly<Schema<VNode[]>>;
+  export type VNodes = Readonly<Schema<VNode[]>>;
 
-  export type JSXElement = Readonly<Schema<JSX.Element>>;
+  export type JSXElement = Readonly<
+    Schema<VNodeTypes | number | null | undefined>
+  >;
 }
