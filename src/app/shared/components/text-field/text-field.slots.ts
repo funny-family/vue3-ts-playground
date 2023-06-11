@@ -1,29 +1,20 @@
-import type { VNode } from 'vue';
+import type { Slot, Slots, VNode, VNodeTypes } from 'vue';
 import type {
   CustomSlot,
   DefaultSlot
 } from '@/app/shared/types/component/slots';
-
-type JSXElement = JSX.Element | string | number | Symbol | JSXElement[];
+// import type { JSXElement } from '@/app/shared/types';
 
 export namespace TextFieldSlots {
   export interface Schema<ReturnSlotType> {
-    label: CustomSlot<undefined, ReturnSlotType>;
-    // extends Partial<DefaultSlot<ReturnSlotType>> {
-    // // export interface Schema<ReturnSlotType> extends DefaultSlot<ReturnSlotType> {
-
-    // // default: (() => ReturnSlotType) | undefined;
-    // // header: ((headerTitle: string, someShittyText: string) => T) | undefined;
-    // header: CustomSlot<
-    //   { headerTitle: string; someShittyText: string },
-    //   ReturnSlotType
-    // >;
-    // footer: CustomSlot<{ t1: string; t2: string }, ReturnSlotType>;
+    label?: CustomSlot<never, ReturnSlotType>;
+    // text: CustomSlot<never, ReturnSlotType>;
   }
 
-  export type VNodeList = Readonly<Schema<VNode[]>>;
+  export type VNodes = Readonly<Schema<[]>>;
+  // export type VNodes = Readonly<{ [m: string]: any }>;
 
-  // export type JSXElement = Readonly<Schema<JSXElement>>;
-
-  export type Record = Readonly<Schema<JSXElement>>;
+  export type JSXElement = Readonly<
+    Schema<VNodeTypes | number | null | undefined>
+  >;
 }
